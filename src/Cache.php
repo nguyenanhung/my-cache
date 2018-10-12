@@ -183,9 +183,106 @@ class Cache implements ProjectInterface, CacheInterface
     }
 
     /**
-     * Function simpleCache
+     * Function has
      *
-     * Hàm Cache
+     * Kiểm tra sự tồn tại dữ liệu cache
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 18:10
+     *
+     * @param string $key
+     *
+     * @return bool|string True if the request resulted in a cache hit. False otherwise.
+     */
+    public function has($key = '')
+    {
+        try {
+            if (empty($this->cacheHandle) && !is_array($this->cacheHandle)) {
+                $this->cacheHandle = [
+                    'path'             => $this->cachePath,
+                    "itemDetailedDate" => FALSE,
+                    'securityKey'      => self::DEFAULT_SECURITY_KEY,
+                    'default_chmod'    => self::DEFAULT_CHMOD
+                ];
+            }
+            CacheManager::setDefaultConfig($this->cacheHandle);
+            if (!empty($this->cacheDriver)) {
+                $cacheInstance = CacheManager::getInstance($this->cacheDriver);
+            } else {
+                $cacheInstance = CacheManager::getInstance(self::DEFAULT_DRIVERS);
+            }
+            $cache = $cacheInstance->getItem($key);
+            if (!$cache->isHit()) {
+                $result = FALSE;
+            } else {
+                $result = TRUE;
+            }
+
+            return $result;
+        }
+        catch (\Exception $e) {
+            $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
+            $this->debug->error(__FUNCTION__, $message);
+
+            return $message;
+        }
+    }
+
+    /**
+     * Function get
+     *
+     * Hàm lấy dữ liệu cache
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 18:09
+     *
+     * @param string $key
+     *
+     * @return bool|mixed|string
+     */
+    public function get($key = '')
+    {
+        try {
+            if (empty($this->cacheHandle) && !is_array($this->cacheHandle)) {
+                $this->cacheHandle = [
+                    'path'             => $this->cachePath,
+                    "itemDetailedDate" => FALSE,
+                    'securityKey'      => self::DEFAULT_SECURITY_KEY,
+                    'default_chmod'    => self::DEFAULT_CHMOD
+                ];
+            }
+            CacheManager::setDefaultConfig($this->cacheHandle);
+            if (!empty($this->cacheDriver)) {
+                $cacheInstance = CacheManager::getInstance($this->cacheDriver);
+            } else {
+                $cacheInstance = CacheManager::getInstance(self::DEFAULT_DRIVERS);
+            }
+            $cache = $cacheInstance->getItem($key);
+            if (!$cache->isHit()) {
+                $result = FALSE;
+                $this->debug->debug(__FUNCTION__, 'Unavailable Cache for Key: ' . $key);
+            } else {
+                $result = $cache->get();
+                $this->debug->debug(__FUNCTION__, 'Get Cache from Key: ' . $key . ', result: ' . json_encode($result));
+            }
+            $message = 'Final get Content from Key: ' . $key . ' => Output result: ' . json_encode($result);
+            $this->debug->info(__FUNCTION__, $message);
+
+            return $result;
+        }
+        catch (\Exception $e) {
+            $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
+            $this->debug->error(__FUNCTION__, $message);
+
+            return $message;
+        }
+    }
+
+
+    /**
+     * Function save
+     *
+     * Hàm Save Cache
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 14:37
@@ -195,7 +292,7 @@ class Cache implements ProjectInterface, CacheInterface
      *
      * @return mixed|string|array|object Dữ liệu đầu ra
      */
-    public function simpleCache($key = '', $value = '')
+    public function save($key = '', $value = '')
     {
         try {
             if (empty($this->cacheHandle) && !is_array($this->cacheHandle)) {

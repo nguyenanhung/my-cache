@@ -23,5 +23,5 @@ $value_test = [
     'desc'   => 'Test',
     'data'   => $key_test
 ];
-//dump($cache->simpleCache($key_test, $value_test));
+//dump($cache->save($key_test, $value_test));
 dump($cache->cleanCache());

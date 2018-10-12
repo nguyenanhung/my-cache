@@ -68,7 +68,31 @@ interface CacheInterface
     public function setCacheHandle($cacheHandle = NULL);
 
     /**
-     * Function simpleCache
+     * Function has
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 18:10
+     *
+     * @param string $key
+     *
+     * @return bool|string
+     */
+    public function has($key = '');
+
+    /**
+     * Function get
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 18:09
+     *
+     * @param string $key
+     *
+     * @return bool|mixed|string
+     */
+    public function get($key = '');
+
+    /**
+     * Function save
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 14:37
@@ -78,7 +102,7 @@ interface CacheInterface
      *
      * @return mixed|string
      */
-    public function simpleCache($key = '', $value = '');
+    public function save($key = '', $value = '');
 
     /**
      * Function cleanCache
