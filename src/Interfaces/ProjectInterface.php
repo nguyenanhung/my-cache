@@ -21,15 +21,16 @@ interface ProjectInterface
     /**
      * Base version of Project
      */
-    const VERSION = '0.1.2.2';
+    const VERSION = '0.1.0';
 
     /**
      * Function getVersion
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/9/18 00:17
+     * @author  : 713uk13m <dev@nguyenanhung.com>
+     * @time    : 10/9/18 00:17
      *
      * @return mixed Current Version of Package
+     * @example 0.1.0
      */
     public function getVersion();
 }
