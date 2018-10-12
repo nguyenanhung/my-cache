@@ -16,7 +16,7 @@ $cache->setDebugLoggerPath(testLogPath());
 $cache->__construct();
 $cache->setCachePath(testCachePath());
 $cache->setCacheTtl(3600);
-$cache->setCacheDriver('apc');
+$cache->setCacheDriver('Apc');
 $key_test   = 'test-1-2-3-4';
 $value_test = [
     'status' => 0,

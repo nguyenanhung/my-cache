@@ -9,8 +9,8 @@
 
 namespace nguyenanhung\MyCache;
 
-use Phpfastcache\CacheManager;
-use Phpfastcache\Config\ConfigurationOption;
+use phpFastCache\CacheManager;
+use phpFastCache\Core\phpFastCache;
 use nguyenanhung\MyDebug\Debug;
 use nguyenanhung\MyCache\Interfaces\ProjectInterface;
 use nguyenanhung\MyCache\Interfaces\CacheInterface;
@@ -175,8 +175,7 @@ class Cache implements ProjectInterface, CacheInterface
                 'path'             => $this->cachePath,
                 "itemDetailedDate" => FALSE
             ];
-            $config = new ConfigurationOption($handle);
-            CacheManager::setDefaultConfig($config);
+            CacheManager::setDefaultConfig($handle);
             if (!empty($this->cacheDriver)) {
                 $cacheInstance = CacheManager::getInstance($this->cacheDriver);
             } else {
