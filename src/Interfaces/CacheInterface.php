@@ -105,12 +105,12 @@ interface CacheInterface
     public function save($key = '', $value = '');
 
     /**
-     * Function cleanCache
+     * Function clean
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 15:28
      *
      * @return bool|string
      */
-    public function cleanCache();
+    public function clean();
 }

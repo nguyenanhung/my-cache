@@ -278,7 +278,6 @@ class Cache implements ProjectInterface, CacheInterface
         }
     }
 
-
     /**
      * Function save
      *
@@ -333,7 +332,7 @@ class Cache implements ProjectInterface, CacheInterface
     }
 
     /**
-     * Function cleanCache
+     * Function clean
      *
      * Hàm Clean Cache
      *
@@ -344,7 +343,7 @@ class Cache implements ProjectInterface, CacheInterface
      * Trả về TRUE trong trường hợp thành công
      * Error String nếu có lỗi Exception
      */
-    public function cleanCache()
+    public function clean()
     {
         try {
             if (empty($this->cacheHandle) && !is_array($this->cacheHandle)) {

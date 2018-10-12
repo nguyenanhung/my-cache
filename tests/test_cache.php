@@ -11,7 +11,7 @@ require_once __DIR__ . '/../functions.php';
  */
 $cache = new \nguyenanhung\MyCache\Cache();
 $cache->setDebugStatus(TRUE);
-$cache->setDebugLevel( NULL);
+$cache->setDebugLevel(NULL);
 $cache->setDebugLoggerPath(testLogPath());
 $cache->__construct();
 $cache->setCachePath(testCachePath());
@@ -24,4 +24,4 @@ $value_test = [
     'data'   => $key_test
 ];
 //dump($cache->save($key_test, $value_test));
-dump($cache->cleanCache());
+dump($cache->clean());
