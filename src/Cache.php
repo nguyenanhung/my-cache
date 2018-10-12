@@ -62,6 +62,7 @@ class Cache implements ProjectInterface, CacheInterface
         $this->cacheHandle = [
             'path'                   => $this->cachePath,
             "itemDetailedDate"       => FALSE,
+            'fallback'               => self::DEFAULT_DRIVERS,
             'ignoreSymfonyNotice'    => self::IGNORE_SYMFONY_NOTICE,
             'securityKey'            => !empty($this->cacheSecurityKey) ? $this->cacheSecurityKey : 'Auto',
             'default_chmod'          => !empty($this->cacheDefaultChmod) ? $this->cacheDefaultChmod : 0777,
