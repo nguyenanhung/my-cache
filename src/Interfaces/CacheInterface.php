@@ -127,6 +127,18 @@ interface CacheInterface
     public function save($key = '', $value = '');
 
     /**
+     * Function delete
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 20:02
+     *
+     * @param string|array $key
+     *
+     * @return null|string  True if the request resulted in a cache hit. False otherwise.
+     */
+    public function delete($key = '');
+
+    /**
      * Function clean
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
