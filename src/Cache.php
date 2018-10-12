@@ -27,6 +27,10 @@ if (!interface_exists('nguyenanhung\MyCache\Interfaces\ProjectInterface')) {
  */
 class Cache implements ProjectInterface, CacheInterface
 {
+    /**
+     * @var object
+     */
+    private $cacheInstance;
     private $cacheHandle;
     private $cacheDriver = NULL;
     private $cachePath   = NULL;
@@ -52,6 +56,27 @@ class Cache implements ProjectInterface, CacheInterface
             }
         }
         $this->debug->debug(__FUNCTION__, '/~~~~~~~~~~~~~~~~~~~> Class Cache - Version: ' . self::VERSION . ' - Last Modified: ' . self::LAST_MODIFIED . ' <~~~~~~~~~~~~~~~~~~~\\');
+        if (empty($this->cacheHandle) && !is_array($this->cacheHandle)) {
+            $this->cacheHandle = [
+                'path'             => $this->cachePath,
+                "itemDetailedDate" => FALSE,
+                'securityKey'      => self::DEFAULT_SECURITY_KEY,
+                'default_chmod'    => self::DEFAULT_CHMOD
+            ];
+        }
+        try {
+            CacheManager::setDefaultConfig($this->cacheHandle);
+            if (!empty($this->cacheDriver)) {
+                $this->cacheInstance = CacheManager::getInstance($this->cacheDriver);
+            } else {
+                $this->cacheInstance = CacheManager::getInstance(self::DEFAULT_DRIVERS);
+            }
+        }
+        catch (\Exception $e) {
+            $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
+            $this->debug->error(__FUNCTION__, $message);
+            $this->cacheInstance = NULL;
+        }
     }
 
     /**
@@ -197,28 +222,21 @@ class Cache implements ProjectInterface, CacheInterface
     public function has($key = '')
     {
         try {
-            if (empty($this->cacheHandle) && !is_array($this->cacheHandle)) {
-                $this->cacheHandle = [
-                    'path'             => $this->cachePath,
-                    "itemDetailedDate" => FALSE,
-                    'securityKey'      => self::DEFAULT_SECURITY_KEY,
-                    'default_chmod'    => self::DEFAULT_CHMOD
-                ];
-            }
-            CacheManager::setDefaultConfig($this->cacheHandle);
-            if (!empty($this->cacheDriver)) {
-                $cacheInstance = CacheManager::getInstance($this->cacheDriver);
+            if ($this->cacheInstance !== NULL && is_object($this->cacheInstance)) {
+                /**
+                 * @var $cache object
+                 */
+                $cache = $this->cacheInstance->getItem($key);
+                if (!$cache->isHit()) {
+                    return FALSE;
+                } else {
+                    return FALSE;
+                }
             } else {
-                $cacheInstance = CacheManager::getInstance(self::DEFAULT_DRIVERS);
-            }
-            $cache = $cacheInstance->getItem($key);
-            if (!$cache->isHit()) {
-                $result = FALSE;
-            } else {
-                $result = TRUE;
-            }
+                $this->debug->error(__FUNCTION__, 'Unavailable cacheInstance');
 
-            return $result;
+                return FALSE;
+            }
         }
         catch (\Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
@@ -238,37 +256,32 @@ class Cache implements ProjectInterface, CacheInterface
      *
      * @param string $key
      *
-     * @return bool|mixed|string
+     * @return bool|mixed|string|null
      */
     public function get($key = '')
     {
         try {
-            if (empty($this->cacheHandle) && !is_array($this->cacheHandle)) {
-                $this->cacheHandle = [
-                    'path'             => $this->cachePath,
-                    "itemDetailedDate" => FALSE,
-                    'securityKey'      => self::DEFAULT_SECURITY_KEY,
-                    'default_chmod'    => self::DEFAULT_CHMOD
-                ];
-            }
-            CacheManager::setDefaultConfig($this->cacheHandle);
-            if (!empty($this->cacheDriver)) {
-                $cacheInstance = CacheManager::getInstance($this->cacheDriver);
-            } else {
-                $cacheInstance = CacheManager::getInstance(self::DEFAULT_DRIVERS);
-            }
-            $cache = $cacheInstance->getItem($key);
-            if (!$cache->isHit()) {
-                $result = FALSE;
-                $this->debug->debug(__FUNCTION__, 'Unavailable Cache for Key: ' . $key);
-            } else {
-                $result = $cache->get();
-                $this->debug->debug(__FUNCTION__, 'Get Cache from Key: ' . $key . ', result: ' . json_encode($result));
-            }
-            $message = 'Final get Content from Key: ' . $key . ' => Output result: ' . json_encode($result);
-            $this->debug->info(__FUNCTION__, $message);
+            if ($this->cacheInstance !== NULL && is_object($this->cacheInstance)) {
+                /**
+                 * @var $cache object
+                 */
+                $cache = $this->cacheInstance->getItem($key);
+                if (!$cache->isHit()) {
+                    $result = NULL;
+                    $this->debug->debug(__FUNCTION__, 'Unavailable Cache for Key: ' . $key);
+                } else {
+                    $result = $cache->get();
+                    $this->debug->debug(__FUNCTION__, 'Get Cache from Key: ' . $key . ', result: ' . json_encode($result));
+                }
+                $message = 'Final get Content from Key: ' . $key . ' => Output result: ' . json_encode($result);
+                $this->debug->info(__FUNCTION__, $message);
 
-            return $result;
+                return $result;
+            } else {
+                $this->debug->error(__FUNCTION__, 'Unavailable cacheInstance');
+
+                return NULL;
+            }
         }
         catch (\Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
@@ -294,34 +307,29 @@ class Cache implements ProjectInterface, CacheInterface
     public function save($key = '', $value = '')
     {
         try {
-            if (empty($this->cacheHandle) && !is_array($this->cacheHandle)) {
-                $this->cacheHandle = [
-                    'path'             => $this->cachePath,
-                    "itemDetailedDate" => FALSE,
-                    'securityKey'      => self::DEFAULT_SECURITY_KEY,
-                    'default_chmod'    => self::DEFAULT_CHMOD
-                ];
-            }
-            CacheManager::setDefaultConfig($this->cacheHandle);
-            if (!empty($this->cacheDriver)) {
-                $cacheInstance = CacheManager::getInstance($this->cacheDriver);
-            } else {
-                $cacheInstance = CacheManager::getInstance(self::DEFAULT_DRIVERS);
-            }
-            $cache = $cacheInstance->getItem($key);
-            if (!$cache->isHit()) {
-                $cache->set($value)->expiresAfter($this->cacheTtl);//in seconds, also accepts Datetime
-                $cacheInstance->save($cache); // Save the cache item just like you do with doctrine and entities
-                $result = $cache->get();
-                $this->debug->debug(__FUNCTION__, 'Save Cache Key: ' . $key . ' with Value: ' . json_encode($value));
-            } else {
-                $result = $cache->get();
-                $this->debug->debug(__FUNCTION__, 'Get Cache from Key: ' . $key . ', result: ' . json_encode($result));
-            }
-            $message = 'Final get Content from Key: ' . $key . ' => Output result: ' . json_encode($result);
-            $this->debug->info(__FUNCTION__, $message);
+            if ($this->cacheInstance !== NULL && is_object($this->cacheInstance)) {
+                /**
+                 * @var $cache object
+                 */
+                $cache = $this->cacheInstance->getItem($key);
+                if (!$cache->isHit()) {
+                    $cache->set($value)->expiresAfter($this->cacheTtl);//in seconds, also accepts Datetime
+                    $this->cacheInstance->save($cache); // Save the cache item just like you do with doctrine and entities
+                    $result = $cache->get();
+                    $this->debug->debug(__FUNCTION__, 'Save Cache Key: ' . $key . ' with Value: ' . json_encode($value));
+                } else {
+                    $result = $cache->get();
+                    $this->debug->debug(__FUNCTION__, 'Get Cache from Key: ' . $key . ', result: ' . json_encode($result));
+                }
+                $message = 'Final get Content from Key: ' . $key . ' => Output result: ' . json_encode($result);
+                $this->debug->info(__FUNCTION__, $message);
 
-            return $result;
+                return $result;
+            } else {
+                $this->debug->error(__FUNCTION__, 'Unavailable cacheInstance');
+
+                return NULL;
+            }
         }
         catch (\Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
@@ -346,26 +354,12 @@ class Cache implements ProjectInterface, CacheInterface
     public function clean()
     {
         try {
-            if (empty($this->cacheHandle) && !is_array($this->cacheHandle)) {
-                $this->cacheHandle = [
-                    'path'             => $this->cachePath,
-                    "itemDetailedDate" => FALSE,
-                    'securityKey'      => self::DEFAULT_SECURITY_KEY,
-                    'default_chmod'    => self::DEFAULT_CHMOD
-                ];
-            }
-            CacheManager::setDefaultConfig($this->cacheHandle);
-            if (!empty($this->cacheDriver)) {
-                $cacheInstance = CacheManager::getInstance($this->cacheDriver);
-            } else {
-                $cacheInstance = CacheManager::getInstance(self::DEFAULT_DRIVERS);
-            }
             $result = [
-                'result'        => $cacheInstance->clear(),
-                'commit'        => $cacheInstance->commit(),
-                'getDriverName' => $cacheInstance->getDriverName(),
-                'getStats'      => $cacheInstance->getStats(),
-                'getConfig'     => $cacheInstance->getConfig(),
+                'result'        => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->clear() : FALSE,
+                'commit'        => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->commit() : NULL,
+                'getDriverName' => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->getDriverName() : NULL,
+                'getStats'      => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->getStats() : NULL,
+                'getConfig'     => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->getConfig() : NULL,
             ];
             $this->debug->debug(__FUNCTION__, 'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . json_encode($result));
 
