@@ -1,0 +1,35 @@
+{
+    "name": "nguyenanhung/my-cache",
+    "type": "library",
+    "description": "My Cache Library",
+    "keywords": [
+        "cache",
+        "phpfastcache",
+        "my cache"
+    ],
+    "homepage": "https://github.com/nguyenanhung/my-cache",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Nguyen An Hung",
+            "email": "dev@nguyenanhung.com",
+            "homepage": "https://nguyenanhung.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-iconv": "*",
+        "ext-openssl": "*",
+        "ext-mbstring": "*",
+        "phpfastcache/phpfastcache": "^6.1.3",
+        "nguyenanhung/my-debug": "^0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "nguyenanhung\\MyCache\\": "src/"
+        }
+    }
+}
