@@ -16,11 +16,12 @@ $cache->setDebugLoggerPath(testLogPath());
 $cache->__construct();
 $cache->setCachePath(testCachePath());
 $cache->setCacheTtl(3600);
-$cache->setCacheDriver('Apc');
-$key_test   = 'test-1-2-3-4';
+$cache->setCacheDriver('apcu');
+$key_test   = 'test-key';
 $value_test = [
     'status' => 0,
     'desc'   => 'Test',
     'data'   => "a"
 ];
-d($cache->simpleCache($key_test, $value_test));
+dump($cache->simpleCache($key_test, $value_test));
+//dump($cache->cleanCache());

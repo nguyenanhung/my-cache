@@ -10,7 +10,6 @@
 namespace nguyenanhung\MyCache;
 
 use phpFastCache\CacheManager;
-use phpFastCache\Core\phpFastCache;
 use nguyenanhung\MyDebug\Debug;
 use nguyenanhung\MyCache\Interfaces\ProjectInterface;
 use nguyenanhung\MyCache\Interfaces\CacheInterface;
@@ -28,6 +27,7 @@ if (!interface_exists('nguyenanhung\MyCache\Interfaces\ProjectInterface')) {
  */
 class Cache implements ProjectInterface, CacheInterface
 {
+    private $cacheHandle;
     private $cacheDriver = NULL;
     private $cachePath   = NULL;
     private $cacheTtl    = 500;
@@ -147,7 +147,7 @@ class Cache implements ProjectInterface, CacheInterface
      */
     public function setCacheDriver($cacheDriver = '')
     {
-        if ($cacheDriver != self::DEFAULT_DRIVERS && (extension_loaded($cacheDriver) && ini_get($cacheDriver . '.enabled'))) {
+        if ($cacheDriver != self::DEFAULT_DRIVERS && (extension_loaded($cacheDriver))) {
             $this->cacheDriver = $cacheDriver;
             $this->debug->debug(__FUNCTION__, 'Set Cache Driver: ' . json_encode($cacheDriver) . ' and server is supported');
         } else {
@@ -158,24 +158,44 @@ class Cache implements ProjectInterface, CacheInterface
     }
 
     /**
+     * Function setCacheHandle
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 15:24
+     *
+     * @param null $cacheHandle
+     */
+    public function setCacheHandle($cacheHandle = NULL)
+    {
+        if (is_array($cacheHandle)) {
+            $this->cacheHandle = $cacheHandle;
+            $this->debug->debug(__FUNCTION__, 'Set Cache Handle with Input: ' . json_encode($cacheHandle));
+        } else {
+            $this->cacheHandle = [
+                'path'             => $this->cachePath,
+                "itemDetailedDate" => FALSE
+            ];
+        }
+        $this->debug->debug(__FUNCTION__, 'setCacheHandle: ', $this->cacheHandle);
+    }
+
+    /**
      * Function simpleCache
+     *
+     * Hàm Cache
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 14:37
      *
-     * @param string $key
-     * @param string $value
+     * @param string $key   Key Cache
+     * @param string $value Dữ liệu cần cache
      *
-     * @return mixed|string
+     * @return mixed|string|array|object Dữ liệu đầu ra
      */
     public function simpleCache($key = '', $value = '')
     {
         try {
-            $handle = [
-                'path'             => $this->cachePath,
-                "itemDetailedDate" => FALSE
-            ];
-            CacheManager::setDefaultConfig($handle);
+            CacheManager::setDefaultConfig($this->cacheHandle);
             if (!empty($this->cacheDriver)) {
                 $cacheInstance = CacheManager::getInstance($this->cacheDriver);
             } else {
@@ -185,13 +205,11 @@ class Cache implements ProjectInterface, CacheInterface
             if (!$cache->isHit()) {
                 $cache->set($value)->expiresAfter($this->cacheTtl);//in seconds, also accepts Datetime
                 $cacheInstance->save($cache); // Save the cache item just like you do with doctrine and entities
-                $result  = $cache->get();
-                $message = 'Save Cache Key: ' . $key . ' with Value: ' . json_encode($value);
-                $this->debug->debug(__FUNCTION__, $message);
+                $result = $cache->get();
+                $this->debug->debug(__FUNCTION__, 'Save Cache Key: ' . $key . ' with Value: ' . json_encode($value));
             } else {
-                $result  = $cache->get();
-                $message = 'Get Cache from Key: ' . $key . ', result: ' . json_encode($result);
-                $this->debug->debug(__FUNCTION__, $message);
+                $result = $cache->get();
+                $this->debug->debug(__FUNCTION__, 'Get Cache from Key: ' . $key . ', result: ' . json_encode($result));
             }
             $message = 'Final get Content from Key: ' . $key . ' => Output result: ' . json_encode($result);
             $this->debug->info(__FUNCTION__, $message);
@@ -200,6 +218,41 @@ class Cache implements ProjectInterface, CacheInterface
         }
         catch (\Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
+            $this->debug->error(__FUNCTION__, $message);
+
+            return $message;
+        }
+    }
+
+    /**
+     * Function cleanCache
+     *
+     * Hàm Clean Cache
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 15:28
+     *
+     * @return bool|string
+     * Trả về TRUE trong trường hợp thành công
+     * Error String nếu có lỗi Exception
+     */
+    public function cleanCache()
+    {
+        try {
+            CacheManager::setDefaultConfig($this->cacheHandle);
+            if (!empty($this->cacheDriver)) {
+                $cacheInstance = CacheManager::getInstance($this->cacheDriver);
+            } else {
+                $cacheInstance = CacheManager::getInstance(self::DEFAULT_DRIVERS);
+            }
+            $result = $cacheInstance->clear();
+            $this->debug->debug(__FUNCTION__, 'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . $result);
+
+            return $result;
+        }
+        catch (\Exception $e) {
+            $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
+            $this->debug->error(__FUNCTION__, $message);
 
             return $message;
         }

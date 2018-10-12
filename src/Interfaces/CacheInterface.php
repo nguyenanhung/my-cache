@@ -56,6 +56,16 @@ interface CacheInterface
     public function setCacheDriver($cacheDriver = '');
 
     /**
+     * Function setCacheHandle
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 15:24
+     *
+     * @param null $cacheHandle
+     */
+    public function setCacheHandle($cacheHandle = NULL);
+
+    /**
      * Function simpleCache
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
@@ -67,4 +77,14 @@ interface CacheInterface
      * @return mixed|string
      */
     public function simpleCache($key = '', $value = '');
+
+    /**
+     * Function cleanCache
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 15:28
+     *
+     * @return bool|string
+     */
+    public function cleanCache();
 }
