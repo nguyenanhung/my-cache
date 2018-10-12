@@ -17,7 +17,7 @@ function dump($str = '')
 {
     echo "<pre>";
     var_dump($str);
-    echo "</pre>";
+    echo "</pre>" . PHP_EOL;
 }
 
 /**
