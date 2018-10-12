@@ -287,7 +287,11 @@ class Cache implements ProjectInterface, CacheInterface
                 /**
                  * @var $cache object
                  */
-                $cache = $this->cacheInstance->getItem($key);
+                if (is_array($key)) {
+                    $cache = $this->cacheInstance->getItems($key);
+                } else {
+                    $cache = $this->cacheInstance->getItem($key);
+                }
                 if (!$cache->isHit()) {
                     $result = NULL;
                     $this->debug->debug(__FUNCTION__, 'Unavailable Cache for Key: ' . $key);
@@ -344,6 +348,46 @@ class Cache implements ProjectInterface, CacheInterface
                     $this->debug->debug(__FUNCTION__, 'Get Cache from Key: ' . $key . ', result: ' . json_encode($result));
                 }
                 $message = 'Final get Content from Key: ' . $key . ' => Output result: ' . json_encode($result);
+                $this->debug->info(__FUNCTION__, $message);
+
+                return $result;
+            } else {
+                $this->debug->error(__FUNCTION__, 'Unavailable cacheInstance');
+
+                return NULL;
+            }
+        }
+        catch (\Exception $e) {
+            $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
+            $this->debug->error(__FUNCTION__, $message);
+
+            return $message;
+        }
+    }
+
+    /**
+     * Function delete
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 20:02
+     *
+     * @param string|array $key
+     *
+     * @return null|string  True if the request resulted in a cache hit. False otherwise.
+     */
+    public function delete($key = '')
+    {
+        try {
+            if ($this->cacheInstance !== NULL && is_object($this->cacheInstance)) {
+                /**
+                 * @var $cache object
+                 */
+                if (is_array($key)) {
+                    $result = $this->cacheInstance->deleteItems($key);
+                } else {
+                    $result = $this->cacheInstance->deleteItem($key);
+                }
+                $message = 'Final Delete Content from Key: ' . $key . ' => Output result: ' . json_encode($result);
                 $this->debug->info(__FUNCTION__, $message);
 
                 return $result;
