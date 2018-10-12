@@ -35,6 +35,9 @@ class Cache implements ProjectInterface, CacheInterface
     private $cacheDriver = NULL;
     private $cachePath   = NULL;
     private $cacheTtl    = 500;
+    private $cacheSecurityKey;
+    private $cacheDefaultChmod;
+    private $cacheDefaultKeyHashFunction;
     private $debug;
     private $debugStatus = FALSE;
     private $debugLevel  = FALSE;
@@ -56,14 +59,14 @@ class Cache implements ProjectInterface, CacheInterface
             }
         }
         $this->debug->debug(__FUNCTION__, '/~~~~~~~~~~~~~~~~~~~> Class Cache - Version: ' . self::VERSION . ' - Last Modified: ' . self::LAST_MODIFIED . ' <~~~~~~~~~~~~~~~~~~~\\');
-        if (empty($this->cacheHandle) && !is_array($this->cacheHandle)) {
-            $this->cacheHandle = [
-                'path'             => $this->cachePath,
-                "itemDetailedDate" => FALSE,
-                'securityKey'      => self::DEFAULT_SECURITY_KEY,
-                'default_chmod'    => self::DEFAULT_CHMOD
-            ];
-        }
+        $this->cacheHandle = [
+            'path'                   => $this->cachePath,
+            "itemDetailedDate"       => FALSE,
+            'ignoreSymfonyNotice'    => self::IGNORE_SYMFONY_NOTICE,
+            'securityKey'            => !empty($this->cacheSecurityKey) ? $this->cacheSecurityKey : 'Auto',
+            'default_chmod'          => !empty($this->cacheDefaultChmod) ? $this->cacheDefaultChmod : 0777,
+            'defaultKeyHashFunction' => !empty($this->cacheDefaultKeyHashFunction) ? $this->cacheDefaultKeyHashFunction : ''
+        ];
         try {
             CacheManager::setDefaultConfig($this->cacheHandle);
             if (!empty($this->cacheDriver)) {
@@ -184,27 +187,45 @@ class Cache implements ProjectInterface, CacheInterface
     }
 
     /**
-     * Function setCacheHandle
+     * Function setCacheSecurityKey
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 15:24
+     * @time  : 10/12/18 18:56
      *
-     * @param null $cacheHandle
+     * @param $cacheSecurityKey
      */
-    public function setCacheHandle($cacheHandle = NULL)
+    public function setCacheSecurityKey($cacheSecurityKey)
     {
-        if (is_array($cacheHandle) && isset($cacheHandle['path']) && isset($cacheHandle['itemDetailedDate'])) {
-            $this->cacheHandle = $cacheHandle;
-            $this->debug->debug(__FUNCTION__, 'Set Cache Handle with Input: ' . json_encode($cacheHandle));
-        } else {
-            $this->cacheHandle = [
-                'path'             => $this->cachePath,
-                "itemDetailedDate" => FALSE,
-                'securityKey'      => self::DEFAULT_SECURITY_KEY,
-                'default_chmod'    => self::DEFAULT_CHMOD
-            ];
-        }
-        $this->debug->debug(__FUNCTION__, 'setCacheHandle: ', $this->cacheHandle);
+        $this->cacheSecurityKey = $cacheSecurityKey;
+        $this->debug->debug(__FUNCTION__, 'setCacheSecurityKey: ', $this->cacheSecurityKey);
+    }
+
+    /**
+     * Function setCacheDefaultChmod
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 18:56
+     *
+     * @param $cacheDefaultChmod
+     */
+    public function setCacheDefaultChmod($cacheDefaultChmod)
+    {
+        $this->cacheDefaultChmod = $cacheDefaultChmod;
+        $this->debug->debug(__FUNCTION__, 'setCacheDefaultChmod: ', $this->cacheDefaultChmod);
+    }
+
+    /**
+     * Function setCacheDefaultKeyHashFunction
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 18:56
+     *
+     * @param $cacheDefaultKeyHashFunction
+     */
+    public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction)
+    {
+        $this->cacheDefaultKeyHashFunction = $cacheDefaultKeyHashFunction;
+        $this->debug->debug(__FUNCTION__, 'setCacheDefaultKeyHashFunction: ', $this->cacheDefaultKeyHashFunction);
     }
 
     /**
