@@ -121,7 +121,9 @@ GitHub.sublime-settings
 /vendor/
 composer.lock
 
+storage/*
 storage/logs/*
-!storage/logs/index.html
 storage/cache/*
+!storage/index.html
+!storage/logs/index.html
 !storage/cache/index.html
