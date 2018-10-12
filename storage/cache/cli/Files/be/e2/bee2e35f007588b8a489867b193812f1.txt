@@ -1,1 +1,0 @@
-a:5:{s:1:"d";a:3:{s:6:"status";i:0;s:4:"desc";s:4:"Test";s:4:"data";s:1:"a";}s:1:"g";a:0:{}s:1:"e";O:8:"DateTime":3:{s:4:"date";s:26:"2018-10-12 08:33:15.751982";s:13:"timezone_type";i:3;s:8:"timezone";s:3:"UTC";}s:1:"m";N;s:1:"c";N;}
