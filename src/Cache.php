@@ -271,7 +271,7 @@ class Cache implements ProjectInterface, CacheInterface
                 'getStats'      => $cacheInstance->getStats(),
                 'getConfig'     => $cacheInstance->getConfig(),
             ];
-            $this->debug->debug(__FUNCTION__, 'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . $result);
+            $this->debug->debug(__FUNCTION__, 'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . json_encode($result));
 
             return $result;
         }
