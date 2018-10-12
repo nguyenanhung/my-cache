@@ -51,6 +51,7 @@ class Cache implements ProjectInterface, CacheInterface
                 $this->debug->setGlobalLoggerLevel($this->debugLevel);
             }
         }
+        $this->debug->debug(__FUNCTION__, '/~~~~~~~~~~~~~~~~~~~> Class Cache - Version: ' . self::VERSION . ' - Last Modified: ' . self::LAST_MODIFIED . ' <~~~~~~~~~~~~~~~~~~~\\');
     }
 
     /**
@@ -195,6 +196,12 @@ class Cache implements ProjectInterface, CacheInterface
     public function simpleCache($key = '', $value = '')
     {
         try {
+            if (empty($this->cacheHandle) && !is_array($this->cacheHandle)) {
+                $this->cacheHandle = [
+                    'path'             => $this->cachePath,
+                    "itemDetailedDate" => FALSE
+                ];
+            }
             CacheManager::setDefaultConfig($this->cacheHandle);
             if (!empty($this->cacheDriver)) {
                 $cacheInstance = CacheManager::getInstance($this->cacheDriver);
@@ -239,6 +246,12 @@ class Cache implements ProjectInterface, CacheInterface
     public function cleanCache()
     {
         try {
+            if (empty($this->cacheHandle) && !is_array($this->cacheHandle)) {
+                $this->cacheHandle = [
+                    'path'             => $this->cachePath,
+                    "itemDetailedDate" => FALSE
+                ];
+            }
             CacheManager::setDefaultConfig($this->cacheHandle);
             if (!empty($this->cacheDriver)) {
                 $cacheInstance = CacheManager::getInstance($this->cacheDriver);
