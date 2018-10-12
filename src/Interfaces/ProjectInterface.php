@@ -37,4 +37,34 @@ interface ProjectInterface
      * @example 0.1.0
      */
     public function getVersion();
+
+    /**
+     * Function setDebugStatus
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 14:30
+     *
+     * @param bool $debugStatus
+     */
+    public function setDebugStatus($debugStatus = FALSE);
+
+    /**
+     * Function setDebugLevel
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 14:30
+     *
+     * @param bool|string|null $debugLevel
+     */
+    public function setDebugLevel($debugLevel = FALSE);
+
+    /**
+     * Function setDebugLoggerPath
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 14:30
+     *
+     * @param null $loggerPath
+     */
+    public function setDebugLoggerPath($loggerPath = NULL);
 }

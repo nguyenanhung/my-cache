@@ -1,0 +1,4 @@
+[2018-10-12 07:33:37 448255] setCachePath.INFO: setCachePath: "\/Applications\/XAMPP\/xamppfiles\/htdocs\/GitHub\/my-cache\/storage\/cache\/" [] []
+[2018-10-12 07:33:37 448821] setCacheTtl.INFO: setCacheTtl: 3600 [] []
+[2018-10-12 07:33:37 450618] setCacheDriver.ERROR: Set Cache Driver: "apc" and server is not supported, user default driver: files [] []
+[2018-10-12 07:33:37 450918] setCacheDriver.INFO: setCacheDriver: "files" [] []

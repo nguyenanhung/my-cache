@@ -30,14 +30,19 @@ function dump($str = '')
  */
 function testLogPath()
 {
-    return __DIR__ . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR;
+    return __DIR__ . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR;
 }
+
 /**
- * [testCachePath description]
- * @return [type] [description]
+ * Function testCachePath
+ *
+ * @author: 713uk13m <dev@nguyenanhung.com>
+ * @time  : 10/12/18 14:08
+ *
+ * @return string
  */
 function testCachePath()
 {
-    return __DIR__ . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR;
+    return __DIR__ . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR;
 }
 
