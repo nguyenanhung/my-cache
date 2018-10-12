@@ -11,17 +11,17 @@ require_once __DIR__ . '/../functions.php';
  */
 $cache = new \nguyenanhung\MyCache\Cache();
 $cache->setDebugStatus(TRUE);
-$cache->setDebugLevel( NULL);
+$cache->setDebugLevel(NULL);
 $cache->setDebugLoggerPath(testLogPath());
-$cache->__construct();
 $cache->setCachePath(testCachePath());
 $cache->setCacheTtl(3600);
 $cache->setCacheDriver('apcu');
+$cache->__construct();
 $key_test   = 'test-key' . rand(1, 100);
 $value_test = [
     'status' => 0,
     'desc'   => 'Test',
     'data'   => $key_test
 ];
-//dump($cache->simpleCache($key_test, $value_test));
-dump($cache->cleanCache());
+dump($cache->save($key_test, $value_test));
+//dump($cache->clean());

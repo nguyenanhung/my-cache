@@ -18,10 +18,12 @@ namespace nguyenanhung\MyCache\Interfaces;
  */
 interface CacheInterface
 {
-    const DEFAULT_TTL          = 300;
-    const DEFAULT_DRIVERS      = 'files';
-    const DEFAULT_SECURITY_KEY = 'gZALHz7d5urLL3mDKUZHPzkaHxcDdCgn';
-    const DEFAULT_CHMOD        = 511;
+    const DEFAULT_TTL           = 300;
+    const DEFAULT_DRIVERS       = 'files';
+    const DEFAULT_SECURITY_KEY  = 'gZALHz7d5urLL3mDKUZHPzkaHxcDdCgn';
+    const DEFAULT_CHMOD         = 511;
+    const IGNORE_SYMFONY_NOTICE = TRUE;
+
 
     /**
      * Function setCachePath
@@ -58,17 +60,61 @@ interface CacheInterface
     public function setCacheDriver($cacheDriver = '');
 
     /**
-     * Function setCacheHandle
+     * Function setCacheSecurityKey
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 15:24
+     * @time  : 10/12/18 18:56
      *
-     * @param null $cacheHandle
+     * @param $cacheSecurityKey
      */
-    public function setCacheHandle($cacheHandle = NULL);
+    public function setCacheSecurityKey($cacheSecurityKey);
 
     /**
-     * Function simpleCache
+     * Function setCacheDefaultChmod
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 18:56
+     *
+     * @param $cacheDefaultChmod
+     */
+    public function setCacheDefaultChmod($cacheDefaultChmod);
+
+    /**
+     * Function setCacheDefaultKeyHashFunction
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 18:56
+     *
+     * @param $cacheDefaultKeyHashFunction
+     */
+    public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction);
+
+    /**
+     * Function has
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 18:10
+     *
+     * @param string $key
+     *
+     * @return bool|string
+     */
+    public function has($key = '');
+
+    /**
+     * Function get
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 18:09
+     *
+     * @param string $key
+     *
+     * @return bool|mixed|string
+     */
+    public function get($key = '');
+
+    /**
+     * Function save
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 14:37
@@ -78,15 +124,15 @@ interface CacheInterface
      *
      * @return mixed|string
      */
-    public function simpleCache($key = '', $value = '');
+    public function save($key = '', $value = '');
 
     /**
-     * Function cleanCache
+     * Function clean
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 15:28
      *
      * @return bool|string
      */
-    public function cleanCache();
+    public function clean();
 }
