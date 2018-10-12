@@ -51,6 +51,7 @@ class Cache implements ProjectInterface, CacheInterface
                 $this->debug->setGlobalLoggerLevel($this->debugLevel);
             }
         }
+        $this->debug->debug(__FUNCTION__, '/~~~~~~~~~~~~~~~~~~~> Class Cache - Version: ' . self::VERSION . ' - Last Modified: ' . self::LAST_MODIFIED . ' <~~~~~~~~~~~~~~~~~~~\\');
     }
 
     /**
@@ -167,13 +168,15 @@ class Cache implements ProjectInterface, CacheInterface
      */
     public function setCacheHandle($cacheHandle = NULL)
     {
-        if (is_array($cacheHandle)) {
+        if (is_array($cacheHandle) && isset($cacheHandle['path']) && isset($cacheHandle['itemDetailedDate'])) {
             $this->cacheHandle = $cacheHandle;
             $this->debug->debug(__FUNCTION__, 'Set Cache Handle with Input: ' . json_encode($cacheHandle));
         } else {
             $this->cacheHandle = [
                 'path'             => $this->cachePath,
-                "itemDetailedDate" => FALSE
+                "itemDetailedDate" => FALSE,
+                'securityKey'      => self::DEFAULT_SECURITY_KEY,
+                'default_chmod'    => self::DEFAULT_CHMOD
             ];
         }
         $this->debug->debug(__FUNCTION__, 'setCacheHandle: ', $this->cacheHandle);
@@ -195,6 +198,14 @@ class Cache implements ProjectInterface, CacheInterface
     public function simpleCache($key = '', $value = '')
     {
         try {
+            if (empty($this->cacheHandle) && !is_array($this->cacheHandle)) {
+                $this->cacheHandle = [
+                    'path'             => $this->cachePath,
+                    "itemDetailedDate" => FALSE,
+                    'securityKey'      => self::DEFAULT_SECURITY_KEY,
+                    'default_chmod'    => self::DEFAULT_CHMOD
+                ];
+            }
             CacheManager::setDefaultConfig($this->cacheHandle);
             if (!empty($this->cacheDriver)) {
                 $cacheInstance = CacheManager::getInstance($this->cacheDriver);
@@ -232,21 +243,35 @@ class Cache implements ProjectInterface, CacheInterface
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 15:28
      *
-     * @return bool|string
+     * @return bool|string|array
      * Trả về TRUE trong trường hợp thành công
      * Error String nếu có lỗi Exception
      */
     public function cleanCache()
     {
         try {
+            if (empty($this->cacheHandle) && !is_array($this->cacheHandle)) {
+                $this->cacheHandle = [
+                    'path'             => $this->cachePath,
+                    "itemDetailedDate" => FALSE,
+                    'securityKey'      => self::DEFAULT_SECURITY_KEY,
+                    'default_chmod'    => self::DEFAULT_CHMOD
+                ];
+            }
             CacheManager::setDefaultConfig($this->cacheHandle);
             if (!empty($this->cacheDriver)) {
                 $cacheInstance = CacheManager::getInstance($this->cacheDriver);
             } else {
                 $cacheInstance = CacheManager::getInstance(self::DEFAULT_DRIVERS);
             }
-            $result = $cacheInstance->clear();
-            $this->debug->debug(__FUNCTION__, 'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . $result);
+            $result = [
+                'result'        => $cacheInstance->clear(),
+                'commit'        => $cacheInstance->commit(),
+                'getDriverName' => $cacheInstance->getDriverName(),
+                'getStats'      => $cacheInstance->getStats(),
+                'getConfig'     => $cacheInstance->getConfig(),
+            ];
+            $this->debug->debug(__FUNCTION__, 'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . json_encode($result));
 
             return $result;
         }

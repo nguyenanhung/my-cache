@@ -18,8 +18,10 @@ namespace nguyenanhung\MyCache\Interfaces;
  */
 interface CacheInterface
 {
-    const DEFAULT_TTL     = 300;
-    const DEFAULT_DRIVERS = 'files';
+    const DEFAULT_TTL          = 300;
+    const DEFAULT_DRIVERS      = 'files';
+    const DEFAULT_SECURITY_KEY = 'gZALHz7d5urLL3mDKUZHPzkaHxcDdCgn';
+    const DEFAULT_CHMOD        = 511;
 
     /**
      * Function setCachePath
