@@ -11,6 +11,7 @@ namespace nguyenanhung\MyCache;
 
 use phpFastCache\CacheManager;
 use nguyenanhung\MyDebug\Debug;
+use nguyenanhung\MyDebug\Benchmark;
 use nguyenanhung\MyCache\Interfaces\ProjectInterface;
 use nguyenanhung\MyCache\Interfaces\CacheInterface;
 
@@ -27,6 +28,10 @@ if (!interface_exists('nguyenanhung\MyCache\Interfaces\ProjectInterface')) {
  */
 class Cache implements ProjectInterface, CacheInterface
 {
+    /**
+     * @var object \nguyenanhung\MyDebug\Benchmark
+     */
+    private $benchmark;
     /**
      * @var object
      */
@@ -48,6 +53,10 @@ class Cache implements ProjectInterface, CacheInterface
      */
     public function __construct()
     {
+        if (self::USE_BENCHMARK === TRUE) {
+            $this->benchmark = new Benchmark();
+            $this->benchmark->mark('code_start');
+        }
         $this->debug = new Debug();
         $this->debug->setLoggerSubPath(__CLASS__);
         $this->debug->setLoggerFilename('Log-' . date('Y-m-d') . '.log');
@@ -58,7 +67,7 @@ class Cache implements ProjectInterface, CacheInterface
                 $this->debug->setGlobalLoggerLevel($this->debugLevel);
             }
         }
-        $this->debug->debug(__FUNCTION__, '/~~~~~~~~~~~~~~~~~~~> Class Cache - Version: ' . self::VERSION . ' - Last Modified: ' . self::LAST_MODIFIED . ' <~~~~~~~~~~~~~~~~~~~\\');
+        $this->debug->debug(__FUNCTION__, '/~~~~~~~~~~~~~~~~~~~> Begin Class Cache - Version: ' . self::VERSION . ' - Last Modified: ' . self::LAST_MODIFIED . ' <~~~~~~~~~~~~~~~~~~~\\');
         $this->cacheHandle = [
             'path'                   => $this->cachePath,
             "itemDetailedDate"       => FALSE,
@@ -81,6 +90,19 @@ class Cache implements ProjectInterface, CacheInterface
             $this->debug->error(__FUNCTION__, $message);
             $this->cacheInstance = NULL;
         }
+    }
+
+    /**
+     * Cache destructor.
+     */
+    public function __destruct()
+    {
+        if (self::USE_BENCHMARK === TRUE) {
+            $this->benchmark->mark('code_end');
+            $this->debug->debug(__FUNCTION__, 'Elapsed Time: ===> ' . $this->benchmark->elapsed_time('code_start', 'code_end'));
+            $this->debug->debug(__FUNCTION__, 'Memory Usage: ===> ' . $this->benchmark->memory_usage());
+        }
+        $this->debug->debug(__FUNCTION__, '/~~~~~~~~~~~~~~~~~~~> End Class Cache - Version: ' . self::VERSION . ' - Last Modified: ' . self::LAST_MODIFIED . ' <~~~~~~~~~~~~~~~~~~~\\');
     }
 
     /**

@@ -8,6 +8,7 @@
  */
 
 namespace nguyenanhung\MyCache\Interfaces;
+
 /**
  * Interface ProjectInterface
  *
@@ -21,11 +22,12 @@ interface ProjectInterface
     /**
      * Base version of Project
      */
-    const VERSION       = '0.1.3';
+    const VERSION       = '0.1.4';
     const LAST_MODIFIED = '2018-10-12';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'My Cache';
+    const USE_BENCHMARK = TRUE;
 
     /**
      * Function getVersion
