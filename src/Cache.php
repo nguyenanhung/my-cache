@@ -15,10 +15,6 @@ use nguyenanhung\MyDebug\Benchmark;
 use nguyenanhung\MyCache\Interfaces\ProjectInterface;
 use nguyenanhung\MyCache\Interfaces\CacheInterface;
 
-if (!interface_exists('nguyenanhung\MyCache\Interfaces\ProjectInterface')) {
-    include_once __DIR__ . DIRECTORY_SEPARATOR . 'Interfaces' . DIRECTORY_SEPARATOR . 'ProjectInterface.php';
-}
-
 /**
  * Class Cache
  *
@@ -28,25 +24,32 @@ if (!interface_exists('nguyenanhung\MyCache\Interfaces\ProjectInterface')) {
  */
 class Cache implements ProjectInterface, CacheInterface
 {
-    /**
-     * @var object \nguyenanhung\MyDebug\Benchmark
-     */
+    /** @var object \nguyenanhung\MyDebug\Benchmark */
     private $benchmark;
-    /**
-     * @var object
-     */
+    /** @var null|object */
     private $cacheInstance;
+    /** @var array */
     private $cacheHandle;
+    /** @var null|string */
     private $cacheDriver = NULL;
-    private $cachePath   = NULL;
-    private $cacheTtl    = 500;
+    /** @var null|string */
+    private $cachePath = NULL;
+    /** @var int */
+    private $cacheTtl = 500;
+    /** @var null|string */
     private $cacheSecurityKey;
+    /** @var null|string|int */
     private $cacheDefaultChmod;
+    /** @var null|string */
     private $cacheDefaultKeyHashFunction;
+    /** @var object \nguyenanhung\MyDebug\Debug */
     private $debug;
+    /** @var bool */
     private $debugStatus = FALSE;
-    private $debugLevel  = FALSE;
-    private $loggerPath  = NULL;
+    /** @var bool|string */
+    private $debugLevel = FALSE;
+    /** @var null|string */
+    private $loggerPath = NULL;
 
     /**
      * Cache constructor.
@@ -274,7 +277,7 @@ class Cache implements ProjectInterface, CacheInterface
                 if (!$cache->isHit()) {
                     return FALSE;
                 } else {
-                    return FALSE;
+                    return TRUE;
                 }
             } else {
                 $this->debug->error(__FUNCTION__, 'Unavailable cacheInstance');

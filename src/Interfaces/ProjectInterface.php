@@ -22,8 +22,8 @@ interface ProjectInterface
     /**
      * Base version of Project
      */
-    const VERSION       = '0.1.4';
-    const LAST_MODIFIED = '2018-10-12';
+    const VERSION       = '0.1.5';
+    const LAST_MODIFIED = '2018-11-20';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'My Cache';
@@ -39,34 +39,4 @@ interface ProjectInterface
      * @example 0.1.0
      */
     public function getVersion();
-
-    /**
-     * Function setDebugStatus
-     *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 14:30
-     *
-     * @param bool $debugStatus
-     */
-    public function setDebugStatus($debugStatus = FALSE);
-
-    /**
-     * Function setDebugLevel
-     *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 14:30
-     *
-     * @param bool|string|null $debugLevel
-     */
-    public function setDebugLevel($debugLevel = FALSE);
-
-    /**
-     * Function setDebugLoggerPath
-     *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 14:30
-     *
-     * @param null $loggerPath
-     */
-    public function setDebugLoggerPath($loggerPath = NULL);
 }
