@@ -8,9 +8,6 @@
  */
 
 namespace nguyenanhung\MyCache\Repository;
-if (!interface_exists('nguyenanhung\MyCache\Interfaces\ProjectInterface')) {
-    include_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Interfaces' . DIRECTORY_SEPARATOR . 'ProjectInterface.php';
-}
 
 use nguyenanhung\MyCache\Interfaces\ProjectInterface;
 
