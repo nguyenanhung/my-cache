@@ -9,6 +9,8 @@
 
 namespace nguyenanhung\MyCache;
 
+error_reporting(0);
+
 use phpFastCache\CacheManager;
 use nguyenanhung\MyDebug\Debug;
 use nguyenanhung\MyDebug\Benchmark;
