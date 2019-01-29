@@ -9,7 +9,7 @@
 
 namespace nguyenanhung\MyCache;
 
-error_reporting(0);
+error_reporting(~E_USER_NOTICE);
 
 use phpFastCache\CacheManager;
 use nguyenanhung\MyDebug\Debug;
