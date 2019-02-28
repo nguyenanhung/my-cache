@@ -72,7 +72,6 @@ class Cache implements ProjectInterface, CacheInterface
                 $this->debug->setGlobalLoggerLevel($this->debugLevel);
             }
         }
-        $this->debug->debug(__FUNCTION__, '/~~~~~~~~~~~~~~~~~~~> Begin Class Cache - Version: ' . self::VERSION . ' - Last Modified: ' . self::LAST_MODIFIED . ' <~~~~~~~~~~~~~~~~~~~\\');
         $this->cacheHandle = [
             'path'                   => $this->cachePath,
             "itemDetailedDate"       => FALSE,
@@ -107,7 +106,6 @@ class Cache implements ProjectInterface, CacheInterface
             $this->debug->debug(__FUNCTION__, 'Elapsed Time: ===> ' . $this->benchmark->elapsed_time('code_start', 'code_end'));
             $this->debug->debug(__FUNCTION__, 'Memory Usage: ===> ' . $this->benchmark->memory_usage());
         }
-        $this->debug->debug(__FUNCTION__, '/~~~~~~~~~~~~~~~~~~~> End Class Cache - Version: ' . self::VERSION . ' - Last Modified: ' . self::LAST_MODIFIED . ' <~~~~~~~~~~~~~~~~~~~\\');
     }
 
     /**
