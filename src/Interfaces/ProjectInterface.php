@@ -22,12 +22,12 @@ interface ProjectInterface
     /**
      * Base version of Project
      */
-    const VERSION       = '0.1.7';
-    const LAST_MODIFIED = '2019-01-29';
+    const VERSION       = '0.1.8';
+    const LAST_MODIFIED = '2019-02-28';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'My Cache';
-    const USE_BENCHMARK = TRUE;
+    const USE_BENCHMARK = FALSE;
 
     /**
      * Function getVersion
