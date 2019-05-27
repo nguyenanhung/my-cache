@@ -14,8 +14,7 @@ error_reporting(~E_USER_NOTICE);
 use phpFastCache\CacheManager;
 use nguyenanhung\MyDebug\Debug;
 use nguyenanhung\MyDebug\Benchmark;
-use nguyenanhung\MyCache\Interfaces\ProjectInterface;
-use nguyenanhung\MyCache\Interfaces\CacheInterface;
+use Exception;
 
 /**
  * Class Cache
@@ -72,7 +71,7 @@ class Cache implements ProjectInterface, CacheInterface
                 $this->debug->setGlobalLoggerLevel($this->debugLevel);
             }
         }
-        $this->cacheHandle = [
+        $this->cacheHandle = array(
             'path'                   => $this->cachePath,
             "itemDetailedDate"       => FALSE,
             'fallback'               => self::DEFAULT_DRIVERS,
@@ -80,7 +79,7 @@ class Cache implements ProjectInterface, CacheInterface
             'securityKey'            => !empty($this->cacheSecurityKey) ? $this->cacheSecurityKey : 'Auto',
             'default_chmod'          => !empty($this->cacheDefaultChmod) ? $this->cacheDefaultChmod : 0777,
             'defaultKeyHashFunction' => !empty($this->cacheDefaultKeyHashFunction) ? $this->cacheDefaultKeyHashFunction : ''
-        ];
+        );
         try {
             CacheManager::setDefaultConfig($this->cacheHandle);
             if (!empty($this->cacheDriver)) {
@@ -89,7 +88,7 @@ class Cache implements ProjectInterface, CacheInterface
                 $this->cacheInstance = CacheManager::getInstance(self::DEFAULT_DRIVERS);
             }
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             $this->debug->error(__FUNCTION__, $message);
             $this->cacheInstance = NULL;
@@ -111,10 +110,10 @@ class Cache implements ProjectInterface, CacheInterface
     /**
      * Function getVersion
      *
+     * @return mixed|string
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 11:47
      *
-     * @return mixed|string
      */
     public function getVersion()
     {
@@ -124,10 +123,11 @@ class Cache implements ProjectInterface, CacheInterface
     /**
      * Function setDebugStatus
      *
+     * @param bool $debugStatus
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 14:30
      *
-     * @param bool $debugStatus
      */
     public function setDebugStatus($debugStatus = FALSE)
     {
@@ -137,10 +137,11 @@ class Cache implements ProjectInterface, CacheInterface
     /**
      * Function setDebugLevel
      *
+     * @param bool|string|null $debugLevel
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 14:30
      *
-     * @param bool|string|null $debugLevel
      */
     public function setDebugLevel($debugLevel = FALSE)
     {
@@ -150,10 +151,11 @@ class Cache implements ProjectInterface, CacheInterface
     /**
      * Function setDebugLoggerPath
      *
+     * @param null $loggerPath
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 14:30
      *
-     * @param null $loggerPath
      */
     public function setDebugLoggerPath($loggerPath = NULL)
     {
@@ -165,10 +167,11 @@ class Cache implements ProjectInterface, CacheInterface
      *
      * Cấu hình thư mục lưu trữ cache
      *
+     * @param null $cachePath
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 12:46
      *
-     * @param null $cachePath
      */
     public function setCachePath($cachePath = NULL)
     {
@@ -181,10 +184,11 @@ class Cache implements ProjectInterface, CacheInterface
      *
      * Cầu hình TTL cho file Cache
      *
+     * @param null $cacheTtl
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 12:49
      *
-     * @param null $cacheTtl
      */
     public function setCacheTtl($cacheTtl = NULL)
     {
@@ -195,10 +199,11 @@ class Cache implements ProjectInterface, CacheInterface
     /**
      * Function setCacheDriver
      *
+     * @param string $cacheDriver
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 14:01
      *
-     * @param string $cacheDriver
      */
     public function setCacheDriver($cacheDriver = '')
     {
@@ -215,10 +220,11 @@ class Cache implements ProjectInterface, CacheInterface
     /**
      * Function setCacheSecurityKey
      *
+     * @param $cacheSecurityKey
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 18:56
      *
-     * @param $cacheSecurityKey
      */
     public function setCacheSecurityKey($cacheSecurityKey)
     {
@@ -229,10 +235,11 @@ class Cache implements ProjectInterface, CacheInterface
     /**
      * Function setCacheDefaultChmod
      *
+     * @param $cacheDefaultChmod
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 18:56
      *
-     * @param $cacheDefaultChmod
      */
     public function setCacheDefaultChmod($cacheDefaultChmod)
     {
@@ -243,10 +250,11 @@ class Cache implements ProjectInterface, CacheInterface
     /**
      * Function setCacheDefaultKeyHashFunction
      *
+     * @param $cacheDefaultKeyHashFunction
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 18:56
      *
-     * @param $cacheDefaultKeyHashFunction
      */
     public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction)
     {
@@ -259,12 +267,12 @@ class Cache implements ProjectInterface, CacheInterface
      *
      * Kiểm tra sự tồn tại dữ liệu cache
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 18:10
-     *
      * @param string $key
      *
      * @return bool|string True if the request resulted in a cache hit. False otherwise.
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 18:10
+     *
      */
     public function has($key = '')
     {
@@ -285,7 +293,7 @@ class Cache implements ProjectInterface, CacheInterface
                 return FALSE;
             }
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             $this->debug->error(__FUNCTION__, $message);
 
@@ -298,12 +306,12 @@ class Cache implements ProjectInterface, CacheInterface
      *
      * Hàm lấy dữ liệu cache
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 18:09
-     *
      * @param string $key
      *
      * @return bool|mixed|string|null
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 18:09
+     *
      */
     public function get($key = '')
     {
@@ -334,7 +342,7 @@ class Cache implements ProjectInterface, CacheInterface
                 return NULL;
             }
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             $this->debug->error(__FUNCTION__, $message);
 
@@ -347,13 +355,13 @@ class Cache implements ProjectInterface, CacheInterface
      *
      * Hàm Save Cache
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 14:37
-     *
      * @param string $key   Key Cache
      * @param string $value Dữ liệu cần cache
      *
      * @return mixed|string|array|object Dữ liệu đầu ra
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 14:37
+     *
      */
     public function save($key = '', $value = '')
     {
@@ -382,7 +390,7 @@ class Cache implements ProjectInterface, CacheInterface
                 return NULL;
             }
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             $this->debug->error(__FUNCTION__, $message);
 
@@ -393,12 +401,12 @@ class Cache implements ProjectInterface, CacheInterface
     /**
      * Function delete
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 20:02
-     *
      * @param string|array $key
      *
      * @return null|string  True if the request resulted in a cache hit. False otherwise.
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 20:02
+     *
      */
     public function delete($key = '')
     {
@@ -422,7 +430,7 @@ class Cache implements ProjectInterface, CacheInterface
                 return NULL;
             }
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             $this->debug->error(__FUNCTION__, $message);
 
@@ -435,28 +443,28 @@ class Cache implements ProjectInterface, CacheInterface
      *
      * Hàm Clean Cache
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 15:28
-     *
      * @return bool|string|array
      * Trả về TRUE trong trường hợp thành công
      * Error String nếu có lỗi Exception
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 15:28
+     *
      */
     public function clean()
     {
         try {
-            $result = [
+            $result = array(
                 'result'        => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->clear() : FALSE,
                 'commit'        => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->commit() : NULL,
                 'getDriverName' => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->getDriverName() : NULL,
                 'getStats'      => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->getStats() : NULL,
-                'getConfig'     => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->getConfig() : NULL,
-            ];
+                'getConfig'     => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->getConfig() : NULL
+            );
             $this->debug->debug(__FUNCTION__, 'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . json_encode($result));
 
             return $result;
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             $this->debug->error(__FUNCTION__, $message);
 

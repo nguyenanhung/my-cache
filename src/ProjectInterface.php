@@ -7,13 +7,13 @@
  * Time: 20:27
  */
 
-namespace nguyenanhung\MyCache\Interfaces;
+namespace nguyenanhung\MyCache;
 
 /**
  * Interface ProjectInterface
  *
  * @category  Interface
- * @package   nguyenanhung\MyCache\Interfaces
+ * @package   nguyenanhung\MyCache
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
@@ -22,8 +22,8 @@ interface ProjectInterface
     /**
      * Base version of Project
      */
-    const VERSION       = '1.0';
-    const LAST_MODIFIED = '2019-04-08';
+    const VERSION       = '1.0.1';
+    const LAST_MODIFIED = '2019-05-27';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'My Cache';
@@ -32,10 +32,10 @@ interface ProjectInterface
     /**
      * Function getVersion
      *
+     * @return mixed Current Version of Package
      * @author  : 713uk13m <dev@nguyenanhung.com>
      * @time    : 10/9/18 00:17
      *
-     * @return mixed Current Version of Package
      * @example 0.1.0
      */
     public function getVersion();

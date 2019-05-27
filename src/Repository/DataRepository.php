@@ -9,7 +9,7 @@
 
 namespace nguyenanhung\MyCache\Repository;
 
-use nguyenanhung\MyCache\Interfaces\ProjectInterface;
+use nguyenanhung\MyCache\ProjectInterface;
 
 /**
  * Class DataRepository
