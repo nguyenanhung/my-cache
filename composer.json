@@ -18,7 +18,6 @@
         }
     ],
     "require": {
-        "php": ">=5.4",
         "ext-json": "*",
         "ext-iconv": "*",
         "ext-openssl": "*",

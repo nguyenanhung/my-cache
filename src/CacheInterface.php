@@ -7,12 +7,12 @@
  * Time: 11:50
  */
 
-namespace nguyenanhung\MyCache\Interfaces;
+namespace nguyenanhung\MyCache;
 
 /**
  * Interface CacheInterface
  *
- * @package   nguyenanhung\MyCache\Interfaces
+ * @package   nguyenanhung\MyCache
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
@@ -27,30 +27,33 @@ interface CacheInterface
     /**
      * Function setDebugStatus
      *
+     * @param bool $debugStatus
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 14:30
      *
-     * @param bool $debugStatus
      */
     public function setDebugStatus($debugStatus = FALSE);
 
     /**
      * Function setDebugLevel
      *
+     * @param bool|string|null $debugLevel
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 14:30
      *
-     * @param bool|string|null $debugLevel
      */
     public function setDebugLevel($debugLevel = FALSE);
 
     /**
      * Function setDebugLoggerPath
      *
+     * @param null $loggerPath
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 14:30
      *
-     * @param null $loggerPath
      */
     public function setDebugLoggerPath($loggerPath = NULL);
 
@@ -59,10 +62,11 @@ interface CacheInterface
      *
      * Cấu hình thư mục lưu trữ cache
      *
+     * @param null $cachePath
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 12:46
      *
-     * @param null $cachePath
      */
     public function setCachePath($cachePath = NULL);
 
@@ -71,109 +75,114 @@ interface CacheInterface
      *
      * Cầu hình TTL cho file Cache
      *
+     * @param null $cacheTtl
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 12:49
      *
-     * @param null $cacheTtl
      */
     public function setCacheTtl($cacheTtl = NULL);
 
     /**
      * Function setCacheDriver
      *
+     * @param string $cacheDriver
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 14:01
      *
-     * @param string $cacheDriver
      */
     public function setCacheDriver($cacheDriver = '');
 
     /**
      * Function setCacheSecurityKey
      *
+     * @param $cacheSecurityKey
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 18:56
      *
-     * @param $cacheSecurityKey
      */
     public function setCacheSecurityKey($cacheSecurityKey);
 
     /**
      * Function setCacheDefaultChmod
      *
+     * @param $cacheDefaultChmod
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 18:56
      *
-     * @param $cacheDefaultChmod
      */
     public function setCacheDefaultChmod($cacheDefaultChmod);
 
     /**
      * Function setCacheDefaultKeyHashFunction
      *
+     * @param $cacheDefaultKeyHashFunction
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 18:56
      *
-     * @param $cacheDefaultKeyHashFunction
      */
     public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction);
 
     /**
      * Function has
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 18:10
-     *
      * @param string $key
      *
      * @return bool|string
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 18:10
+     *
      */
     public function has($key = '');
 
     /**
      * Function get
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 18:09
-     *
      * @param string $key
      *
      * @return bool|mixed|string
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 18:09
+     *
      */
     public function get($key = '');
 
     /**
      * Function save
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 14:37
-     *
      * @param string $key
      * @param string $value
      *
      * @return mixed|string
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 14:37
+     *
      */
     public function save($key = '', $value = '');
 
     /**
      * Function delete
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 20:02
-     *
      * @param string|array $key
      *
      * @return null|string  True if the request resulted in a cache hit. False otherwise.
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 20:02
+     *
      */
     public function delete($key = '');
 
     /**
      * Function clean
      *
+     * @return bool|string
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 15:28
      *
-     * @return bool|string
      */
     public function clean();
 }
