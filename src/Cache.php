@@ -44,7 +44,7 @@ class Cache implements ProjectInterface, CacheInterface
     /** @var null|string */
     private $cacheDefaultKeyHashFunction;
     /** @var object \nguyenanhung\MyDebug\Debug */
-    private $debug;
+    private $logger;
     /** @var bool */
     private $debugStatus = FALSE;
     /** @var bool|string */
@@ -61,14 +61,14 @@ class Cache implements ProjectInterface, CacheInterface
             $this->benchmark = new Benchmark();
             $this->benchmark->mark('code_start');
         }
-        $this->debug = new Debug();
-        $this->debug->setLoggerSubPath(__CLASS__);
-        $this->debug->setLoggerFilename('Log-' . date('Y-m-d') . '.log');
+        $this->logger = new Debug();
+        $this->logger->setLoggerSubPath(__CLASS__);
+        $this->logger->setLoggerFilename('Log-' . date('Y-m-d') . '.log');
         if ($this->debugStatus === TRUE && !empty($this->loggerPath)) {
-            $this->debug->setDebugStatus($this->debugStatus);
-            $this->debug->setLoggerPath($this->loggerPath);
+            $this->logger->setDebugStatus($this->debugStatus);
+            $this->logger->setLoggerPath($this->loggerPath);
             if (!empty($this->debugLevel)) {
-                $this->debug->setGlobalLoggerLevel($this->debugLevel);
+                $this->logger->setGlobalLoggerLevel($this->debugLevel);
             }
         }
         $this->cacheHandle = array(
@@ -90,7 +90,7 @@ class Cache implements ProjectInterface, CacheInterface
         }
         catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
-            $this->debug->error(__FUNCTION__, $message);
+            $this->logger->error(__FUNCTION__, $message);
             $this->cacheInstance = NULL;
         }
     }
@@ -102,8 +102,8 @@ class Cache implements ProjectInterface, CacheInterface
     {
         if (self::USE_BENCHMARK === TRUE) {
             $this->benchmark->mark('code_end');
-            $this->debug->debug(__FUNCTION__, 'Elapsed Time: ===> ' . $this->benchmark->elapsed_time('code_start', 'code_end'));
-            $this->debug->debug(__FUNCTION__, 'Memory Usage: ===> ' . $this->benchmark->memory_usage());
+            $this->logger->debug(__FUNCTION__, 'Elapsed Time: ===> ' . $this->benchmark->elapsed_time('code_start', 'code_end'));
+            $this->logger->debug(__FUNCTION__, 'Memory Usage: ===> ' . $this->benchmark->memory_usage());
         }
     }
 
@@ -176,7 +176,7 @@ class Cache implements ProjectInterface, CacheInterface
     public function setCachePath($cachePath = NULL)
     {
         $this->cachePath = $cachePath;
-        $this->debug->debug(__FUNCTION__, 'setCachePath: ', $this->cachePath);
+        $this->logger->debug(__FUNCTION__, 'setCachePath: ', $this->cachePath);
     }
 
     /**
@@ -193,7 +193,7 @@ class Cache implements ProjectInterface, CacheInterface
     public function setCacheTtl($cacheTtl = NULL)
     {
         $this->cacheTtl = $cacheTtl;
-        $this->debug->debug(__FUNCTION__, 'setCacheTtl: ', $this->cacheTtl);
+        $this->logger->debug(__FUNCTION__, 'setCacheTtl: ', $this->cacheTtl);
     }
 
     /**
@@ -209,12 +209,12 @@ class Cache implements ProjectInterface, CacheInterface
     {
         if ($cacheDriver != self::DEFAULT_DRIVERS && (extension_loaded($cacheDriver))) {
             $this->cacheDriver = $cacheDriver;
-            $this->debug->debug(__FUNCTION__, 'Set Cache Driver: ' . json_encode($cacheDriver) . ' and server is supported');
+            $this->logger->debug(__FUNCTION__, 'Set Cache Driver: ' . json_encode($cacheDriver) . ' and server is supported');
         } else {
-            $this->debug->error(__FUNCTION__, 'Set Cache Driver: ' . json_encode($cacheDriver) . ' and server is not supported, user default driver: ' . self::DEFAULT_DRIVERS);
+            $this->logger->error(__FUNCTION__, 'Set Cache Driver: ' . json_encode($cacheDriver) . ' and server is not supported, user default driver: ' . self::DEFAULT_DRIVERS);
             $this->cacheDriver = self::DEFAULT_DRIVERS;
         }
-        $this->debug->debug(__FUNCTION__, 'setCacheDriver: ', $this->cacheDriver);
+        $this->logger->debug(__FUNCTION__, 'setCacheDriver: ', $this->cacheDriver);
     }
 
     /**
@@ -229,7 +229,7 @@ class Cache implements ProjectInterface, CacheInterface
     public function setCacheSecurityKey($cacheSecurityKey)
     {
         $this->cacheSecurityKey = $cacheSecurityKey;
-        $this->debug->debug(__FUNCTION__, 'setCacheSecurityKey: ', $this->cacheSecurityKey);
+        $this->logger->debug(__FUNCTION__, 'setCacheSecurityKey: ', $this->cacheSecurityKey);
     }
 
     /**
@@ -244,7 +244,7 @@ class Cache implements ProjectInterface, CacheInterface
     public function setCacheDefaultChmod($cacheDefaultChmod)
     {
         $this->cacheDefaultChmod = $cacheDefaultChmod;
-        $this->debug->debug(__FUNCTION__, 'setCacheDefaultChmod: ', $this->cacheDefaultChmod);
+        $this->logger->debug(__FUNCTION__, 'setCacheDefaultChmod: ', $this->cacheDefaultChmod);
     }
 
     /**
@@ -259,7 +259,7 @@ class Cache implements ProjectInterface, CacheInterface
     public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction)
     {
         $this->cacheDefaultKeyHashFunction = $cacheDefaultKeyHashFunction;
-        $this->debug->debug(__FUNCTION__, 'setCacheDefaultKeyHashFunction: ', $this->cacheDefaultKeyHashFunction);
+        $this->logger->debug(__FUNCTION__, 'setCacheDefaultKeyHashFunction: ', $this->cacheDefaultKeyHashFunction);
     }
 
     /**
@@ -288,14 +288,14 @@ class Cache implements ProjectInterface, CacheInterface
                     return TRUE;
                 }
             } else {
-                $this->debug->error(__FUNCTION__, 'Unavailable cacheInstance');
+                $this->logger->error(__FUNCTION__, 'Unavailable cacheInstance');
 
                 return FALSE;
             }
         }
         catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
-            $this->debug->error(__FUNCTION__, $message);
+            $this->logger->error(__FUNCTION__, $message);
 
             return $message;
         }
@@ -327,24 +327,24 @@ class Cache implements ProjectInterface, CacheInterface
                 }
                 if (!$cache->isHit()) {
                     $result = NULL;
-                    $this->debug->debug(__FUNCTION__, 'Unavailable Cache for Key: ' . $key);
+                    $this->logger->debug(__FUNCTION__, 'Unavailable Cache for Key: ' . $key);
                 } else {
                     $result = $cache->get();
-                    $this->debug->debug(__FUNCTION__, 'Get Cache from Key: ' . $key . ', result: ' . json_encode($result));
+                    $this->logger->debug(__FUNCTION__, 'Get Cache from Key: ' . $key . ', result: ' . json_encode($result));
                 }
                 $message = 'Final get Content from Key: ' . $key . ' => Output result: ' . json_encode($result);
-                $this->debug->info(__FUNCTION__, $message);
+                $this->logger->debug(__FUNCTION__, $message);
 
                 return $result;
             } else {
-                $this->debug->error(__FUNCTION__, 'Unavailable cacheInstance');
+                $this->logger->error(__FUNCTION__, 'Unavailable cacheInstance');
 
                 return NULL;
             }
         }
         catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
-            $this->debug->error(__FUNCTION__, $message);
+            $this->logger->error(__FUNCTION__, $message);
 
             return $message;
         }
@@ -375,24 +375,24 @@ class Cache implements ProjectInterface, CacheInterface
                     $cache->set($value)->expiresAfter($this->cacheTtl);//in seconds, also accepts Datetime
                     $this->cacheInstance->save($cache); // Save the cache item just like you do with doctrine and entities
                     $result = $cache->get();
-                    $this->debug->debug(__FUNCTION__, 'Save Cache Key: ' . $key . ' with Value: ' . json_encode($value));
+                    $this->logger->debug(__FUNCTION__, 'Save Cache Key: ' . $key . ' with Value: ' . json_encode($value));
                 } else {
                     $result = $cache->get();
-                    $this->debug->debug(__FUNCTION__, 'Get Cache from Key: ' . $key . ', result: ' . json_encode($result));
+                    $this->logger->debug(__FUNCTION__, 'Get Cache from Key: ' . $key . ', result: ' . json_encode($result));
                 }
                 $message = 'Final get Content from Key: ' . $key . ' => Output result: ' . json_encode($result);
-                $this->debug->info(__FUNCTION__, $message);
+                $this->logger->debug(__FUNCTION__, $message);
 
                 return $result;
             } else {
-                $this->debug->error(__FUNCTION__, 'Unavailable cacheInstance');
+                $this->logger->error(__FUNCTION__, 'Unavailable cacheInstance');
 
                 return NULL;
             }
         }
         catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
-            $this->debug->error(__FUNCTION__, $message);
+            $this->logger->error(__FUNCTION__, $message);
 
             return $message;
         }
@@ -421,18 +421,18 @@ class Cache implements ProjectInterface, CacheInterface
                     $result = $this->cacheInstance->deleteItem($key);
                 }
                 $message = 'Final Delete Content from Key: ' . $key . ' => Output result: ' . json_encode($result);
-                $this->debug->info(__FUNCTION__, $message);
+                $this->logger->debug(__FUNCTION__, $message);
 
                 return $result;
             } else {
-                $this->debug->error(__FUNCTION__, 'Unavailable cacheInstance');
+                $this->logger->error(__FUNCTION__, 'Unavailable cacheInstance');
 
                 return NULL;
             }
         }
         catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
-            $this->debug->error(__FUNCTION__, $message);
+            $this->logger->error(__FUNCTION__, $message);
 
             return $message;
         }
@@ -460,13 +460,13 @@ class Cache implements ProjectInterface, CacheInterface
                 'getStats'      => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->getStats() : NULL,
                 'getConfig'     => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->getConfig() : NULL
             );
-            $this->debug->debug(__FUNCTION__, 'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . json_encode($result));
+            $this->logger->debug(__FUNCTION__, 'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . json_encode($result));
 
             return $result;
         }
         catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
-            $this->debug->error(__FUNCTION__, $message);
+            $this->logger->error(__FUNCTION__, $message);
 
             return $message;
         }

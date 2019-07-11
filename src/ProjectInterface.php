@@ -22,8 +22,8 @@ interface ProjectInterface
     /**
      * Base version of Project
      */
-    const VERSION       = '1.0.1';
-    const LAST_MODIFIED = '2019-05-27';
+    const VERSION       = '1.0.2';
+    const LAST_MODIFIED = '2019-07-11';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'My Cache';
