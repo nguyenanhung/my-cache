@@ -466,6 +466,9 @@ class Cache implements ProjectInterface, CacheInterface
         }
         catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
+            if (function_exists('log_message')) {
+                log_message('error', $message);
+            }
             $this->logger->error(__FUNCTION__, $message);
 
             return $message;
