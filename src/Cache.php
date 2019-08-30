@@ -123,15 +123,18 @@ class Cache implements ProjectInterface, CacheInterface
     /**
      * Function setDebugStatus
      *
-     * @param bool $debugStatus
+     * @param bool|string|null $debugStatus
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 14:30
-     *
+     * @return $this
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 8/30/19 17:39
      */
     public function setDebugStatus($debugStatus = FALSE)
     {
         $this->debugStatus = $debugStatus;
+
+        return $this;
     }
 
     /**
@@ -139,27 +142,33 @@ class Cache implements ProjectInterface, CacheInterface
      *
      * @param bool|string|null $debugLevel
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 14:30
-     *
+     * @return $this
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 8/30/19 18:02
      */
     public function setDebugLevel($debugLevel = FALSE)
     {
         $this->debugLevel = $debugLevel;
+
+        return $this;
     }
 
     /**
      * Function setDebugLoggerPath
      *
-     * @param null $loggerPath
+     * @param string|null $loggerPath
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 14:30
-     *
+     * @return $this
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 8/30/19 18:21
      */
     public function setDebugLoggerPath($loggerPath = NULL)
     {
         $this->loggerPath = $loggerPath;
+
+        return $this;
     }
 
     /**
@@ -167,16 +176,19 @@ class Cache implements ProjectInterface, CacheInterface
      *
      * Cấu hình thư mục lưu trữ cache
      *
-     * @param null $cachePath
+     * @param string|null $cachePath
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 12:46
-     *
+     * @return $this
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 8/30/19 18:43
      */
     public function setCachePath($cachePath = NULL)
     {
         $this->cachePath = $cachePath;
         $this->logger->debug(__FUNCTION__, 'setCachePath: ', $this->cachePath);
+
+        return $this;
     }
 
     /**
@@ -186,20 +198,30 @@ class Cache implements ProjectInterface, CacheInterface
      *
      * @param null $cacheTtl
      *
+     * @return $this
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 12:49
      *
      */
     public function setCacheTtl($cacheTtl = NULL)
     {
-        $this->cacheTtl = $cacheTtl;
-        $this->logger->debug(__FUNCTION__, 'setCacheTtl: ', $this->cacheTtl);
+        if (!empty($cacheTtl)) {
+            $this->cacheTtl = $cacheTtl;
+            $this->logger->debug(__FUNCTION__, 'setCacheTtl: ', $this->cacheTtl);
+        } else {
+            $this->cacheTtl = self::DEFAULT_TTL;
+        }
+
+        return $this;
     }
 
     /**
      * Function setCacheDriver
      *
      * @param string $cacheDriver
+     *
+     * @return $this
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 14:01
@@ -215,51 +237,77 @@ class Cache implements ProjectInterface, CacheInterface
             $this->cacheDriver = self::DEFAULT_DRIVERS;
         }
         $this->logger->debug(__FUNCTION__, 'setCacheDriver: ', $this->cacheDriver);
+
+        return $this;
     }
 
     /**
      * Function setCacheSecurityKey
      *
-     * @param $cacheSecurityKey
+     * @param string|null $cacheSecurityKey
+     *
+     * @return $this
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheSecurityKey($cacheSecurityKey)
+    public function setCacheSecurityKey($cacheSecurityKey = NULL)
     {
-        $this->cacheSecurityKey = $cacheSecurityKey;
-        $this->logger->debug(__FUNCTION__, 'setCacheSecurityKey: ', $this->cacheSecurityKey);
+        if (!empty($cacheSecurityKey)) {
+            $this->cacheSecurityKey = $cacheSecurityKey;
+            $this->logger->debug(__FUNCTION__, 'setCacheSecurityKey: ', $this->cacheSecurityKey);
+        } else {
+            $this->cacheSecurityKey = self::DEFAULT_SECURITY_KEY;
+        }
+
+        return $this;
     }
 
     /**
      * Function setCacheDefaultChmod
      *
-     * @param $cacheDefaultChmod
+     * @param null|int|string $cacheDefaultChmod
+     *
+     * @return $this
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheDefaultChmod($cacheDefaultChmod)
+    public function setCacheDefaultChmod($cacheDefaultChmod = NULL)
     {
-        $this->cacheDefaultChmod = $cacheDefaultChmod;
-        $this->logger->debug(__FUNCTION__, 'setCacheDefaultChmod: ', $this->cacheDefaultChmod);
+        if (!empty($cacheDefaultChmod)) {
+            $this->cacheDefaultChmod = $cacheDefaultChmod;
+            $this->logger->debug(__FUNCTION__, 'setCacheDefaultChmod: ', $this->cacheDefaultChmod);
+        } else {
+            $this->cacheDefaultChmod = self::DEFAULT_CHMOD;
+        }
+
+        return $this;
     }
 
     /**
      * Function setCacheDefaultKeyHashFunction
      *
-     * @param $cacheDefaultKeyHashFunction
+     * @param null|string $cacheDefaultKeyHashFunction
+     *
+     * @return $this
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction)
+    public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction = NULL)
     {
-        $this->cacheDefaultKeyHashFunction = $cacheDefaultKeyHashFunction;
-        $this->logger->debug(__FUNCTION__, 'setCacheDefaultKeyHashFunction: ', $this->cacheDefaultKeyHashFunction);
+        if (!empty($cacheDefaultKeyHashFunction)) {
+            $this->cacheDefaultKeyHashFunction = $cacheDefaultKeyHashFunction;
+            $this->logger->debug(__FUNCTION__, 'setCacheDefaultKeyHashFunction: ', $this->cacheDefaultKeyHashFunction);
+        } else {
+            $this->cacheDefaultKeyHashFunction = '';
+        }
+
+        return $this;
     }
 
     /**
@@ -270,6 +318,7 @@ class Cache implements ProjectInterface, CacheInterface
      * @param string $key
      *
      * @return bool|string True if the request resulted in a cache hit. False otherwise.
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 18:10
      *
@@ -278,9 +327,7 @@ class Cache implements ProjectInterface, CacheInterface
     {
         try {
             if ($this->cacheInstance !== NULL && is_object($this->cacheInstance)) {
-                /**
-                 * @var $cache object
-                 */
+                /** @var object $cache */
                 $cache = $this->cacheInstance->getItem($key);
                 if (!$cache->isHit()) {
                     return FALSE;
@@ -288,7 +335,7 @@ class Cache implements ProjectInterface, CacheInterface
                     return TRUE;
                 }
             } else {
-                $this->logger->error(__FUNCTION__, 'Unavailable cacheInstance');
+                $this->logger->debug(__FUNCTION__, 'Unavailable cacheInstance');
 
                 return FALSE;
             }
@@ -309,6 +356,7 @@ class Cache implements ProjectInterface, CacheInterface
      * @param string $key
      *
      * @return bool|mixed|string|null
+     *
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 18:09
      *
@@ -337,7 +385,7 @@ class Cache implements ProjectInterface, CacheInterface
 
                 return $result;
             } else {
-                $this->logger->error(__FUNCTION__, 'Unavailable cacheInstance');
+                $this->logger->debug(__FUNCTION__, 'Unavailable cacheInstance');
 
                 return NULL;
             }
@@ -385,7 +433,7 @@ class Cache implements ProjectInterface, CacheInterface
 
                 return $result;
             } else {
-                $this->logger->error(__FUNCTION__, 'Unavailable cacheInstance');
+                $this->logger->debug(__FUNCTION__, 'Unavailable cacheInstance');
 
                 return NULL;
             }
@@ -425,7 +473,7 @@ class Cache implements ProjectInterface, CacheInterface
 
                 return $result;
             } else {
-                $this->logger->error(__FUNCTION__, 'Unavailable cacheInstance');
+                $this->logger->debug(__FUNCTION__, 'Unavailable cacheInstance');
 
                 return NULL;
             }
