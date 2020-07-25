@@ -342,7 +342,8 @@ class Cache implements ProjectInterface, CacheInterface
         }
         catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
-            $this->logger->error(__FUNCTION__, $message);
+            $this->logger->error(__FUNCTION__, 'Error Message: ' . $e->getMessage());
+            $this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $e->getTraceAsString());
 
             return $message;
         }
@@ -392,7 +393,8 @@ class Cache implements ProjectInterface, CacheInterface
         }
         catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
-            $this->logger->error(__FUNCTION__, $message);
+            $this->logger->error(__FUNCTION__, 'Error Message: ' . $e->getMessage());
+            $this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $e->getTraceAsString());
 
             return $message;
         }
@@ -415,9 +417,7 @@ class Cache implements ProjectInterface, CacheInterface
     {
         try {
             if ($this->cacheInstance !== NULL && is_object($this->cacheInstance)) {
-                /**
-                 * @var $cache object
-                 */
+                /** @var $cache object */
                 $cache = $this->cacheInstance->getItem($key);
                 if (!$cache->isHit()) {
                     $cache->set($value)->expiresAfter($this->cacheTtl);//in seconds, also accepts Datetime
@@ -440,7 +440,8 @@ class Cache implements ProjectInterface, CacheInterface
         }
         catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
-            $this->logger->error(__FUNCTION__, $message);
+            $this->logger->error(__FUNCTION__, 'Error Message: ' . $e->getMessage());
+            $this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $e->getTraceAsString());
 
             return $message;
         }
@@ -454,15 +455,12 @@ class Cache implements ProjectInterface, CacheInterface
      * @return null|string  True if the request resulted in a cache hit. False otherwise.
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 20:02
-     *
      */
     public function delete($key = '')
     {
         try {
             if ($this->cacheInstance !== NULL && is_object($this->cacheInstance)) {
-                /**
-                 * @var $cache object
-                 */
+                /** @var $cache object */
                 if (is_array($key)) {
                     $result = $this->cacheInstance->deleteItems($key);
                 } else {
@@ -480,7 +478,8 @@ class Cache implements ProjectInterface, CacheInterface
         }
         catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
-            $this->logger->error(__FUNCTION__, $message);
+            $this->logger->error(__FUNCTION__, 'Error Message: ' . $e->getMessage());
+            $this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $e->getTraceAsString());
 
             return $message;
         }
@@ -491,12 +490,9 @@ class Cache implements ProjectInterface, CacheInterface
      *
      * Hàm Clean Cache
      *
-     * @return bool|string|array
-     * Trả về TRUE trong trường hợp thành công
-     * Error String nếu có lỗi Exception
+     * @return bool|string|array Trả về TRUE trong trường hợp thành công | Error String nếu có lỗi Exception
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 10/12/18 15:28
-     *
      */
     public function clean()
     {
@@ -515,9 +511,11 @@ class Cache implements ProjectInterface, CacheInterface
         catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             if (function_exists('log_message')) {
-                log_message('error', $message);
+                log_message('error', 'Error Message: ' . $e->getMessage());
+                log_message('error', 'Error Trace As String: ' . $e->getTraceAsString());
             }
-            $this->logger->error(__FUNCTION__, $message);
+            $this->logger->error(__FUNCTION__, 'Error Message: ' . $e->getMessage());
+            $this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $e->getTraceAsString());
 
             return $message;
         }
