@@ -11,10 +11,11 @@ namespace nguyenanhung\MyCache;
 
 error_reporting(~E_USER_NOTICE);
 
-use phpFastCache\CacheManager;
+use Exception;
+use Phpfastcache\CacheManager;
+use Phpfastcache\Config\ConfigurationOption;
 use nguyenanhung\MyDebug\Debug;
 use nguyenanhung\MyDebug\Benchmark;
-use Exception;
 
 /**
  * Class Cache
@@ -84,7 +85,7 @@ class Cache implements ProjectInterface, CacheInterface
             'defaultKeyHashFunction' => !empty($this->cacheDefaultKeyHashFunction) ? $this->cacheDefaultKeyHashFunction : ''
         );
         try {
-            CacheManager::setDefaultConfig($this->cacheHandle);
+            CacheManager::setDefaultConfig(new ConfigurationOption($this->cacheHandle));
             if (!empty($this->cacheDriver)) {
                 $this->cacheInstance = CacheManager::getInstance($this->cacheDriver);
             } else {
@@ -92,8 +93,8 @@ class Cache implements ProjectInterface, CacheInterface
             }
         }
         catch (Exception $e) {
-            $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
-            $this->logger->error(__FUNCTION__, $message);
+            $this->logger->error(__FUNCTION__, $e->getMessage());
+            $this->logger->error(__FUNCTION__, "----------------------| Trace Error Log |----------------------\n" . $e->getTraceAsString());
             $this->cacheInstance = NULL;
         }
     }
