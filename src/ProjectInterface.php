@@ -19,11 +19,8 @@ namespace nguyenanhung\MyCache;
  */
 interface ProjectInterface
 {
-    /**
-     * Base version of Project
-     */
-    const VERSION       = '1.0.5';
-    const LAST_MODIFIED = '2020-07-26';
+    const VERSION       = '2.0.0';
+    const LAST_MODIFIED = '2020-10-02';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'My Cache';

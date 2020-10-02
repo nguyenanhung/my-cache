@@ -29,7 +29,7 @@ class Cache implements ProjectInterface, CacheInterface
     private $benchmark;
     /** @var null|object */
     private $cacheInstance;
-    /** @var array */
+    /** @var array|mixed */
     private $cacheHandle;
     /** @var null|string */
     private $cacheDriver = NULL;
@@ -54,6 +54,9 @@ class Cache implements ProjectInterface, CacheInterface
 
     /**
      * Cache constructor.
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
      */
     public function __construct()
     {
