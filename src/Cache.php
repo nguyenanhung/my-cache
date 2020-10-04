@@ -9,7 +9,7 @@
 
 namespace nguyenanhung\MyCache;
 
-error_reporting(~E_USER_NOTICE);
+// error_reporting(~E_USER_NOTICE);
 
 use Exception;
 use Phpfastcache\CacheManager;
@@ -24,7 +24,7 @@ use nguyenanhung\MyDebug\Benchmark;
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class Cache implements ProjectInterface, CacheInterface
+class Cache implements CacheInterface
 {
     /** @var object \nguyenanhung\MyDebug\Benchmark */
     private $benchmark;
@@ -80,9 +80,8 @@ class Cache implements ProjectInterface, CacheInterface
             "itemDetailedDate"       => FALSE,
             'fallback'               => self::DEFAULT_DRIVERS,
             'ignoreSymfonyNotice'    => self::IGNORE_SYMFONY_NOTICE,
-            'securityKey'            => !empty($this->cacheSecurityKey) ? $this->cacheSecurityKey : 'Auto',
-            'default_chmod'          => !empty($this->cacheDefaultChmod) ? $this->cacheDefaultChmod : 0777,
-            'defaultKeyHashFunction' => !empty($this->cacheDefaultKeyHashFunction) ? $this->cacheDefaultKeyHashFunction : ''
+            'defaultChmod'           => !empty($this->cacheDefaultChmod) ? $this->cacheDefaultChmod : 0777,
+            'defaultKeyHashFunction' => !empty($this->cacheDefaultKeyHashFunction) ? $this->cacheDefaultKeyHashFunction : 'md5'
         );
         try {
             CacheManager::setDefaultConfig(new ConfigurationOption($this->cacheHandle));
@@ -142,6 +141,19 @@ class Cache implements ProjectInterface, CacheInterface
     }
 
     /**
+     * Function getDebugStatus
+     *
+     * @return bool
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 22:02
+     */
+    public function getDebugStatus()
+    {
+        return $this->debugStatus;
+    }
+
+    /**
      * Function setDebugLevel
      *
      * @param bool|string|null $debugLevel
@@ -156,6 +168,19 @@ class Cache implements ProjectInterface, CacheInterface
         $this->debugLevel = $debugLevel;
 
         return $this;
+    }
+
+    /**
+     * Function getDebugLevel
+     *
+     * @return bool|string
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 22:07
+     */
+    public function getDebugLevel()
+    {
+        return $this->debugLevel;
     }
 
     /**
@@ -176,6 +201,45 @@ class Cache implements ProjectInterface, CacheInterface
     }
 
     /**
+     * Function getDebugLoggerPath
+     *
+     * @return string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 22:58
+     */
+    public function getDebugLoggerPath()
+    {
+        return $this->loggerPath;
+    }
+
+    /**
+     * Function getCacheInstance
+     *
+     * @return object|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 21:59
+     */
+    public function getCacheInstance()
+    {
+        return $this->cacheInstance;
+    }
+
+    /**
+     * Function getCacheHandle
+     *
+     * @return array|mixed
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 23:45
+     */
+    public function getCacheHandle()
+    {
+        return $this->cacheHandle;
+    }
+
+    /**
      * Function setCachePath
      *
      * Cấu hình thư mục lưu trữ cache
@@ -193,6 +257,19 @@ class Cache implements ProjectInterface, CacheInterface
         $this->logger->debug(__FUNCTION__, 'setCachePath: ', $this->cachePath);
 
         return $this;
+    }
+
+    /**
+     * Function getCachePath
+     *
+     * @return string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 33:15
+     */
+    public function getCachePath()
+    {
+        return $this->cachePath;
     }
 
     /**
@@ -221,6 +298,19 @@ class Cache implements ProjectInterface, CacheInterface
     }
 
     /**
+     * Function getCacheTtl
+     *
+     * @return int
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 33:42
+     */
+    public function getCacheTtl()
+    {
+        return $this->cacheTtl;
+    }
+
+    /**
      * Function setCacheDriver
      *
      * @param string $cacheDriver
@@ -243,6 +333,19 @@ class Cache implements ProjectInterface, CacheInterface
         $this->logger->debug(__FUNCTION__, 'setCacheDriver: ', $this->cacheDriver);
 
         return $this;
+    }
+
+    /**
+     * Function getCacheDriver
+     *
+     * @return string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 33:49
+     */
+    public function getCacheDriver()
+    {
+        return $this->cacheDriver;
     }
 
     /**
@@ -269,6 +372,19 @@ class Cache implements ProjectInterface, CacheInterface
     }
 
     /**
+     * Function getCacheSecurityKey
+     *
+     * @return string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 33:58
+     */
+    public function getCacheSecurityKey()
+    {
+        return $this->cacheSecurityKey;
+    }
+
+    /**
      * Function setCacheDefaultChmod
      *
      * @param null|int|string $cacheDefaultChmod
@@ -289,6 +405,19 @@ class Cache implements ProjectInterface, CacheInterface
         }
 
         return $this;
+    }
+
+    /**
+     * Function getCacheDefaultChmod
+     *
+     * @return int|string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 34:06
+     */
+    public function getCacheDefaultChmod()
+    {
+        return $this->cacheDefaultChmod;
     }
 
     /**
@@ -315,17 +444,28 @@ class Cache implements ProjectInterface, CacheInterface
     }
 
     /**
-     * Function has
+     * Function getCacheDefaultKeyHashFunction
      *
-     * Kiểm tra sự tồn tại dữ liệu cache
+     * @return string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 34:11
+     */
+    public function getCacheDefaultKeyHashFunction()
+    {
+        return $this->cacheDefaultKeyHashFunction;
+    }
+
+    /**
+     * Function has - Kiểm tra sự tồn tại dữ liệu cache
      *
      * @param string $key
      *
      * @return bool|string True if the request resulted in a cache hit. False otherwise.
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 18:10
-     *
+     * @author    : 713uk13m <dev@nguyenanhung.com>
+     * @copyright : 713uk13m <dev@nguyenanhung.com>
+     * @time      : 10/12/18 18:10
      */
     public function has($key = '')
     {
@@ -354,17 +494,15 @@ class Cache implements ProjectInterface, CacheInterface
     }
 
     /**
-     * Function get
-     *
-     * Hàm lấy dữ liệu cache
+     * Function get - Hàm lấy dữ liệu cache
      *
      * @param string $key
      *
      * @return bool|mixed|string|null
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 18:09
-     *
+     * @author    : 713uk13m <dev@nguyenanhung.com>
+     * @copyright : 713uk13m <dev@nguyenanhung.com>
+     * @time      : 10/12/18 18:09
      */
     public function get($key = '')
     {
@@ -405,17 +543,15 @@ class Cache implements ProjectInterface, CacheInterface
     }
 
     /**
-     * Function save
-     *
-     * Hàm Save Cache
+     * Function save - Hàm Save Cache
      *
      * @param string $key   Key Cache
      * @param string $value Dữ liệu cần cache
      *
      * @return mixed|string|array|object Dữ liệu đầu ra
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 14:37
-     *
+     * @author    : 713uk13m <dev@nguyenanhung.com>
+     * @copyright : 713uk13m <dev@nguyenanhung.com>
+     * @time      : 10/12/18 14:37
      */
     public function save($key = '', $value = '')
     {
@@ -452,13 +588,15 @@ class Cache implements ProjectInterface, CacheInterface
     }
 
     /**
-     * Function delete
+     * Function delete - Hàm Delete Cache
      *
      * @param string|array $key
      *
      * @return null|string  True if the request resulted in a cache hit. False otherwise.
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 20:02
+     *
+     * @author    : 713uk13m <dev@nguyenanhung.com>
+     * @copyright : 713uk13m <dev@nguyenanhung.com>
+     * @time      : 10/12/18 20:02
      */
     public function delete($key = '')
     {
@@ -490,13 +628,13 @@ class Cache implements ProjectInterface, CacheInterface
     }
 
     /**
-     * Function clean
-     *
-     * Hàm Clean Cache
+     * Function clean - Hàm Clean Cache
      *
      * @return bool|string|array Trả về TRUE trong trường hợp thành công | Error String nếu có lỗi Exception
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 15:28
+     *
+     * @author    : 713uk13m <dev@nguyenanhung.com>
+     * @copyright : 713uk13m <dev@nguyenanhung.com>
+     * @time      : 10/12/18 15:28
      */
     public function clean()
     {

@@ -18,11 +18,27 @@ namespace nguyenanhung\MyCache;
  */
 interface CacheInterface
 {
+    const VERSION               = '2.0.2';
+    const LAST_MODIFIED         = '2020-10-04';
+    const AUTHOR_NAME           = 'Hung Nguyen';
+    const AUTHOR_EMAIL          = 'dev@nguyenanhung.com';
+    const PROJECT_NAME          = 'My Cache';
+    const USE_BENCHMARK         = FALSE;
     const DEFAULT_TTL           = 500;
     const DEFAULT_DRIVERS       = 'files';
     const DEFAULT_SECURITY_KEY  = 'gZALHz7d5urLL3mDKUZHPzkaHxcDdCgn';
     const DEFAULT_CHMOD         = 0777;
     const IGNORE_SYMFONY_NOTICE = TRUE;
+
+    /**
+     * Function getVersion
+     *
+     * @return mixed|string
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 10/12/18 11:47
+     *
+     */
+    public function getVersion();
 
     /**
      * Function setDebugStatus
@@ -37,6 +53,16 @@ interface CacheInterface
     public function setDebugStatus($debugStatus = FALSE);
 
     /**
+     * Function getDebugStatus
+     *
+     * @return bool
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 22:02
+     */
+    public function getDebugStatus();
+
+    /**
      * Function setDebugLevel
      *
      * @param bool|string|null $debugLevel
@@ -47,6 +73,16 @@ interface CacheInterface
      * @time     : 8/30/19 18:02
      */
     public function setDebugLevel($debugLevel = FALSE);
+
+    /**
+     * Function getDebugLevel
+     *
+     * @return bool|string
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 22:07
+     */
+    public function getDebugLevel();
 
     /**
      * Function setDebugLoggerPath
@@ -61,6 +97,36 @@ interface CacheInterface
     public function setDebugLoggerPath($loggerPath = NULL);
 
     /**
+     * Function getDebugLoggerPath
+     *
+     * @return string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 22:58
+     */
+    public function getDebugLoggerPath();
+
+    /**
+     * Function getCacheInstance
+     *
+     * @return object|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 21:59
+     */
+    public function getCacheInstance();
+
+    /**
+     * Function getCacheHandle
+     *
+     * @return array|mixed
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 23:45
+     */
+    public function getCacheHandle();
+
+    /**
      * Function setCachePath
      *
      * Cấu hình thư mục lưu trữ cache
@@ -73,6 +139,16 @@ interface CacheInterface
      * @time     : 8/30/19 18:43
      */
     public function setCachePath($cachePath = NULL);
+
+    /**
+     * Function getCachePath
+     *
+     * @return string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 33:15
+     */
+    public function getCachePath();
 
     /**
      * Function setCacheTtl
@@ -90,6 +166,16 @@ interface CacheInterface
     public function setCacheTtl($cacheTtl = NULL);
 
     /**
+     * Function getCacheTtl
+     *
+     * @return int
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 33:42
+     */
+    public function getCacheTtl();
+
+    /**
      * Function setCacheDriver
      *
      * @param string $cacheDriver
@@ -101,6 +187,16 @@ interface CacheInterface
      *
      */
     public function setCacheDriver($cacheDriver = '');
+
+    /**
+     * Function getCacheDriver
+     *
+     * @return string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 33:49
+     */
+    public function getCacheDriver();
 
     /**
      * Function setCacheSecurityKey
@@ -116,6 +212,16 @@ interface CacheInterface
     public function setCacheSecurityKey($cacheSecurityKey = NULL);
 
     /**
+     * Function getCacheSecurityKey
+     *
+     * @return string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 33:58
+     */
+    public function getCacheSecurityKey();
+
+    /**
      * Function setCacheDefaultChmod
      *
      * @param null|int|string $cacheDefaultChmod
@@ -127,6 +233,16 @@ interface CacheInterface
      *
      */
     public function setCacheDefaultChmod($cacheDefaultChmod = NULL);
+
+    /**
+     * Function getCacheDefaultChmod
+     *
+     * @return int|string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 34:06
+     */
+    public function getCacheDefaultChmod();
 
     /**
      * Function setCacheDefaultKeyHashFunction
@@ -142,73 +258,75 @@ interface CacheInterface
     public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction = NULL);
 
     /**
-     * Function has
+     * Function getCacheDefaultKeyHashFunction
      *
-     * Kiểm tra sự tồn tại dữ liệu cache
+     * @return string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 34:11
+     */
+    public function getCacheDefaultKeyHashFunction();
+
+    /**
+     * Function has - Kiểm tra sự tồn tại dữ liệu cache
      *
      * @param string $key
      *
      * @return bool|string True if the request resulted in a cache hit. False otherwise.
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 18:10
-     *
+     * @author    : 713uk13m <dev@nguyenanhung.com>
+     * @copyright : 713uk13m <dev@nguyenanhung.com>
+     * @time      : 10/12/18 18:10
      */
     public function has($key = '');
 
     /**
-     * Function get
-     *
-     * Hàm lấy dữ liệu cache
+     * Function get - Hàm lấy dữ liệu cache
      *
      * @param string $key
      *
      * @return bool|mixed|string|null
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 18:09
-     *
+     * @author    : 713uk13m <dev@nguyenanhung.com>
+     * @copyright : 713uk13m <dev@nguyenanhung.com>
+     * @time      : 10/12/18 18:09
      */
     public function get($key = '');
 
     /**
-     * Function save
-     *
-     * Hàm Save Cache
+     * Function save - Hàm Save Cache
      *
      * @param string $key   Key Cache
      * @param string $value Dữ liệu cần cache
      *
      * @return mixed|string|array|object Dữ liệu đầu ra
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 14:37
-     *
+     * @author    : 713uk13m <dev@nguyenanhung.com>
+     * @copyright : 713uk13m <dev@nguyenanhung.com>
+     * @time      : 10/12/18 14:37
      */
     public function save($key = '', $value = '');
 
     /**
-     * Function delete
+     * Function delete - Hàm Delete Cache
      *
      * @param string|array $key
      *
      * @return null|string  True if the request resulted in a cache hit. False otherwise.
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 20:02
      *
+     * @author    : 713uk13m <dev@nguyenanhung.com>
+     * @copyright : 713uk13m <dev@nguyenanhung.com>
+     * @time      : 10/12/18 20:02
      */
     public function delete($key = '');
 
     /**
-     * Function clean
+     * Function clean - Hàm Clean Cache
      *
-     * Hàm Clean Cache
+     * @return bool|string|array Trả về TRUE trong trường hợp thành công | Error String nếu có lỗi Exception
      *
-     * @return bool|string|array
-     * Trả về TRUE trong trường hợp thành công
-     * Error String nếu có lỗi Exception
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 15:28
-     *
+     * @author    : 713uk13m <dev@nguyenanhung.com>
+     * @copyright : 713uk13m <dev@nguyenanhung.com>
+     * @time      : 10/12/18 15:28
      */
     public function clean();
 }
