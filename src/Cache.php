@@ -9,7 +9,7 @@
 
 namespace nguyenanhung\MyCache;
 
-// error_reporting(~E_USER_NOTICE);
+error_reporting(~E_USER_NOTICE);
 
 use Exception;
 use Phpfastcache\CacheManager;
@@ -79,7 +79,6 @@ class Cache implements CacheInterface
             'path'                   => $this->cachePath,
             "itemDetailedDate"       => FALSE,
             'fallback'               => self::DEFAULT_DRIVERS,
-            'ignoreSymfonyNotice'    => self::IGNORE_SYMFONY_NOTICE,
             'defaultChmod'           => !empty($this->cacheDefaultChmod) ? $this->cacheDefaultChmod : 0777,
             'defaultKeyHashFunction' => !empty($this->cacheDefaultKeyHashFunction) ? $this->cacheDefaultKeyHashFunction : 'md5'
         );
