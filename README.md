@@ -6,13 +6,13 @@
 [![composer.lock](https://poser.pugx.org/nguyenanhung/my-cache/composerlock)](https://packagist.org/packages/nguyenanhung/my-cache)
 [![License](https://poser.pugx.org/nguyenanhung/my-cache/license)](https://packagist.org/packages/nguyenanhung/my-cache)
 
-- [x] Cache by phpfastcache/phpfastcache v7.0
+- [x] Cache by phpfastcache/phpfastcache ^7.1
 
-- [x] Debug by nguyenanhung/my-debug v2.0
+- [x] Debug by nguyenanhung/my-debug ^2.0
 
 ### Contact
 
-If any quetion & request, please contact following infomation
+If any question & request, please contact following information
 
 | Name        | Email                | Skype            | Facebook      |
 | ----------- | -------------------- | ---------------- | ------------- |

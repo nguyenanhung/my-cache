@@ -19,8 +19,8 @@ namespace nguyenanhung\MyCache;
  */
 interface ProjectInterface
 {
-    const VERSION       = '2.0.1';
-    const LAST_MODIFIED = '2020-10-03';
+    const VERSION       = '2.0.2';
+    const LAST_MODIFIED = '2020-10-04';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'My Cache';
@@ -29,11 +29,10 @@ interface ProjectInterface
     /**
      * Function getVersion
      *
-     * @return mixed Current Version of Package
-     * @author  : 713uk13m <dev@nguyenanhung.com>
-     * @time    : 10/9/18 00:17
-     *
-     * @example 0.1.0
+     * @return mixed
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/04/2020 53:37
      */
     public function getVersion();
 }
