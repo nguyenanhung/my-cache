@@ -95,9 +95,11 @@ echo $cache->getVersion() . PHP_EOL;
 
 $bloggerId  = '6346344800454653614';
 $alt        = 'json';
-$maxResults = 25;
+$maxResults = 1;
 $url        = 'https://www.blogger.com/feeds/' . trim($bloggerId) . '/posts/summary?alt=' . $alt . '&max-results=' . $maxResults;
+$url3       = 'https://www.blogger.com/feeds/' . trim($bloggerId) . '/posts/summary?alt=' . $alt . '&max-results=2';
 $cacheId    = md5($url);
+$cacheId2   = md5($url3);
 
 echo $cacheId . PHP_EOL;
 
@@ -114,6 +116,14 @@ if ($cache->has($cacheId)) {
     $cache->save($cacheId, $data);
 }
 echo $data;
+//Create Cache
+if ($cache->has($cacheId)) {
+    $data2 = $cache->get($cacheId);
+} else {
+    $data2 = sendRequest($url3);
+    $cache->save($cacheId, $data2);
+}
+echo $data2;
 
 // Delete Cache
 //if ($cache->has($cacheId)) {
