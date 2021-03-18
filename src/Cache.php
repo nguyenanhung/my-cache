@@ -470,7 +470,6 @@ class Cache implements CacheInterface
     {
         try {
             if ($this->cacheInstance !== NULL && is_object($this->cacheInstance)) {
-                /** @var object $cache */
                 $cache = $this->cacheInstance->getItem($key);
                 if (!$cache->isHit()) {
                     return FALSE;
@@ -478,7 +477,7 @@ class Cache implements CacheInterface
                     return TRUE;
                 }
             } else {
-                $this->logger->debug(__FUNCTION__, 'Unavailable cacheInstance');
+                $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
 
                 return FALSE;
             }
@@ -507,9 +506,6 @@ class Cache implements CacheInterface
     {
         try {
             if ($this->cacheInstance !== NULL && is_object($this->cacheInstance)) {
-                /**
-                 * @var $cache object
-                 */
                 if (is_array($key)) {
                     $cache = $this->cacheInstance->getItems($key);
                 } else {
@@ -527,7 +523,7 @@ class Cache implements CacheInterface
 
                 return $result;
             } else {
-                $this->logger->debug(__FUNCTION__, 'Unavailable cacheInstance');
+                $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
 
                 return NULL;
             }
@@ -556,7 +552,6 @@ class Cache implements CacheInterface
     {
         try {
             if ($this->cacheInstance !== NULL && is_object($this->cacheInstance)) {
-                /** @var $cache object */
                 $cache = $this->cacheInstance->getItem($key);
                 if (!$cache->isHit()) {
                     $cache->set($value)->expiresAfter($this->cacheTtl);//in seconds, also accepts Datetime
@@ -572,7 +567,7 @@ class Cache implements CacheInterface
 
                 return $result;
             } else {
-                $this->logger->debug(__FUNCTION__, 'Unavailable cacheInstance');
+                $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
 
                 return NULL;
             }
@@ -589,30 +584,24 @@ class Cache implements CacheInterface
     /**
      * Function delete - Hàm Delete Cache
      *
-     * @param string|array $key
+     * @param string $key
      *
-     * @return null|string  True if the request resulted in a cache hit. False otherwise.
-     *
-     * @author    : 713uk13m <dev@nguyenanhung.com>
-     * @copyright : 713uk13m <dev@nguyenanhung.com>
-     * @time      : 10/12/18 20:02
+     * @return bool|string|null  True if the request resulted in a cache hit. False otherwise.
+     * @throws \Psr\Cache\InvalidArgumentException
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 03/18/2021 28:13
      */
     public function delete($key = '')
     {
         try {
             if ($this->cacheInstance !== NULL && is_object($this->cacheInstance)) {
-                /** @var $cache object */
-                if (is_array($key)) {
-                    $result = $this->cacheInstance->deleteItems($key);
-                } else {
-                    $result = $this->cacheInstance->deleteItem($key);
-                }
-                $message = 'Final Delete Content from Key: ' . $key . ' => Output result: ' . json_encode($result);
-                $this->logger->debug(__FUNCTION__, $message);
+                $result = is_array($key) ? $this->cacheInstance->deleteItems($key) : $this->cacheInstance->deleteItem($key);
+                $this->logger->debug(__FUNCTION__, 'Final Delete Content from Key: ' . $key . ' => Output result: ' . json_encode($result));
 
                 return $result;
             } else {
-                $this->logger->debug(__FUNCTION__, 'Unavailable cacheInstance');
+                $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
 
                 return NULL;
             }
@@ -638,20 +627,27 @@ class Cache implements CacheInterface
     public function clean()
     {
         try {
-            $result = array(
-                'result'        => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->clear() : FALSE,
-                'commit'        => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->commit() : NULL,
-                'getDriverName' => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->getDriverName() : NULL,
-                'getStats'      => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->getStats() : NULL,
-                'getConfig'     => isset($this->cacheInstance) && is_object($this->cacheInstance) ? $this->cacheInstance->getConfig() : NULL
-            );
-            $this->logger->debug(__FUNCTION__, 'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . json_encode($result));
+            if (isset($this->cacheInstance) && is_object($this->cacheInstance)) {
+                $result = array(
+                    'result'        => $this->cacheInstance->clear(),
+                    'commit'        => $this->cacheInstance->commit(),
+                    'getDriverName' => $this->cacheInstance->getDriverName(),
+                    'getStats'      => $this->cacheInstance->getStats(),
+                    'getConfig'     => $this->cacheInstance->getConfig()
+                );
+                $this->logger->debug(__FUNCTION__, 'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . json_encode($result));
 
-            return $result;
+                return $result;
+            } else {
+                $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
+
+                return NULL;
+            }
         }
         catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             if (function_exists('log_message')) {
+                // Enabled logging for CodeIgniter Framework
                 log_message('error', 'Error Message: ' . $e->getMessage());
                 log_message('error', 'Error Trace As String: ' . $e->getTraceAsString());
             }

@@ -59,15 +59,11 @@ $cacheSecurityKey = 'Web-Build';
 $cacheChmod       = 0777;
 $cacheKeyHash     = 'md5';
 $cache            = new Cache();
-$cache
-    ->setDebugStatus(TRUE)->setDebugLevel('info')->setDebugLoggerPath($logsPath)
-    ->setCachePath($cachePath)
-    ->setCacheTtl(500)
-    ->setCacheDriver('apcu')
-    ->setCacheSecurityKey($cacheSecurityKey)
-    ->setCacheDefaultChmod($cacheChmod)
-    ->setCacheDefaultKeyHashFunction($cacheKeyHash);
-$cache->__construct();
+$cache->setDebugStatus(TRUE)->setDebugLevel('info')->setDebugLoggerPath($logsPath)
+      ->setCachePath($cachePath)->setCacheTtl(500)
+      ->setCacheDriver('apcu')->setCacheSecurityKey($cacheSecurityKey)
+      ->setCacheDefaultChmod($cacheChmod)->setCacheDefaultKeyHashFunction($cacheKeyHash)
+      ->__construct();
 
 echo "<pre>";
 print_r($cache->getDebugStatus());
