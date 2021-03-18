@@ -18,8 +18,8 @@ namespace nguyenanhung\MyCache;
  */
 interface CacheInterface
 {
-    const VERSION               = '2.0.3';
-    const LAST_MODIFIED         = '2020-10-04';
+    const VERSION               = '2.0.4';
+    const LAST_MODIFIED         = '2021-03-18';
     const AUTHOR_NAME           = 'Hung Nguyen';
     const AUTHOR_EMAIL          = 'dev@nguyenanhung.com';
     const PROJECT_NAME          = 'My Cache';

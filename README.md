@@ -7,8 +7,12 @@
 [![License](https://poser.pugx.org/nguyenanhung/my-cache/license)](https://packagist.org/packages/nguyenanhung/my-cache)
 
 - [x] Cache by phpfastcache/phpfastcache ^7.1
-
 - [x] Debug by nguyenanhung/my-debug ^2.0
+
+
+### Usage
+See `test.php` for example usage very simple.
+
 
 ### Contact
 
