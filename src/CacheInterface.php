@@ -18,27 +18,38 @@ namespace nguyenanhung\MyCache;
  */
 interface CacheInterface
 {
-    const VERSION               = '2.0.4';
-    const LAST_MODIFIED         = '2021-03-18';
+    const VERSION               = '2.0.5';
+    const LAST_MODIFIED         = '2021-08-01';
     const AUTHOR_NAME           = 'Hung Nguyen';
+    const AUTHOR_WEB            = 'https://nguyenanhung.com/';
     const AUTHOR_EMAIL          = 'dev@nguyenanhung.com';
-    const PROJECT_NAME          = 'My Cache';
+    const PROJECT_NAME          = 'My Cache by HungNG';
     const USE_BENCHMARK         = FALSE;
-    const DEFAULT_TTL           = 500;
+    const DEFAULT_TTL           = 1800;
     const DEFAULT_DRIVERS       = 'files';
-    const DEFAULT_SECURITY_KEY  = 'gZALHz7d5urLL3mDKUZHPzkaHxcDdCgn';
     const DEFAULT_CHMOD         = 0777;
+    const DEFAULT_SECURITY_KEY  = 'jo3nUt9optnFijidIuRScIGi8HXT2dNQ';
     const IGNORE_SYMFONY_NOTICE = TRUE;
 
     /**
      * Function getVersion
      *
-     * @return mixed|string
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 10/12/18 11:47
-     *
+     * @return string
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 08/01/2021 14:10
      */
     public function getVersion();
+
+    /**
+     * Function getProjectStatus
+     *
+     * @return array
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 08/01/2021 18:29
+     */
+    public function getProjectStatus();
 
     /**
      * Function setDebugStatus
@@ -107,7 +118,7 @@ interface CacheInterface
     public function getDebugLoggerPath();
 
     /**
-     * Function getCacheInstance
+     * Function getCacheInstance - Hàm cấu hình cache Instance
      *
      * @return object|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -117,7 +128,7 @@ interface CacheInterface
     public function getCacheInstance();
 
     /**
-     * Function getCacheHandle
+     * Function getCacheHandle - Hàm lấy ra cấu hình cache
      *
      * @return array|mixed
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -127,9 +138,7 @@ interface CacheInterface
     public function getCacheHandle();
 
     /**
-     * Function setCachePath
-     *
-     * Cấu hình thư mục lưu trữ cache
+     * Function setCachePath - Cấu hình thư mục lưu trữ cache
      *
      * @param string|null $cachePath
      *
@@ -141,7 +150,7 @@ interface CacheInterface
     public function setCachePath($cachePath = NULL);
 
     /**
-     * Function getCachePath
+     * Function getCachePath - Hàm lấy ra thư mục lưu trữ file cache mặc định
      *
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -151,9 +160,7 @@ interface CacheInterface
     public function getCachePath();
 
     /**
-     * Function setCacheTtl
-     *
-     * Cầu hình TTL cho file Cache
+     * Function setCacheTtl - Cầu hình TTL cho file Cache
      *
      * @param null $cacheTtl
      *
@@ -166,7 +173,7 @@ interface CacheInterface
     public function setCacheTtl($cacheTtl = NULL);
 
     /**
-     * Function getCacheTtl
+     * Function getCacheTtl - Hàm lấy ra cấu hình thời hạn cache
      *
      * @return int
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -176,7 +183,7 @@ interface CacheInterface
     public function getCacheTtl();
 
     /**
-     * Function setCacheDriver
+     * Function setCacheDriver - Hàm cấu hình cache drivers
      *
      * @param string $cacheDriver
      *
@@ -189,7 +196,7 @@ interface CacheInterface
     public function setCacheDriver($cacheDriver = '');
 
     /**
-     * Function getCacheDriver
+     * Function getCacheDriver - Hàm lấy ra cấu hình cache drivers
      *
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -199,7 +206,7 @@ interface CacheInterface
     public function getCacheDriver();
 
     /**
-     * Function setCacheSecurityKey
+     * Function setCacheSecurityKey - Hàm cấu hình mã an toàn khi encode cache
      *
      * @param string|null $cacheSecurityKey
      *
@@ -212,7 +219,7 @@ interface CacheInterface
     public function setCacheSecurityKey($cacheSecurityKey = NULL);
 
     /**
-     * Function getCacheSecurityKey
+     * Function getCacheSecurityKey - Hàm lấy ra cấu hình mã an toàn khi encode cache
      *
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -222,7 +229,7 @@ interface CacheInterface
     public function getCacheSecurityKey();
 
     /**
-     * Function setCacheDefaultChmod
+     * Function setCacheDefaultChmod - Hàm cấu hình phân quyền file cache
      *
      * @param null|int|string $cacheDefaultChmod
      *
@@ -235,7 +242,7 @@ interface CacheInterface
     public function setCacheDefaultChmod($cacheDefaultChmod = NULL);
 
     /**
-     * Function getCacheDefaultChmod
+     * Function getCacheDefaultChmod - Hàm lấy ra cấu hình phân quyền file cache
      *
      * @return int|string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -245,7 +252,7 @@ interface CacheInterface
     public function getCacheDefaultChmod();
 
     /**
-     * Function setCacheDefaultKeyHashFunction
+     * Function setCacheDefaultKeyHashFunction - Hàm cấu hình thuật toán mã hóa ID Cache
      *
      * @param null|string $cacheDefaultKeyHashFunction
      *
@@ -258,7 +265,7 @@ interface CacheInterface
     public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction = NULL);
 
     /**
-     * Function getCacheDefaultKeyHashFunction
+     * Function getCacheDefaultKeyHashFunction - Hàm lấy ra cấu hình thuật toán mã hóa ID Cache
      *
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -309,20 +316,19 @@ interface CacheInterface
     /**
      * Function delete - Hàm Delete Cache
      *
-     * @param string|array $key
+     * @param string $key
      *
-     * @return null|string  True if the request resulted in a cache hit. False otherwise.
-     *
-     * @author    : 713uk13m <dev@nguyenanhung.com>
-     * @copyright : 713uk13m <dev@nguyenanhung.com>
-     * @time      : 10/12/18 20:02
+     * @return bool|string|null  True if the request resulted in a cache hit. False otherwise.
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 03/18/2021 28:13
      */
     public function delete($key = '');
 
     /**
      * Function clean - Hàm Clean Cache
      *
-     * @return bool|string|array Trả về TRUE trong trường hợp thành công | Error String nếu có lỗi Exception
+     * @return null|string|array Trả về TRUE trong trường hợp thành công | Error String nếu có lỗi Exception
      *
      * @author    : 713uk13m <dev@nguyenanhung.com>
      * @copyright : 713uk13m <dev@nguyenanhung.com>
