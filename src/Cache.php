@@ -28,31 +28,31 @@ use nguyenanhung\MyDebug\Benchmark;
 class Cache implements CacheInterface
 {
     /** @var object \nguyenanhung\MyDebug\Benchmark */
-    private $benchmark;
+    protected $benchmark;
     /** @var null|object */
-    private $cacheInstance;
+    protected $cacheInstance;
     /** @var array|mixed */
-    private $cacheHandle;
+    protected $cacheHandle;
     /** @var null|string */
-    private $cacheDriver = NULL;
+    protected $cacheDriver = NULL;
     /** @var null|string */
-    private $cachePath = NULL;
+    protected $cachePath = NULL;
     /** @var int */
-    private $cacheTtl = 900;
+    protected $cacheTtl = 900;
     /** @var null|string */
-    private $cacheSecurityKey;
+    protected $cacheSecurityKey;
     /** @var null|string|int */
-    private $cacheDefaultChmod;
+    protected $cacheDefaultChmod;
     /** @var null|string */
-    private $cacheDefaultKeyHashFunction;
+    protected $cacheDefaultKeyHashFunction;
     /** @var object \nguyenanhung\MyDebug\Debug */
-    private $logger;
+    protected $logger;
     /** @var bool */
-    private $debugStatus = FALSE;
+    protected $debugStatus = FALSE;
     /** @var bool|string */
-    private $debugLevel = FALSE;
+    protected $debugLevel = FALSE;
     /** @var null|string */
-    private $loggerPath = NULL;
+    protected $loggerPath = NULL;
 
     /**
      * Cache constructor.
