@@ -9,10 +9,13 @@
 Class Cache được customize lại từ thư viện `phpfastcache/phpfastcache`, được tối ưu cho PHP 7
 
 ## Information
+
 - [x] Cache by phpfastcache/phpfastcache ^8.0
 - [x] Debug by nguyenanhung/my-debug ^2.0
+- [x] Support Driver:`files`, `apcu`, `redis`, `predis`, `memcache`, `memcached`,`mongodb`,`cassandra`, `couchbase`, `couchdb`
 
 ## Usage
+
 See `test.php` for example usage very simple.
 
 ## Contact
