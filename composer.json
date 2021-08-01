@@ -22,9 +22,9 @@
         "ext-iconv": "*",
         "ext-openssl": "*",
         "ext-mbstring": "*",
+        "ext-curl": "*",
         "nguyenanhung/my-debug": "^2.0",
-        "phpfastcache/phpfastcache": "^7.1",
-        "ext-curl": "*"
+        "phpfastcache/phpfastcache": "^8.0"
     },
     "autoload": {
         "psr-4": {

@@ -43,9 +43,7 @@ if (!function_exists('sendRequest')) {
         $err      = curl_error($curl);
         curl_close($curl);
         if ($err) {
-            $message = "cURL Error #:" . $err;
-
-            return $message;
+            return "cURL Error #:" . $err;
         } else {
             return $response;
         }
