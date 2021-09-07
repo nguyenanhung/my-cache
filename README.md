@@ -11,7 +11,7 @@ Class Cache được customize lại từ thư viện `phpfastcache/phpfastcache
 ## Information
 
 - [x] Cache by phpfastcache/phpfastcache ^8.0
-- [x] Debug by nguyenanhung/my-debug ^2.0
+- [x] Debug by nguyenanhung/my-debug ^3.0
 - [x] Support Driver:`files`, `apcu`, `redis`, `predis`, `memcache`, `memcached`,`mongodb`,`cassandra`, `couchbase`, `couchdb`
 
 ## Usage

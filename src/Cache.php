@@ -15,7 +15,7 @@ use Exception;
 use Psr\Cache\InvalidArgumentException;
 use Phpfastcache\CacheManager;
 use Phpfastcache\Config\ConfigurationOption;
-use nguyenanhung\MyDebug\Debug;
+use nguyenanhung\MyDebug\Logger;
 use nguyenanhung\MyDebug\Benchmark;
 
 /**
@@ -34,9 +34,9 @@ class Cache implements CacheInterface
     /** @var array|mixed */
     protected $cacheHandle;
     /** @var null|string */
-    protected $cacheDriver = NULL;
+    protected $cacheDriver = null;
     /** @var null|string */
-    protected $cachePath = NULL;
+    protected $cachePath = null;
     /** @var int */
     protected $cacheTtl = 900;
     /** @var null|string */
@@ -48,11 +48,11 @@ class Cache implements CacheInterface
     /** @var object \nguyenanhung\MyDebug\Debug */
     protected $logger;
     /** @var bool */
-    protected $debugStatus = FALSE;
+    protected $debugStatus = false;
     /** @var bool|string */
-    protected $debugLevel = FALSE;
+    protected $debugLevel = false;
     /** @var null|string */
-    protected $loggerPath = NULL;
+    protected $loggerPath = null;
 
     /**
      * Cache constructor.
@@ -62,14 +62,14 @@ class Cache implements CacheInterface
      */
     public function __construct()
     {
-        if (self::USE_BENCHMARK === TRUE) {
+        if (self::USE_BENCHMARK === true) {
             $this->benchmark = new Benchmark();
             $this->benchmark->mark('code_start');
         }
-        $this->logger = new Debug();
+        $this->logger = new Logger();
         $this->logger->setLoggerSubPath(__CLASS__);
         $this->logger->setLoggerFilename('Log-' . date('Y-m-d') . '.log');
-        if ($this->debugStatus === TRUE && !empty($this->loggerPath)) {
+        if ($this->debugStatus === true && !empty($this->loggerPath)) {
             $this->logger->setDebugStatus($this->debugStatus);
             $this->logger->setLoggerPath($this->loggerPath);
             if (!empty($this->debugLevel)) {
@@ -78,7 +78,7 @@ class Cache implements CacheInterface
         }
         $this->cacheHandle = [
             'path'                   => $this->cachePath,
-            "itemDetailedDate"       => FALSE,
+            "itemDetailedDate"       => false,
             //'fallback'               => self::DEFAULT_DRIVERS,
             'defaultTtl'             => self::DEFAULT_TTL,
             'defaultChmod'           => !empty($this->cacheDefaultChmod) ? $this->cacheDefaultChmod : 0777,
@@ -91,12 +91,11 @@ class Cache implements CacheInterface
             } else {
                 $this->cacheInstance = CacheManager::getInstance(self::DEFAULT_DRIVERS);
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error(__FUNCTION__, $e->getMessage());
             $this->logger->error(__FUNCTION__, "----------------------| Trace Error Log |----------------------");
             $this->logger->error(__FUNCTION__, $e->getTraceAsString());
-            $this->cacheInstance = NULL;
+            $this->cacheInstance = null;
         }
     }
 
@@ -105,7 +104,7 @@ class Cache implements CacheInterface
      */
     public function __destruct()
     {
-        if (self::USE_BENCHMARK === TRUE) {
+        if (self::USE_BENCHMARK === true) {
             $this->benchmark->mark('code_end');
             $this->logger->debug(__FUNCTION__, 'Elapsed Time: ===> ' . $this->benchmark->elapsed_time('code_start', 'code_end'));
             $this->logger->debug(__FUNCTION__, 'Memory Usage: ===> ' . $this->benchmark->memory_usage());
@@ -158,7 +157,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 17:39
      */
-    public function setDebugStatus($debugStatus = FALSE)
+    public function setDebugStatus($debugStatus = false)
     {
         $this->debugStatus = $debugStatus;
 
@@ -188,7 +187,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 18:02
      */
-    public function setDebugLevel($debugLevel = FALSE)
+    public function setDebugLevel($debugLevel = false)
     {
         $this->debugLevel = $debugLevel;
 
@@ -218,7 +217,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 18:21
      */
-    public function setDebugLoggerPath($loggerPath = NULL)
+    public function setDebugLoggerPath($loggerPath = null)
     {
         $this->loggerPath = $loggerPath;
 
@@ -274,7 +273,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 18:43
      */
-    public function setCachePath($cachePath = NULL)
+    public function setCachePath($cachePath = null)
     {
         $this->cachePath = $cachePath;
         $this->logger->debug(__FUNCTION__, 'setCachePath: ', $this->cachePath);
@@ -306,7 +305,7 @@ class Cache implements CacheInterface
      * @time  : 10/12/18 12:49
      *
      */
-    public function setCacheTtl($cacheTtl = NULL)
+    public function setCacheTtl($cacheTtl = null)
     {
         if (!empty($cacheTtl)) {
             $this->cacheTtl = $cacheTtl;
@@ -380,7 +379,7 @@ class Cache implements CacheInterface
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheSecurityKey($cacheSecurityKey = NULL)
+    public function setCacheSecurityKey($cacheSecurityKey = null)
     {
         if (!empty($cacheSecurityKey)) {
             $this->cacheSecurityKey = $cacheSecurityKey;
@@ -416,7 +415,7 @@ class Cache implements CacheInterface
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheDefaultChmod($cacheDefaultChmod = NULL)
+    public function setCacheDefaultChmod($cacheDefaultChmod = null)
     {
         if (!empty($cacheDefaultChmod)) {
             $this->cacheDefaultChmod = $cacheDefaultChmod;
@@ -452,7 +451,7 @@ class Cache implements CacheInterface
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction = NULL)
+    public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction = null)
     {
         if (!empty($cacheDefaultKeyHashFunction)) {
             $this->cacheDefaultKeyHashFunction = $cacheDefaultKeyHashFunction;
@@ -494,24 +493,22 @@ class Cache implements CacheInterface
             if (is_object($this->cacheInstance)) {
                 $cache = $this->cacheInstance->getItem($key);
                 if (!$cache->isHit()) {
-                    return FALSE;
+                    return false;
                 } else {
-                    return TRUE;
+                    return true;
                 }
             } else {
                 $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
 
-                return FALSE;
+                return false;
             }
-        }
-        catch (InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             $message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine() . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
             $this->logger->error(__FUNCTION__, 'Error Message: ' . $exception->getMessage());
             $this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $exception->getTraceAsString());
 
             return $message;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             $this->logger->error(__FUNCTION__, 'Error Message: ' . $e->getMessage());
             $this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $e->getTraceAsString());
@@ -541,7 +538,7 @@ class Cache implements CacheInterface
                     $cache = $this->cacheInstance->getItem($key);
                 }
                 if (!$cache->isHit()) {
-                    $result = NULL;
+                    $result = null;
                     $this->logger->debug(__FUNCTION__, 'Unavailable Cache for Key: ' . $key);
                 } else {
                     $result = $cache->get();
@@ -554,17 +551,15 @@ class Cache implements CacheInterface
             } else {
                 $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
 
-                return NULL;
+                return null;
             }
-        }
-        catch (InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             $message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine() . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
             $this->logger->error(__FUNCTION__, 'Error Message: ' . $exception->getMessage());
             $this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $exception->getTraceAsString());
 
             return $message;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             $this->logger->error(__FUNCTION__, 'Error Message: ' . $e->getMessage());
             $this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $e->getTraceAsString());
@@ -605,17 +600,15 @@ class Cache implements CacheInterface
             } else {
                 $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
 
-                return NULL;
+                return null;
             }
-        }
-        catch (InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             $message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine() . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
             $this->logger->error(__FUNCTION__, 'Error Message: ' . $exception->getMessage());
             $this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $exception->getTraceAsString());
 
             return $message;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             $this->logger->error(__FUNCTION__, 'Error Message: ' . $e->getMessage());
             $this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $e->getTraceAsString());
@@ -645,17 +638,15 @@ class Cache implements CacheInterface
             } else {
                 $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
 
-                return NULL;
+                return null;
             }
-        }
-        catch (InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             $message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine() . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
             $this->logger->error(__FUNCTION__, 'Error Message: ' . $exception->getMessage());
             $this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $exception->getTraceAsString());
 
             return $message;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             $this->logger->error(__FUNCTION__, 'Error Message: ' . $e->getMessage());
             $this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $e->getTraceAsString());
@@ -690,10 +681,9 @@ class Cache implements CacheInterface
             } else {
                 $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
 
-                return NULL;
+                return null;
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             if (function_exists('log_message')) {
                 // Enabled logging for CodeIgniter Framework
