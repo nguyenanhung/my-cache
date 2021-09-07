@@ -18,18 +18,18 @@ namespace nguyenanhung\MyCache;
  */
 interface CacheInterface
 {
-    const VERSION               = '2.0.5';
-    const LAST_MODIFIED         = '2021-08-01';
+    const VERSION               = '3.0.0';
+    const LAST_MODIFIED         = '2021-09-07';
     const AUTHOR_NAME           = 'Hung Nguyen';
     const AUTHOR_WEB            = 'https://nguyenanhung.com/';
     const AUTHOR_EMAIL          = 'dev@nguyenanhung.com';
     const PROJECT_NAME          = 'My Cache by HungNG';
-    const USE_BENCHMARK         = FALSE;
+    const USE_BENCHMARK         = false;
     const DEFAULT_TTL           = 1800;
     const DEFAULT_DRIVERS       = 'files';
     const DEFAULT_CHMOD         = 0777;
-    const DEFAULT_SECURITY_KEY  = 'jo3nUt9optnFijidIuRScIGi8HXT2dNQ';
-    const IGNORE_SYMFONY_NOTICE = TRUE;
+    const DEFAULT_SECURITY_KEY  = 'eEcVrlXMKq3xqEuZg4bhuY295gSpCI3z';
+    const IGNORE_SYMFONY_NOTICE = true;
 
     /**
      * Function getVersion
@@ -61,7 +61,7 @@ interface CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 17:39
      */
-    public function setDebugStatus($debugStatus = FALSE);
+    public function setDebugStatus($debugStatus = false);
 
     /**
      * Function getDebugStatus
@@ -83,7 +83,7 @@ interface CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 18:02
      */
-    public function setDebugLevel($debugLevel = FALSE);
+    public function setDebugLevel($debugLevel = false);
 
     /**
      * Function getDebugLevel
@@ -105,7 +105,7 @@ interface CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 18:21
      */
-    public function setDebugLoggerPath($loggerPath = NULL);
+    public function setDebugLoggerPath($loggerPath = null);
 
     /**
      * Function getDebugLoggerPath
@@ -147,7 +147,7 @@ interface CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 18:43
      */
-    public function setCachePath($cachePath = NULL);
+    public function setCachePath($cachePath = null);
 
     /**
      * Function getCachePath - Hàm lấy ra thư mục lưu trữ file cache mặc định
@@ -170,7 +170,7 @@ interface CacheInterface
      * @time  : 10/12/18 12:49
      *
      */
-    public function setCacheTtl($cacheTtl = NULL);
+    public function setCacheTtl($cacheTtl = null);
 
     /**
      * Function getCacheTtl - Hàm lấy ra cấu hình thời hạn cache
@@ -216,7 +216,7 @@ interface CacheInterface
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheSecurityKey($cacheSecurityKey = NULL);
+    public function setCacheSecurityKey($cacheSecurityKey = null);
 
     /**
      * Function getCacheSecurityKey - Hàm lấy ra cấu hình mã an toàn khi encode cache
@@ -239,7 +239,7 @@ interface CacheInterface
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheDefaultChmod($cacheDefaultChmod = NULL);
+    public function setCacheDefaultChmod($cacheDefaultChmod = null);
 
     /**
      * Function getCacheDefaultChmod - Hàm lấy ra cấu hình phân quyền file cache
@@ -262,7 +262,7 @@ interface CacheInterface
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction = NULL);
+    public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction = null);
 
     /**
      * Function getCacheDefaultKeyHashFunction - Hàm lấy ra cấu hình thuật toán mã hóa ID Cache
