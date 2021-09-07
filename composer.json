@@ -23,7 +23,7 @@
         "ext-openssl": "*",
         "ext-mbstring": "*",
         "ext-curl": "*",
-        "nguyenanhung/my-debug": "^2.0",
+        "nguyenanhung/my-debug": "^3.0",
         "phpfastcache/phpfastcache": "^8.0"
     },
     "autoload": {
