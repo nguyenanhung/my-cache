@@ -1,11 +1,6 @@
 # My Cache
 
-[![Latest Stable Version](https://poser.pugx.org/nguyenanhung/my-cache/v/stable)](https://packagist.org/packages/nguyenanhung/my-cache)
-[![Total Downloads](https://poser.pugx.org/nguyenanhung/my-cache/downloads)](https://packagist.org/packages/nguyenanhung/my-cache)
-[![Latest Unstable Version](https://poser.pugx.org/nguyenanhung/my-cache/v/unstable)](https://packagist.org/packages/nguyenanhung/my-cache)
-[![composer.lock](https://poser.pugx.org/nguyenanhung/my-cache/composerlock)](https://packagist.org/packages/nguyenanhung/my-cache)
-[![License](https://poser.pugx.org/nguyenanhung/my-cache/license)](https://packagist.org/packages/nguyenanhung/my-cache)
-
+[![Latest Stable Version](http://poser.pugx.org/nguyenanhung/my-cache/v)](https://packagist.org/packages/nguyenanhung/my-cache) [![Total Downloads](http://poser.pugx.org/nguyenanhung/my-cache/downloads)](https://packagist.org/packages/nguyenanhung/my-cache) [![Latest Unstable Version](http://poser.pugx.org/nguyenanhung/my-cache/v/unstable)](https://packagist.org/packages/nguyenanhung/my-cache) [![License](http://poser.pugx.org/nguyenanhung/my-cache/license)](https://packagist.org/packages/nguyenanhung/my-cache) [![PHP Version Require](http://poser.pugx.org/nguyenanhung/my-cache/require/php)](https://packagist.org/packages/nguyenanhung/my-cache)
 Class Cache được customize lại từ thư viện `phpfastcache/phpfastcache`, được tối ưu cho PHP 7
 
 ## Information
