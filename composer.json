@@ -31,5 +31,22 @@
         "psr-4": {
             "nguyenanhung\\MyCache\\": "src/"
         }
+    },
+    "suggest": {
+        "ext-apcu": "*",
+        "ext-intl": "*",
+        "ext-memcached": "*",
+        "ext-memcache": "*",
+        "ext-redis": "*",
+        "ext-xcache": "*",
+        "ext-sqlite": "*",
+        "ext-wincache": "*",
+        "ext-leveldb": "*",
+        "ext-couchbase": "*",
+        "ext-couchbase_v3": "*",
+        "predis/predis": "^1.1",
+        "mongodb/mongodb": "^1.9",
+        "phpfastcache/phpssdb": "~1.0.0",
+        "phpfastcache/couchdb": "~1.0.0"
     }
 }
