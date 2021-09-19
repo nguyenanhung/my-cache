@@ -31,7 +31,7 @@ use nguyenanhung\MyDebug\Benchmark;
  */
 class Cache
 {
-    public const VERSION               = '3.0.2';
+    public const VERSION               = '3.0.3';
     public const LAST_MODIFIED         = '2021-09-20';
     public const AUTHOR_NAME           = 'Hung Nguyen';
     public const AUTHOR_WEB            = 'https://nguyenanhung.com/';
@@ -78,10 +78,10 @@ class Cache
     protected $debugStatus = false;
 
     /** @var bool|string */
-    protected $debugLevel = false;
+    protected $debugLevel = 'error';
 
     /** @var string */
-    protected $loggerPath;
+    protected $loggerPath = '';
 
     /**
      * Cache constructor.
