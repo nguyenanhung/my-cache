@@ -7,31 +7,31 @@
  * Date: 10/04/2020
  * Time: 20:57
  */
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use nguyenanhung\MyCache\Cache;
 
-if (!function_exists('sendRequest')) {
+if (!function_exists('testSendRequestOnCache')) {
     /**
-     * Function sendRequest
+     * Function testSendRequestOnCache
      *
-     * @param string $url
-     * @param string $data
-     * @param string $method
+     * @param string              $url
+     * @param string|array|object $data
+     * @param string              $method
      *
      * @return bool|string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/21/2020 17:40
      */
-    function sendRequest($url = '', $data = '', $method = 'GET')
+    function testSendRequestOnCache(string $url = '', $data = '', string $method = 'GET')
     {
         $endpoint = (!empty($data) && (is_array($data) || is_object($data))) ? $url . '?' . http_build_query($data) : $url;
         $method   = strtoupper($method);
         $curl     = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL            => $endpoint,
-            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING       => "",
             CURLOPT_MAXREDIRS      => 10,
             CURLOPT_TIMEOUT        => 30,
@@ -44,9 +44,9 @@ if (!function_exists('sendRequest')) {
         curl_close($curl);
         if ($err) {
             return "cURL Error #:" . $err;
-        } else {
-            return $response;
         }
+
+        return $response;
     }
 }
 
@@ -57,9 +57,11 @@ $cacheSecurityKey = 'Web-Build';
 $cacheChmod       = 0777;
 $cacheKeyHash     = 'md5';
 $cache            = new Cache();
-$cache->setDebugStatus(TRUE)->setDebugLevel('info')->setDebugLoggerPath($logsPath)
+$cache->setDebugStatus(true)
+      ->setDebugLevel('info')
+      ->setDebugLoggerPath($logsPath)
       ->setCachePath($cachePath)->setCacheTtl(500)
-      ->setCacheDriver('apcu')->setCacheSecurityKey($cacheSecurityKey)
+      ->setCacheDriver('files')->setCacheSecurityKey($cacheSecurityKey)
       ->setCacheDefaultChmod($cacheChmod)->setCacheDefaultKeyHashFunction($cacheKeyHash)
       ->__construct();
 
@@ -106,7 +108,7 @@ echo "</pre>";
 if ($cache->has($cacheId)) {
     $data = $cache->get($cacheId);
 } else {
-    $data = sendRequest($url);
+    $data = testSendRequestOnCache($url);
     $cache->save($cacheId, $data);
 }
 echo $data;
@@ -114,7 +116,7 @@ echo $data;
 if ($cache->has($cacheId)) {
     $data2 = $cache->get($cacheId);
 } else {
-    $data2 = sendRequest($url3);
+    $data2 = testSendRequestOnCache($url3);
     $cache->save($cacheId, $data2);
 }
 echo $data2;
