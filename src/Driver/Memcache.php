@@ -18,6 +18,8 @@ use nguyenanhung\MyCache\Cache;
 /**
  * Class Memcache
  *
+ * The Memcache driver. A memory cache for regular performances. Do not cross this driver with Memcached driver
+ *
  * @package   nguyenanhung\MyCache\Driver
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>

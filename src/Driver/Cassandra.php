@@ -16,7 +16,11 @@ use Phpfastcache\Drivers\Cassandra\Config;
 use nguyenanhung\MyCache\Cache;
 
 /**
- * Class Mongodb
+ * Class Cassandra
+ *
+ * A very high-performance NoSQL driver using a key-value pair system. Please note that the Driver rely on php's Datastax extension: https://github.com/datastax/php-driver
+ *
+ * @see       https://github.com/datastax/php-driver
  *
  * @package   nguyenanhung\MyCache\Driver
  * @author    713uk13m <dev@nguyenanhung.com>
@@ -30,8 +34,8 @@ class Cassandra extends Cache
         'username'   => '',
         'password'   => '',
         'timeout'    => 2,
-        'sslEnabled' => FALSE,
-        'sslVerify'  => FALSE
+        'sslEnabled' => false,
+        'sslVerify'  => false
     ];
 
 
@@ -47,12 +51,11 @@ class Cassandra extends Cache
         $this->logger->setLoggerSubPath(__CLASS__);
         try {
             $this->cacheInstance = CacheManager::getInstance('cassandra', new Config($this->driverConfig));
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error(__FUNCTION__, $e->getMessage());
             $this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for Cassandra |----------------------");
             $this->logger->error(__FUNCTION__, $e->getTraceAsString());
-            $this->cacheInstance = NULL;
+            $this->cacheInstance = null;
         }
     }
 
@@ -72,7 +75,7 @@ class Cassandra extends Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/01/2021 36:12
      */
-    public function setDriverConfig(string $host = '127.0.0.1', int $port = 27017, string $username = '', string $password = '', int $timeout = 2, bool $sslEnabled = FALSE, bool $sslVerify = FALSE): Cassandra
+    public function setDriverConfig(string $host = '127.0.0.1', int $port = 27017, string $username = '', string $password = '', int $timeout = 2, bool $sslEnabled = false, bool $sslVerify = false): Cassandra
     {
         $this->driverConfig = [
             'host'     => $host,

@@ -12,29 +12,24 @@ namespace nguyenanhung\MyCache\Driver;
 
 use Exception;
 use Phpfastcache\CacheManager;
-use Phpfastcache\Drivers\Memcached\Config;
+use Phpfastcache\Drivers\Cassandra\Config;
 use nguyenanhung\MyCache\Cache;
 
 /**
- * Class Memcached
+ * Class Leveldb
  *
- * The Memcached driver. A memory cache for regular performances. Do not cross this driver with Memcache driver
+ * A NoSQL driver using a key-value pair system. A $path config must be specified, else the system temporary directory will be used.
  *
  * @package   nguyenanhung\MyCache\Driver
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class Memcached extends Cache
+class Leveldb extends Cache
 {
-    protected $driverConfig = [
-        'host' => '127.0.0.1',
-        'port' => 11211,
-        // 'sasl_user' => false, // optional
-        // 'sasl_password' => false // optional
-    ];
+    protected $driverConfig = [];
 
     /**
-     * Memcached constructor.
+     * Leveldb constructor.
      *
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
@@ -44,10 +39,10 @@ class Memcached extends Cache
         parent::__construct();
         $this->logger->setLoggerSubPath(__CLASS__);
         try {
-            $this->cacheInstance = CacheManager::getInstance('memcached', new Config($this->driverConfig));
+            $this->cacheInstance = CacheManager::getInstance('leveldb', new Config($this->driverConfig));
         } catch (Exception $e) {
             $this->logger->error(__FUNCTION__, $e->getMessage());
-            $this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for Memcached |----------------------");
+            $this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for Level DB Cache |----------------------");
             $this->logger->error(__FUNCTION__, $e->getTraceAsString());
             $this->cacheInstance = null;
         }
@@ -56,23 +51,17 @@ class Memcached extends Cache
     /**
      * Function setDriverConfig
      *
-     * @param string $host
-     * @param int    $port
-     * @param bool   $saslUser
-     * @param bool   $saslPassword
+     * @param string $cachePath
      *
      * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 08/01/2021 27:01
+     * @time     : 09/20/2021 36:40
      */
-    public function setDriverConfig(string $host = '127.0.0.1', int $port = 11211, bool $saslUser = false, bool $saslPassword = false): Memcached
+    public function setDriverConfig(string $cachePath = ''): Leveldb
     {
         $this->driverConfig = [
-            'host'          => $host,
-            'port'          => $port,
-            'sasl_user'     => $saslUser,
-            'sasl_password' => $saslPassword
+            'path' => $cachePath
         ];
 
         return $this;

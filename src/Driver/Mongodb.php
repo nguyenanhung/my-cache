@@ -18,6 +18,8 @@ use nguyenanhung\MyCache\Cache;
 /**
  * Class Mongodb
  *
+ * A very high-performance NoSQL driver using a key-value pair system
+ *
  * @package   nguyenanhung\MyCache\Driver
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>

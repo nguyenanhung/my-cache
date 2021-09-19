@@ -18,6 +18,8 @@ use nguyenanhung\MyCache\Cache;
 /**
  * Class Redis
  *
+ * A very high-performance memory driver using a in-memory data structure storage. More efficient than Predis driver as it is an compiled library
+ *
  * @package   nguyenanhung\MyCache\Driver
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
