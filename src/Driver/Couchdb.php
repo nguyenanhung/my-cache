@@ -30,7 +30,7 @@ class Couchdb extends Cache
         'path'     => '/',
         'username' => 'your-couchdb-username',
         'password' => 'your-couchdb-password',
-        'ssl'      => TRUE,
+        'ssl'      => true,
         'timeout'  => 10,
     ];
 
@@ -46,12 +46,11 @@ class Couchdb extends Cache
         $this->logger->setLoggerSubPath(__CLASS__);
         try {
             $this->cacheInstance = CacheManager::getInstance('couchdb', new Config($this->driverConfig));
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error(__FUNCTION__, $e->getMessage());
             $this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for Couchdb |----------------------");
             $this->logger->error(__FUNCTION__, $e->getTraceAsString());
-            $this->cacheInstance = NULL;
+            $this->cacheInstance = null;
         }
     }
 
@@ -71,7 +70,7 @@ class Couchdb extends Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/01/2021 42:12
      */
-    public function setDriverConfig($host = '127.0.0.1', $port = 5984, $path = '/', $username = '', $password = '', $ssl = TRUE, $timeout = 10)
+    public function setDriverConfig(string $host = '127.0.0.1', int $port = 5984, string $path = '/', string $username = '', string $password = '', bool $ssl = true, int $timeout = 10): Couchdb
     {
         $this->driverConfig = [
             'host'     => $host,

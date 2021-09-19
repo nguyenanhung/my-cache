@@ -18,18 +18,18 @@ namespace nguyenanhung\MyCache;
  */
 interface CacheInterface
 {
-    const VERSION               = '3.0.1';
-    const LAST_MODIFIED         = '2021-09-15';
-    const AUTHOR_NAME           = 'Hung Nguyen';
-    const AUTHOR_WEB            = 'https://nguyenanhung.com/';
-    const AUTHOR_EMAIL          = 'dev@nguyenanhung.com';
-    const PROJECT_NAME          = 'My Cache by HungNG';
-    const USE_BENCHMARK         = false;
-    const DEFAULT_TTL           = 1800;
-    const DEFAULT_DRIVERS       = 'files';
-    const DEFAULT_CHMOD         = 0777;
-    const DEFAULT_SECURITY_KEY  = 'eEcVrlXMKq3xqEuZg4bhuY295gSpCI3z';
-    const IGNORE_SYMFONY_NOTICE = true;
+    public const VERSION       = '3.0.2';
+    public const LAST_MODIFIED = '2021-09-15';
+    public const AUTHOR_NAME = 'Hung Nguyen';
+    public const AUTHOR_WEB   = 'https://nguyenanhung.com/';
+    public const AUTHOR_EMAIL = 'dev@nguyenanhung.com';
+    public const PROJECT_NAME  = 'My Cache by HungNG';
+    public const USE_BENCHMARK = false;
+    public const DEFAULT_TTL     = 1800;
+    public const DEFAULT_DRIVERS = 'files';
+    public const DEFAULT_CHMOD        = 0777;
+    public const DEFAULT_SECURITY_KEY  = 'eEcVrlXMKq3xqEuZg4bhuY295gSpCI3z';
+    public const IGNORE_SYMFONY_NOTICE = true;
 
     /**
      * Function getVersion

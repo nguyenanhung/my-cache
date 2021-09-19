@@ -72,7 +72,7 @@ class Cassandra extends Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/01/2021 36:12
      */
-    public function setDriverConfig($host = '127.0.0.1', $port = 27017, $username = '', $password = '', $timeout = 2, $sslEnabled = FALSE, $sslVerify = FALSE)
+    public function setDriverConfig(string $host = '127.0.0.1', int $port = 27017, string $username = '', string $password = '', int $timeout = 2, bool $sslEnabled = FALSE, bool $sslVerify = FALSE): Cassandra
     {
         $this->driverConfig = [
             'host'     => $host,

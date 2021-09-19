@@ -45,12 +45,11 @@ class Couchbase extends Cache
         $this->logger->setLoggerSubPath(__CLASS__);
         try {
             $this->cacheInstance = CacheManager::getInstance('couchbase', new Config($this->driverConfig));
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error(__FUNCTION__, $e->getMessage());
             $this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for Couchbase |----------------------");
             $this->logger->error(__FUNCTION__, $e->getTraceAsString());
-            $this->cacheInstance = NULL;
+            $this->cacheInstance = null;
         }
     }
 
@@ -68,7 +67,7 @@ class Couchbase extends Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/01/2021 40:02
      */
-    public function setDriverConfig($host = '127.0.0.1', $port = '8091', $username = '', $password = '', $bucketName = 'default')
+    public function setDriverConfig(string $host = '127.0.0.1', string $port = '8091', string $username = '', string $password = '', string $bucketName = 'default'): Couchbase
     {
         $this->driverConfig = [
             'host'       => $host,

@@ -18,14 +18,14 @@
         }
     ],
     "require": {
-        "php": "^7.0 || ^8.0",
+        "php": "^7.1 || ^8.0",
         "ext-json": "*",
         "ext-iconv": "*",
         "ext-openssl": "*",
         "ext-mbstring": "*",
         "ext-curl": "*",
         "nguyenanhung/my-debug": "^3.0",
-        "phpfastcache/phpfastcache": "^8.0"
+        "phpfastcache/phpfastcache": "^8.0 || ^7.1"
     },
     "autoload": {
         "psr-4": {
