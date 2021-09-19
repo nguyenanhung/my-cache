@@ -69,15 +69,15 @@ if (!function_exists('testSendRequestOnCache')) {
     }
 }
 
-$storagePath      = realpath(__DIR__ . '/storage');
-$logsPath         = realpath(__DIR__ . '/storage/logs');
-$cachePath        = realpath(__DIR__ . '/storage/cache');
+$storagePath      = dirname(__DIR__) . '/storage';
+$logsPath         = dirname(__DIR__) . '/storage/logs';
+$cachePath        = dirname(__DIR__) . '/storage/cache';
 $cacheSecurityKey = 'Web-Build';
 $cacheChmod       = 0777;
 $cacheKeyHash     = 'md5';
 $cache            = new Cache();
 $cache->setDebugStatus(true)
-      ->setDebugLevel('info')
+      ->setDebugLevel(null)
       ->setDebugLoggerPath($logsPath)
       ->setCachePath($cachePath)
       ->setCacheTtl(500)
