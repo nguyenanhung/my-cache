@@ -21,6 +21,10 @@ use nguyenanhung\MyDebug\Benchmark;
 /**
  * Class Cache
  *
+ * Class Cache được customize từ PhpFastCache
+ *
+ * Support Driver: files, apcu, redis, predis, memcache, memcached, mongodb, cassandra, couchbase, couchdb, leveldb, ssdb, Zend Disk Cache, Zend Memory Cache, Cookie, SqlLite
+ *
  * @package   nguyenanhung\MyCache
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
@@ -40,7 +44,7 @@ class Cache
     public const DEFAULT_SECURITY_KEY  = 'eEcVrlXMKq3xqEuZg4bhuY295gSpCI3z';
     public const IGNORE_SYMFONY_NOTICE = true;
 
-    /** @var object \nguyenanhung\MyDebug\Benchmark */
+    /** @var \nguyenanhung\MyDebug\Benchmark $benchmark */
     protected $benchmark;
 
     /** @var null|object */
@@ -49,22 +53,22 @@ class Cache
     /** @var array|mixed */
     protected $cacheHandle;
 
-    /** @var null|string */
+    /** @var string */
     protected $cacheDriver;
 
-    /** @var null|string */
+    /** @var string */
     protected $cachePath;
 
     /** @var int */
     protected $cacheTtl = 900;
 
-    /** @var null|string */
+    /** @var string */
     protected $cacheSecurityKey;
 
-    /** @var null|string|int */
+    /** @var string|int */
     protected $cacheDefaultChmod;
 
-    /** @var null|string */
+    /** @var string */
     protected $cacheDefaultKeyHashFunction;
 
     /** @var Logger $logger */
@@ -76,7 +80,7 @@ class Cache
     /** @var bool|string */
     protected $debugLevel = false;
 
-    /** @var null|string */
+    /** @var string */
     protected $loggerPath;
 
     /**
@@ -383,12 +387,12 @@ class Cache
     /**
      * Function getCacheDriver - Hàm lấy ra cấu hình cache drivers
      *
-     * @return string|null
+     * @return string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 33:49
      */
-    public function getCacheDriver(): ?string
+    public function getCacheDriver(): string
     {
         return $this->cacheDriver;
     }

@@ -11,6 +11,25 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use nguyenanhung\MyCache\Cache;
 
+if (!function_exists('testOutputWriteLnOnCache')) {
+    /**
+     * Function testOutputWriteLnOnCache
+     *
+     * @param mixed $name
+     * @param mixed $msg
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/20/2021 30:31
+     */
+    function testOutputWriteLnOnCache($name = '', $msg = '')
+    {
+        if (is_array($msg) || is_object($msg)) {
+            $msg = json_encode($msg);
+        }
+        echo $name . ' -> ' . $msg . PHP_EOL;
+    }
+}
 if (!function_exists('testSendRequestOnCache')) {
     /**
      * Function testSendRequestOnCache
@@ -60,49 +79,34 @@ $cache            = new Cache();
 $cache->setDebugStatus(true)
       ->setDebugLevel('info')
       ->setDebugLoggerPath($logsPath)
-      ->setCachePath($cachePath)->setCacheTtl(500)
-      ->setCacheDriver('files')->setCacheSecurityKey($cacheSecurityKey)
-      ->setCacheDefaultChmod($cacheChmod)->setCacheDefaultKeyHashFunction($cacheKeyHash)
+      ->setCachePath($cachePath)
+      ->setCacheTtl(500)
+      ->setCacheDriver('files')
+      ->setCacheSecurityKey($cacheSecurityKey)
+      ->setCacheDefaultChmod($cacheChmod)
+      ->setCacheDefaultKeyHashFunction($cacheKeyHash)
       ->__construct();
 
-echo "<pre>";
-print_r($cache->getDebugStatus());
-echo "</pre>" . PHP_EOL;
-echo "<pre>";
-print_r($cache->getDebugLevel());
-echo "</pre>" . PHP_EOL;
-echo "<pre>";
-print_r($cache->getDebugLoggerPath());
-echo "</pre>" . PHP_EOL;
-echo "<pre>";
-print_r($cache->getCachePath());
-echo "</pre>" . PHP_EOL;
-echo "<pre>";
-print_r($cache->getCacheDriver());
-echo "</pre>" . PHP_EOL;
-echo "<pre>";
-print_r($cache->getCacheSecurityKey());
-echo "</pre>" . PHP_EOL;
+
+testOutputWriteLnOnCache('Class Cache SDK Version', $cache->getVersion());
+
+testOutputWriteLnOnCache('Class Cache Debug Status', $cache->getDebugStatus());
+testOutputWriteLnOnCache('Class Cache Debug Level', $cache->getDebugLevel());
+testOutputWriteLnOnCache('Class Cache Debug Logger Path', $cache->getDebugLoggerPath());
+testOutputWriteLnOnCache('Class Cache Path', $cache->getCachePath());
+testOutputWriteLnOnCache('Class Cache TTL', $cache->getCacheTtl());
+testOutputWriteLnOnCache('Class Cache Driver', $cache->getCacheDriver());
+testOutputWriteLnOnCache('Class Cache Security Key', $cache->getCacheSecurityKey());
+
+$url     = 'https://www.blogger.com/feeds/6346344800454653614/posts/summary?alt=json&max-results=1';
+$cacheId = md5($url);
+
+testOutputWriteLnOnCache('CacheId', $cacheId);
 
 
-echo $storagePath . "\n";
-echo $cachePath . "\n";
-echo $cache->getVersion() . PHP_EOL;
-
-$bloggerId  = '6346344800454653614';
-$alt        = 'json';
-$maxResults = 1;
-$url        = 'https://www.blogger.com/feeds/' . trim($bloggerId) . '/posts/summary?alt=' . $alt . '&max-results=' . $maxResults;
-$url3       = 'https://www.blogger.com/feeds/' . trim($bloggerId) . '/posts/summary?alt=' . $alt . '&max-results=2';
-$cacheId    = md5($url);
-$cacheId2   = md5($url3);
-
-echo $cacheId . PHP_EOL;
-
-
-echo "<pre>";
-print_r($cache->has($cacheId));
-echo "</pre>";
+//echo "<pre>";
+//print_r($cache->has($cacheId));
+//echo "</pre>";
 
 //Create Cache
 if ($cache->has($cacheId)) {
@@ -111,15 +115,17 @@ if ($cache->has($cacheId)) {
     $data = testSendRequestOnCache($url);
     $cache->save($cacheId, $data);
 }
-echo $data;
+
+testOutputWriteLnOnCache('|~~~~~~~~~~~~~~ Cache Result ~~~~~~~~~~~~~~|', $data);
+
 //Create Cache
-if ($cache->has($cacheId)) {
-    $data2 = $cache->get($cacheId);
-} else {
-    $data2 = testSendRequestOnCache($url3);
-    $cache->save($cacheId, $data2);
-}
-echo $data2;
+//if ($cache->has($cacheId)) {
+//    $data2 = $cache->get($cacheId);
+//} else {
+//    $data2 = testSendRequestOnCache($url3);
+//    $cache->save($cacheId, $data2);
+//}
+//echo $data2;
 
 // Delete Cache
 //if ($cache->has($cacheId)) {
