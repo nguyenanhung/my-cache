@@ -25,7 +25,7 @@
         "ext-mbstring": "*",
         "ext-curl": "*",
         "nguyenanhung/my-debug": "^3.0",
-        "phpfastcache/phpfastcache": "^8.0 || ^7.1"
+        "phpfastcache/phpfastcache": "^8.0.8 || ^7.1"
     },
     "autoload": {
         "psr-4": {
