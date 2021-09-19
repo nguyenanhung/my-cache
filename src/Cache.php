@@ -25,34 +25,59 @@ use nguyenanhung\MyDebug\Benchmark;
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class Cache implements CacheInterface
+class Cache
 {
+    public const VERSION               = '3.0.2';
+    public const LAST_MODIFIED         = '2021-09-15';
+    public const AUTHOR_NAME           = 'Hung Nguyen';
+    public const AUTHOR_WEB            = 'https://nguyenanhung.com/';
+    public const AUTHOR_EMAIL          = 'dev@nguyenanhung.com';
+    public const PROJECT_NAME          = 'My Cache by HungNG';
+    public const USE_BENCHMARK         = false;
+    public const DEFAULT_TTL           = 1800;
+    public const DEFAULT_DRIVERS       = 'files';
+    public const DEFAULT_CHMOD         = 0777;
+    public const DEFAULT_SECURITY_KEY  = 'eEcVrlXMKq3xqEuZg4bhuY295gSpCI3z';
+    public const IGNORE_SYMFONY_NOTICE = true;
+
     /** @var object \nguyenanhung\MyDebug\Benchmark */
     protected $benchmark;
+
     /** @var null|object */
     protected $cacheInstance;
+
     /** @var array|mixed */
     protected $cacheHandle;
+
     /** @var null|string */
-    protected $cacheDriver = null;
+    protected $cacheDriver;
+
     /** @var null|string */
-    protected $cachePath = null;
+    protected $cachePath;
+
     /** @var int */
     protected $cacheTtl = 900;
+
     /** @var null|string */
     protected $cacheSecurityKey;
+
     /** @var null|string|int */
     protected $cacheDefaultChmod;
+
     /** @var null|string */
     protected $cacheDefaultKeyHashFunction;
-    /** @var object \nguyenanhung\MyDebug\Debug */
+
+    /** @var Logger $logger */
     protected $logger;
+
     /** @var bool */
     protected $debugStatus = false;
+
     /** @var bool|string */
     protected $debugLevel = false;
+
     /** @var null|string */
-    protected $loggerPath = null;
+    protected $loggerPath;
 
     /**
      * Cache constructor.
@@ -119,7 +144,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/01/2021 14:10
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return self::VERSION;
     }
@@ -132,7 +157,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/01/2021 18:29
      */
-    public function getProjectStatus()
+    public function getProjectStatus(): array
     {
         return [
             'name'              => self::PROJECT_NAME,
@@ -157,7 +182,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 17:39
      */
-    public function setDebugStatus($debugStatus = false)
+    public function setDebugStatus($debugStatus = false): Cache
     {
         $this->debugStatus = $debugStatus;
 
@@ -172,7 +197,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 22:02
      */
-    public function getDebugStatus()
+    public function getDebugStatus(): bool
     {
         return $this->debugStatus;
     }
@@ -187,7 +212,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 18:02
      */
-    public function setDebugLevel($debugLevel = false)
+    public function setDebugLevel($debugLevel = false): Cache
     {
         $this->debugLevel = $debugLevel;
 
@@ -217,7 +242,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 18:21
      */
-    public function setDebugLoggerPath($loggerPath = null)
+    public function setDebugLoggerPath(string $loggerPath = null): Cache
     {
         $this->loggerPath = $loggerPath;
 
@@ -232,7 +257,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 22:58
      */
-    public function getDebugLoggerPath()
+    public function getDebugLoggerPath(): ?string
     {
         return $this->loggerPath;
     }
@@ -273,10 +298,10 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 18:43
      */
-    public function setCachePath($cachePath = null)
+    public function setCachePath(string $cachePath = null): Cache
     {
         $this->cachePath = $cachePath;
-        $this->logger->debug(__FUNCTION__, 'setCachePath: ', $this->cachePath);
+        $this->logger->debug(__FUNCTION__, 'setCachePath: ' . $this->cachePath);
 
         return $this;
     }
@@ -289,7 +314,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 33:15
      */
-    public function getCachePath()
+    public function getCachePath(): ?string
     {
         return $this->cachePath;
     }
@@ -305,11 +330,11 @@ class Cache implements CacheInterface
      * @time  : 10/12/18 12:49
      *
      */
-    public function setCacheTtl($cacheTtl = null)
+    public function setCacheTtl($cacheTtl = null): Cache
     {
         if (!empty($cacheTtl)) {
             $this->cacheTtl = $cacheTtl;
-            $this->logger->debug(__FUNCTION__, 'setCacheTtl: ', $this->cacheTtl);
+            $this->logger->debug(__FUNCTION__, 'setCacheTtl: ' . $this->cacheTtl);
         } else {
             $this->cacheTtl = self::DEFAULT_TTL;
         }
@@ -325,7 +350,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 33:42
      */
-    public function getCacheTtl()
+    public function getCacheTtl(): int
     {
         return $this->cacheTtl;
     }
@@ -341,16 +366,16 @@ class Cache implements CacheInterface
      * @time  : 10/12/18 14:01
      *
      */
-    public function setCacheDriver($cacheDriver = '')
+    public function setCacheDriver(string $cacheDriver = ''): Cache
     {
-        if ($cacheDriver != self::DEFAULT_DRIVERS && (extension_loaded($cacheDriver))) {
+        if ($cacheDriver !== self::DEFAULT_DRIVERS && (extension_loaded($cacheDriver))) {
             $this->cacheDriver = $cacheDriver;
             $this->logger->debug(__FUNCTION__, 'Set Cache Driver: ' . json_encode($cacheDriver) . ' and server is supported');
         } else {
             $this->logger->error(__FUNCTION__, 'Set Cache Driver: ' . json_encode($cacheDriver) . ' and server is not supported, user default driver: ' . self::DEFAULT_DRIVERS);
             $this->cacheDriver = self::DEFAULT_DRIVERS;
         }
-        $this->logger->debug(__FUNCTION__, 'setCacheDriver: ', $this->cacheDriver);
+        $this->logger->debug(__FUNCTION__, 'setCacheDriver: ' . $this->cacheDriver);
 
         return $this;
     }
@@ -363,7 +388,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 33:49
      */
-    public function getCacheDriver()
+    public function getCacheDriver(): ?string
     {
         return $this->cacheDriver;
     }
@@ -379,11 +404,11 @@ class Cache implements CacheInterface
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheSecurityKey($cacheSecurityKey = null)
+    public function setCacheSecurityKey(string $cacheSecurityKey = null): Cache
     {
         if (!empty($cacheSecurityKey)) {
             $this->cacheSecurityKey = $cacheSecurityKey;
-            $this->logger->debug(__FUNCTION__, 'setCacheSecurityKey: ', $this->cacheSecurityKey);
+            $this->logger->debug(__FUNCTION__, 'setCacheSecurityKey: ' . $this->cacheSecurityKey);
         } else {
             $this->cacheSecurityKey = self::DEFAULT_SECURITY_KEY;
         }
@@ -399,7 +424,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 33:58
      */
-    public function getCacheSecurityKey()
+    public function getCacheSecurityKey(): ?string
     {
         return $this->cacheSecurityKey;
     }
@@ -415,11 +440,11 @@ class Cache implements CacheInterface
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheDefaultChmod($cacheDefaultChmod = null)
+    public function setCacheDefaultChmod($cacheDefaultChmod = null): Cache
     {
         if (!empty($cacheDefaultChmod)) {
             $this->cacheDefaultChmod = $cacheDefaultChmod;
-            $this->logger->debug(__FUNCTION__, 'setCacheDefaultChmod: ', $this->cacheDefaultChmod);
+            $this->logger->debug(__FUNCTION__, 'setCacheDefaultChmod: ' . $this->cacheDefaultChmod);
         } else {
             $this->cacheDefaultChmod = self::DEFAULT_CHMOD;
         }
@@ -443,7 +468,7 @@ class Cache implements CacheInterface
     /**
      * Function setCacheDefaultKeyHashFunction - Hàm cấu hình thuật toán mã hóa ID Cache
      *
-     * @param null|string $cacheDefaultKeyHashFunction
+     * @param string|null $cacheDefaultKeyHashFunction
      *
      * @return $this
      *
@@ -451,11 +476,11 @@ class Cache implements CacheInterface
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction = null)
+    public function setCacheDefaultKeyHashFunction(string $cacheDefaultKeyHashFunction = null): Cache
     {
         if (!empty($cacheDefaultKeyHashFunction)) {
             $this->cacheDefaultKeyHashFunction = $cacheDefaultKeyHashFunction;
-            $this->logger->debug(__FUNCTION__, 'setCacheDefaultKeyHashFunction: ', $this->cacheDefaultKeyHashFunction);
+            $this->logger->debug(__FUNCTION__, 'setCacheDefaultKeyHashFunction: ' . $this->cacheDefaultKeyHashFunction);
         } else {
             $this->cacheDefaultKeyHashFunction = '';
         }
@@ -471,7 +496,7 @@ class Cache implements CacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 34:11
      */
-    public function getCacheDefaultKeyHashFunction()
+    public function getCacheDefaultKeyHashFunction(): ?string
     {
         return $this->cacheDefaultKeyHashFunction;
     }
@@ -479,7 +504,7 @@ class Cache implements CacheInterface
     /**
      * Function has - Kiểm tra sự tồn tại dữ liệu cache
      *
-     * @param string $key
+     * @param mixed $key
      *
      * @return bool|string True if the request resulted in a cache hit. False otherwise.
      *
@@ -494,14 +519,14 @@ class Cache implements CacheInterface
                 $cache = $this->cacheInstance->getItem($key);
                 if (!$cache->isHit()) {
                     return false;
-                } else {
-                    return true;
                 }
-            } else {
-                $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
 
-                return false;
+                return true;
             }
+
+            $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
+
+            return false;
         } catch (InvalidArgumentException $exception) {
             $message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine() . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
             $this->logger->error(__FUNCTION__, 'Error Message: ' . $exception->getMessage());
@@ -520,7 +545,7 @@ class Cache implements CacheInterface
     /**
      * Function get - Hàm lấy dữ liệu cache
      *
-     * @param string $key
+     * @param array|string $key
      *
      * @return bool|mixed|string|null
      *
@@ -548,11 +573,11 @@ class Cache implements CacheInterface
                 $this->logger->debug(__FUNCTION__, $message);
 
                 return $result;
-            } else {
-                $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
-
-                return null;
             }
+
+            $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
+
+            return null;
         } catch (InvalidArgumentException $exception) {
             $message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine() . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
             $this->logger->error(__FUNCTION__, 'Error Message: ' . $exception->getMessage());
@@ -571,8 +596,8 @@ class Cache implements CacheInterface
     /**
      * Function save - Hàm Save Cache
      *
-     * @param string $key   Key Cache
-     * @param string $value Dữ liệu cần cache
+     * @param array|string $key   Key Cache
+     * @param mixed        $value Dữ liệu cần cache
      *
      * @return mixed|string|array|object Dữ liệu đầu ra
      * @author    : 713uk13m <dev@nguyenanhung.com>
@@ -597,11 +622,11 @@ class Cache implements CacheInterface
                 $this->logger->debug(__FUNCTION__, $message);
 
                 return $result;
-            } else {
-                $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
-
-                return null;
             }
+
+            $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
+
+            return null;
         } catch (InvalidArgumentException $exception) {
             $message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine() . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
             $this->logger->error(__FUNCTION__, 'Error Message: ' . $exception->getMessage());
@@ -620,7 +645,7 @@ class Cache implements CacheInterface
     /**
      * Function delete - Hàm Delete Cache
      *
-     * @param string $key
+     * @param array|string $key
      *
      * @return bool|string|null  True if the request resulted in a cache hit. False otherwise.
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -635,11 +660,11 @@ class Cache implements CacheInterface
                 $this->logger->debug(__FUNCTION__, 'Final Delete Content from Key: ' . $key . ' => Output result: ' . json_encode($result));
 
                 return $result;
-            } else {
-                $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
-
-                return null;
             }
+
+            $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
+
+            return null;
         } catch (InvalidArgumentException $exception) {
             $message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine() . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
             $this->logger->error(__FUNCTION__, 'Error Message: ' . $exception->getMessage());
@@ -678,11 +703,11 @@ class Cache implements CacheInterface
                 $this->logger->debug(__FUNCTION__, 'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . json_encode($result));
 
                 return $result;
-            } else {
-                $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
-
-                return null;
             }
+
+            $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
+
+            return null;
         } catch (Exception $e) {
             $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
             if (function_exists('log_message')) {
