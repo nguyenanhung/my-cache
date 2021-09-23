@@ -43,7 +43,7 @@ if (!function_exists('testSendRequestOnCache')) {
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/21/2020 17:40
      */
-    function testSendRequestOnCache(string $url = '', $data = '', string $method = 'GET')
+    function testSendRequestOnCache( $url = '', $data = '',  $method = 'GET')
     {
         $endpoint = (!empty($data) && (is_array($data) || is_object($data))) ? $url . '?' . http_build_query($data) : $url;
         $method   = strtoupper($method);

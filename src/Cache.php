@@ -31,7 +31,7 @@ use nguyenanhung\MyDebug\Benchmark;
  */
 class Cache
 {
-    const VERSION               = '3.0.4';
+    const VERSION               = '2.1.0';
     const LAST_MODIFIED         = '2021-09-24';
     const AUTHOR_NAME           = 'Hung Nguyen';
     const AUTHOR_WEB            = 'https://nguyenanhung.com/';
@@ -148,7 +148,7 @@ class Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/01/2021 14:10
      */
-    public function getVersion(): string
+    public function getVersion()
     {
         return self::VERSION;
     }
@@ -161,7 +161,7 @@ class Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/01/2021 18:29
      */
-    public function getProjectStatus(): array
+    public function getProjectStatus()
     {
         return [
             'name'              => self::PROJECT_NAME,
@@ -186,7 +186,7 @@ class Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 17:39
      */
-    public function setDebugStatus($debugStatus = false): Cache
+    public function setDebugStatus($debugStatus = false)
     {
         $this->debugStatus = $debugStatus;
 
@@ -201,7 +201,7 @@ class Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 22:02
      */
-    public function getDebugStatus(): bool
+    public function getDebugStatus()
     {
         return $this->debugStatus;
     }
@@ -216,7 +216,7 @@ class Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 18:02
      */
-    public function setDebugLevel($debugLevel = false): Cache
+    public function setDebugLevel($debugLevel = false)
     {
         $this->debugLevel = $debugLevel;
 
@@ -246,7 +246,7 @@ class Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 18:21
      */
-    public function setDebugLoggerPath(string $loggerPath = null): Cache
+    public function setDebugLoggerPath($loggerPath = null)
     {
         $this->loggerPath = $loggerPath;
 
@@ -302,7 +302,7 @@ class Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 8/30/19 18:43
      */
-    public function setCachePath(string $cachePath = null): Cache
+    public function setCachePath($cachePath = null)
     {
         $this->cachePath = $cachePath;
         $this->logger->debug(__FUNCTION__, 'setCachePath: ' . $this->cachePath);
@@ -334,7 +334,7 @@ class Cache
      * @time  : 10/12/18 12:49
      *
      */
-    public function setCacheTtl($cacheTtl = null): Cache
+    public function setCacheTtl($cacheTtl = null)
     {
         if (!empty($cacheTtl)) {
             $this->cacheTtl = $cacheTtl;
@@ -354,7 +354,7 @@ class Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 33:42
      */
-    public function getCacheTtl(): int
+    public function getCacheTtl()
     {
         return $this->cacheTtl;
     }
@@ -370,7 +370,7 @@ class Cache
      * @time  : 10/12/18 14:01
      *
      */
-    public function setCacheDriver(string $cacheDriver = ''): Cache
+    public function setCacheDriver($cacheDriver = '')
     {
         if ($cacheDriver !== self::DEFAULT_DRIVERS && (extension_loaded($cacheDriver))) {
             $this->cacheDriver = $cacheDriver;
@@ -392,7 +392,7 @@ class Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 33:49
      */
-    public function getCacheDriver(): string
+    public function getCacheDriver()
     {
         return $this->cacheDriver;
     }
@@ -408,7 +408,7 @@ class Cache
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheSecurityKey(string $cacheSecurityKey = null): Cache
+    public function setCacheSecurityKey($cacheSecurityKey = null)
     {
         if (!empty($cacheSecurityKey)) {
             $this->cacheSecurityKey = $cacheSecurityKey;
@@ -444,7 +444,7 @@ class Cache
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheDefaultChmod($cacheDefaultChmod = null): Cache
+    public function setCacheDefaultChmod($cacheDefaultChmod = null)
     {
         if (!empty($cacheDefaultChmod)) {
             $this->cacheDefaultChmod = $cacheDefaultChmod;
@@ -480,7 +480,7 @@ class Cache
      * @time  : 10/12/18 18:56
      *
      */
-    public function setCacheDefaultKeyHashFunction(string $cacheDefaultKeyHashFunction = null): Cache
+    public function setCacheDefaultKeyHashFunction($cacheDefaultKeyHashFunction = null)
     {
         if (!empty($cacheDefaultKeyHashFunction)) {
             $this->cacheDefaultKeyHashFunction = $cacheDefaultKeyHashFunction;

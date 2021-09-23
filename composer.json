@@ -18,13 +18,14 @@
         }
     ],
     "require": {
-        "php": ">=7.0",
+        "php": ">=5.6",
         "ext-json": "*",
         "ext-iconv": "*",
         "ext-openssl": "*",
         "ext-mbstring": "*",
-        "nguyenanhung/my-debug": "^3.0",
-        "phpfastcache/phpfastcache": "^8.0.8 || ^7.1"
+        "nguyenanhung/my-debug": "^2.1",
+        "phpfastcache/phpfastcache": "^7 || ^6 || ^5",
+        "ext-curl": "*"
     },
     "require-dev": {
         "kint-php/kint": ">=3.0"
