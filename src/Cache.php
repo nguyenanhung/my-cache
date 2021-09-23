@@ -31,18 +31,18 @@ use nguyenanhung\MyDebug\Benchmark;
  */
 class Cache
 {
-    public const VERSION               = '3.0.3';
-    public const LAST_MODIFIED         = '2021-09-20';
-    public const AUTHOR_NAME           = 'Hung Nguyen';
-    public const AUTHOR_WEB            = 'https://nguyenanhung.com/';
-    public const AUTHOR_EMAIL          = 'dev@nguyenanhung.com';
-    public const PROJECT_NAME          = 'My Cache by HungNG';
-    public const USE_BENCHMARK         = false;
-    public const DEFAULT_TTL           = 1800;
-    public const DEFAULT_DRIVERS       = 'files';
-    public const DEFAULT_CHMOD         = 0777;
-    public const DEFAULT_SECURITY_KEY  = 'eEcVrlXMKq3xqEuZg4bhuY295gSpCI3z';
-    public const IGNORE_SYMFONY_NOTICE = true;
+    const VERSION               = '3.0.4';
+    const LAST_MODIFIED         = '2021-09-24';
+    const AUTHOR_NAME           = 'Hung Nguyen';
+    const AUTHOR_WEB            = 'https://nguyenanhung.com/';
+    const AUTHOR_EMAIL          = 'dev@nguyenanhung.com';
+    const PROJECT_NAME          = 'My Cache by HungNG';
+    const USE_BENCHMARK         = false;
+    const DEFAULT_TTL           = 1800;
+    const DEFAULT_DRIVERS       = 'files';
+    const DEFAULT_CHMOD         = 0777;
+    const DEFAULT_SECURITY_KEY  = 'eEcVrlXMKq3xqEuZg4bhuY295gSpCI3z';
+    const IGNORE_SYMFONY_NOTICE = true;
 
     /** @var \nguyenanhung\MyDebug\Benchmark $benchmark */
     protected $benchmark;
@@ -261,7 +261,7 @@ class Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 22:58
      */
-    public function getDebugLoggerPath(): ?string
+    public function getDebugLoggerPath()
     {
         return $this->loggerPath;
     }
@@ -318,7 +318,7 @@ class Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 33:15
      */
-    public function getCachePath(): ?string
+    public function getCachePath()
     {
         return $this->cachePath;
     }
@@ -428,7 +428,7 @@ class Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 33:58
      */
-    public function getCacheSecurityKey(): ?string
+    public function getCacheSecurityKey()
     {
         return $this->cacheSecurityKey;
     }
@@ -500,7 +500,7 @@ class Cache
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/04/2020 34:11
      */
-    public function getCacheDefaultKeyHashFunction(): ?string
+    public function getCacheDefaultKeyHashFunction()
     {
         return $this->cacheDefaultKeyHashFunction;
     }
