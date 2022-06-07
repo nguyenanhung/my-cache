@@ -11,7 +11,7 @@ Class Cache được customize lại từ thư viện `phpfastcache/phpfastcache
 
 ## Information
 
-- [x] Cache by phpfastcache/phpfastcache `^8.0.8 || ^7.1`
+- [x] Cache by phpfastcache/phpfastcache `^9.0 || ^8.0.8 || ^7.1`
 - [x] Logging by nguyenanhung/my-debug `^3.0`
 - [x] Support Driver: `files`, `apcu`, `redis`, `predis`, `memcache`, `memcached`, `mongodb`, `cassandra`, `couchbase`, `couchdb`, `leveldb`, `ssdb`, `Zend Disk Cache`, `Zend Memory Cache`, `Cookie`, `SqlLite`
 
