@@ -24,7 +24,7 @@
         "ext-openssl": "*",
         "ext-mbstring": "*",
         "nguyenanhung/my-debug": "^3.0",
-        "phpfastcache/phpfastcache": "^8.0.8 || ^7.1"
+        "phpfastcache/phpfastcache": "^9.0 || ^8.0.8 || ^7.1"
     },
     "require-dev": {
         "kint-php/kint": ">=3.0"
