@@ -31,8 +31,8 @@ use nguyenanhung\MyDebug\Benchmark;
  */
 class Cache
 {
-    const VERSION               = '3.0.5';
-    const LAST_MODIFIED         = '2022-06-07';
+    const VERSION               = '3.0.6';
+    const LAST_MODIFIED         = '2022-06-25';
     const AUTHOR_NAME           = 'Hung Nguyen';
     const AUTHOR_WEB            = 'https://nguyenanhung.com/';
     const AUTHOR_EMAIL          = 'dev@nguyenanhung.com';
@@ -113,6 +113,9 @@ class Cache
             'defaultChmod'           => !empty($this->cacheDefaultChmod) ? $this->cacheDefaultChmod : 0777,
             'defaultKeyHashFunction' => !empty($this->cacheDefaultKeyHashFunction) ? $this->cacheDefaultKeyHashFunction : 'md5'
         ];
+        if (version_compare(PHP_VERSION, '8.0', '>=')) {
+            unset($this->cacheHandle['defaultChmod']);
+        }
         try {
             CacheManager::setDefaultConfig(new ConfigurationOption($this->cacheHandle));
             if (!empty($this->cacheDriver)) {
