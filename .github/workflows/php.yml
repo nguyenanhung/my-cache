@@ -26,6 +26,6 @@ jobs:
                     key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
                     restore-keys: ${{ runner.os }}-composer-
             -   name: Install dependencies
-                run: composer install --no-progress --prefer-dist --optimize-autoloader --ignore-platform-reqs
+                run: composer install --no-progress --prefer-dist --optimize-autoloader
             -   name: Test PHP Package Cache by HungNG
                 run: php ./test/test.php
