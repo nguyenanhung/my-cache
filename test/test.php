@@ -46,8 +46,8 @@ if (!function_exists('testSendRequestOnCache')) {
     function testSendRequestOnCache(string $url = '', $data = '', string $method = 'GET')
     {
         $endpoint = (!empty($data) && (is_array($data) || is_object($data))) ? $url . '?' . http_build_query($data) : $url;
-        $method   = strtoupper($method);
-        $curl     = curl_init();
+        $method = strtoupper($method);
+        $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL            => $endpoint,
             CURLOPT_RETURNTRANSFER => true,
@@ -59,7 +59,7 @@ if (!function_exists('testSendRequestOnCache')) {
             CURLOPT_HTTPHEADER     => array(),
         ));
         $response = curl_exec($curl);
-        $err      = curl_error($curl);
+        $err = curl_error($curl);
         curl_close($curl);
         if ($err) {
             return "cURL Error #:" . $err;
@@ -69,23 +69,14 @@ if (!function_exists('testSendRequestOnCache')) {
     }
 }
 
-$storagePath      = dirname(__DIR__) . '/storage';
-$logsPath         = dirname(__DIR__) . '/storage/logs';
-$cachePath        = dirname(__DIR__) . '/storage/cache';
+$storagePath = dirname(__DIR__) . '/storage';
+$logsPath = dirname(__DIR__) . '/storage/logs';
+$cachePath = dirname(__DIR__) . '/storage/cache';
 $cacheSecurityKey = 'Web-Build';
-$cacheChmod       = 0777;
-$cacheKeyHash     = 'md5';
-$cache            = new Cache();
-$cache->setDebugStatus(true)
-      ->setDebugLevel(null)
-      ->setDebugLoggerPath($logsPath)
-      ->setCachePath($cachePath)
-      ->setCacheTtl(500)
-      ->setCacheDriver('files')
-      ->setCacheSecurityKey($cacheSecurityKey)
-      ->setCacheDefaultChmod($cacheChmod)
-      ->setCacheDefaultKeyHashFunction($cacheKeyHash)
-      ->__construct();
+$cacheChmod = 0777;
+$cacheKeyHash = 'md5';
+$cache = new Cache();
+$cache->setDebugStatus(true)->setDebugLevel(null)->setDebugLoggerPath($logsPath)->setCachePath($cachePath)->setCacheTtl(500)->setCacheDriver('files')->setCacheSecurityKey($cacheSecurityKey)->setCacheDefaultChmod($cacheChmod)->setCacheDefaultKeyHashFunction($cacheKeyHash)->__construct();
 
 
 testOutputWriteLnOnCache('Class Cache SDK Version', $cache->getVersion());
@@ -98,7 +89,7 @@ testOutputWriteLnOnCache('Class Cache TTL', $cache->getCacheTtl());
 testOutputWriteLnOnCache('Class Cache Driver', $cache->getCacheDriver());
 testOutputWriteLnOnCache('Class Cache Security Key', $cache->getCacheSecurityKey());
 
-$url     = 'https://www.blogger.com/feeds/6346344800454653614/posts/summary?alt=json&max-results=1';
+$url = 'https://www.blogger.com/feeds/6346344800454653614/posts/summary?alt=json&max-results=1';
 $cacheId = md5($url);
 
 testOutputWriteLnOnCache('CacheId', $cacheId);

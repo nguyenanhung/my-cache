@@ -31,17 +31,17 @@ use nguyenanhung\MyDebug\Benchmark;
  */
 class Cache
 {
-    const VERSION               = '3.0.6';
-    const LAST_MODIFIED         = '2022-06-25';
-    const AUTHOR_NAME           = 'Hung Nguyen';
-    const AUTHOR_WEB            = 'https://nguyenanhung.com/';
-    const AUTHOR_EMAIL          = 'dev@nguyenanhung.com';
-    const PROJECT_NAME          = 'My Cache by HungNG';
-    const USE_BENCHMARK         = false;
-    const DEFAULT_TTL           = 1800;
-    const DEFAULT_DRIVERS       = 'files';
-    const DEFAULT_CHMOD         = 0777;
-    const DEFAULT_SECURITY_KEY  = 'eEcVrlXMKq3xqEuZg4bhuY295gSpCI3z';
+    const VERSION = '3.0.6.1';
+    const LAST_MODIFIED = '2023-01-14';
+    const AUTHOR_NAME = 'Hung Nguyen';
+    const AUTHOR_WEB = 'https://nguyenanhung.com/';
+    const AUTHOR_EMAIL = 'dev@nguyenanhung.com';
+    const PROJECT_NAME = 'My Cache by HungNG';
+    const USE_BENCHMARK = false;
+    const DEFAULT_TTL = 1800;
+    const DEFAULT_DRIVERS = 'files';
+    const DEFAULT_CHMOD = 0777;
+    const DEFAULT_SECURITY_KEY = 'eEcVrlXMKq3xqEuZg4bhuY295gSpCI3z';
     const IGNORE_SYMFONY_NOTICE = true;
 
     /** @var \nguyenanhung\MyDebug\Benchmark $benchmark */
