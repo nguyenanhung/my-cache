@@ -31,8 +31,8 @@ use nguyenanhung\MyDebug\Benchmark;
  */
 class Cache
 {
-    const VERSION = '3.0.6.3';
-    const LAST_MODIFIED = '2023-01-14';
+    const VERSION = '3.0.6.4';
+    const LAST_MODIFIED = '2023-01-15';
     const AUTHOR_NAME = 'Hung Nguyen';
     const AUTHOR_WEB = 'https://nguyenanhung.com/';
     const AUTHOR_EMAIL = 'dev@nguyenanhung.com';

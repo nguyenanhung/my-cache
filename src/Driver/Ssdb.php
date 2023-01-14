@@ -28,7 +28,6 @@ class Ssdb extends Cache
 {
     protected $driverConfig = [];
 
-
     /**
      * Ssdb constructor.
      *

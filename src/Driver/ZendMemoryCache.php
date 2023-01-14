@@ -30,7 +30,6 @@ class ZendMemoryCache extends Cache
 {
     protected $driverConfig = [];
 
-
     /**
      * ZendMemoryCache constructor.
      *
