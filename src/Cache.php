@@ -12,6 +12,14 @@ namespace nguyenanhung\MyCache;
 error_reporting(~E_USER_NOTICE);
 
 use Exception;
+use Phpfastcache\Drivers\Predis\Config as PRedisConfig;
+use Phpfastcache\Drivers\Redis\Config as RedisConfig;
+use Phpfastcache\Drivers\Memcache\Config as MemcacheConfig;
+use Phpfastcache\Drivers\Memcached\Config as MemcachedConfig;
+use Phpfastcache\Drivers\Mongodb\Config as MongoDBConfig;
+use Phpfastcache\Drivers\Couchdb\Config as CouchDBConfig;
+use Phpfastcache\Drivers\Cassandra\Config as CassandraConfig;
+use Phpfastcache\Drivers\Ssdb\Config as SsdbConfig;
 use Psr\Cache\InvalidArgumentException;
 use Phpfastcache\CacheManager;
 use Phpfastcache\Config\ConfigurationOption;
@@ -31,8 +39,8 @@ use nguyenanhung\MyDebug\Benchmark;
  */
 class Cache
 {
-    const VERSION = '3.0.6.4';
-    const LAST_MODIFIED = '2023-01-15';
+    const VERSION = '3.0.6.5';
+    const LAST_MODIFIED = '2023-09-28';
     const AUTHOR_NAME = 'Hung Nguyen';
     const AUTHOR_WEB = 'https://nguyenanhung.com/';
     const AUTHOR_EMAIL = 'dev@nguyenanhung.com';
@@ -55,6 +63,9 @@ class Cache
 
     /** @var string */
     protected $cacheDriver;
+
+    /** @var array */
+    protected $driverConfig;
 
     /** @var string */
     protected $cachePath;
@@ -106,11 +117,11 @@ class Cache
             }
         }
         $this->cacheHandle = [
-            'path'                   => $this->cachePath,
-            "itemDetailedDate"       => false,
+            'path' => $this->cachePath,
+            "itemDetailedDate" => false,
             //'fallback'               => self::DEFAULT_DRIVERS,
-            'defaultTtl'             => self::DEFAULT_TTL,
-            'defaultChmod'           => !empty($this->cacheDefaultChmod) ? $this->cacheDefaultChmod : 0777,
+            'defaultTtl' => self::DEFAULT_TTL,
+            'defaultChmod' => !empty($this->cacheDefaultChmod) ? $this->cacheDefaultChmod : 0777,
             'defaultKeyHashFunction' => !empty($this->cacheDefaultKeyHashFunction) ? $this->cacheDefaultKeyHashFunction : 'md5'
         ];
         if (version_compare(PHP_VERSION, '8.0', '>=')) {
@@ -119,7 +130,29 @@ class Cache
         try {
             CacheManager::setDefaultConfig(new ConfigurationOption($this->cacheHandle));
             if (!empty($this->cacheDriver)) {
-                $this->cacheInstance = CacheManager::getInstance($this->cacheDriver);
+                if (!empty($this->driverConfig)) {
+                    if (strtolower($this->cacheDriver) === 'redis') {
+                        $this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new RedisConfig($this->driverConfig));
+                    } elseif (strtolower($this->cacheDriver) === 'predis') {
+                        $this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new PRedisConfig($this->driverConfig));
+                    } elseif (strtolower($this->cacheDriver) === 'memcache') {
+                        $this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new MemcacheConfig($this->driverConfig));
+                    } elseif (strtolower($this->cacheDriver) === 'memcached') {
+                        $this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new MemcachedConfig($this->driverConfig));
+                    } elseif (strtolower($this->cacheDriver) === 'mongodb') {
+                        $this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new MongoDBConfig($this->driverConfig));
+                    } elseif (strtolower($this->cacheDriver) === 'cassandra') {
+                        $this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new CassandraConfig($this->driverConfig));
+                    } elseif (strtolower($this->cacheDriver) === 'ssdb') {
+                        $this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new SsdbConfig($this->driverConfig));
+                    } elseif (strtolower($this->cacheDriver) === 'couchdb') {
+                        $this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new CouchDBConfig($this->driverConfig));
+                    } else {
+                        $this->cacheInstance = CacheManager::getInstance($this->cacheDriver);
+                    }
+                } else {
+                    $this->cacheInstance = CacheManager::getInstance($this->cacheDriver);
+                }
             } else {
                 $this->cacheInstance = CacheManager::getInstance(self::DEFAULT_DRIVERS);
             }
@@ -167,15 +200,15 @@ class Cache
     public function getProjectStatus(): array
     {
         return [
-            'name'              => self::PROJECT_NAME,
-            'version'           => self::VERSION,
-            'lastModified'      => self::LAST_MODIFIED,
-            'defaultTtl'        => self::DEFAULT_TTL,
-            'defaultDriver'     => self::DEFAULT_DRIVERS,
+            'name' => self::PROJECT_NAME,
+            'version' => self::VERSION,
+            'lastModified' => self::LAST_MODIFIED,
+            'defaultTtl' => self::DEFAULT_TTL,
+            'defaultDriver' => self::DEFAULT_DRIVERS,
             'defaultPermission' => self::DEFAULT_CHMOD,
-            'authorName'        => self::AUTHOR_NAME,
-            'authorWebsite'     => self::AUTHOR_WEB,
-            'authorEmail'       => self::AUTHOR_EMAIL,
+            'authorName' => self::AUTHOR_NAME,
+            'authorWebsite' => self::AUTHOR_WEB,
+            'authorEmail' => self::AUTHOR_EMAIL,
         ];
     }
 
@@ -401,6 +434,32 @@ class Cache
     }
 
     /**
+     * Function setDriverConfigure
+     *
+     * @param array $driverConfig
+     * User: 713uk13m <dev@nguyenanhung.com>
+     * Copyright: 713uk13m <dev@nguyenanhung.com>
+     * @return $this
+     */
+    public function setDriverConfigure(array $driverConfig = array()): Cache
+    {
+        $this->driverConfig = $driverConfig;
+        return $this;
+    }
+
+    /**
+     * Function getDriverConfigure
+     *
+     * User: 713uk13m <dev@nguyenanhung.com>
+     * Copyright: 713uk13m <dev@nguyenanhung.com>
+     * @return array
+     */
+    public function getDriverConfigure(): array
+    {
+        return $this->driverConfig;
+    }
+
+    /**
      * Function setCacheSecurityKey - Hàm cấu hình mã an toàn khi encode cache
      *
      * @param string|null $cacheSecurityKey
@@ -530,9 +589,7 @@ class Cache
 
                 return true;
             }
-
             $this->logger->error(__FUNCTION__, 'cacheInstance is not available');
-
             return false;
         } catch (InvalidArgumentException $exception) {
             $message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine() . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
@@ -603,8 +660,8 @@ class Cache
     /**
      * Function save - Hàm Save Cache
      *
-     * @param array|string $key   Key Cache
-     * @param mixed        $value Dữ liệu cần cache
+     * @param array|string $key Key Cache
+     * @param mixed $value Dữ liệu cần cache
      *
      * @return mixed|string|array|object Dữ liệu đầu ra
      * @author    : 713uk13m <dev@nguyenanhung.com>
@@ -701,11 +758,11 @@ class Cache
         try {
             if (is_object($this->cacheInstance)) {
                 $result = array(
-                    'result'        => $this->cacheInstance->clear(),
-                    'commit'        => $this->cacheInstance->commit(),
+                    'result' => $this->cacheInstance->clear(),
+                    'commit' => $this->cacheInstance->commit(),
                     'getDriverName' => $this->cacheInstance->getDriverName(),
-                    'getStats'      => $this->cacheInstance->getStats(),
-                    'getConfig'     => $this->cacheInstance->getConfig()
+                    'getStats' => $this->cacheInstance->getStats(),
+                    'getConfig' => $this->cacheInstance->getConfig()
                 );
                 $this->logger->debug(__FUNCTION__, 'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . json_encode($result));
 
