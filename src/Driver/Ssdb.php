@@ -12,7 +12,7 @@ namespace nguyenanhung\MyCache\Driver;
 
 use Exception;
 use Phpfastcache\CacheManager;
-use Phpfastcache\Drivers\Cassandra\Config;
+use Phpfastcache\Drivers\Ssdb\Config;
 use nguyenanhung\MyCache\Cache;
 
 /**
