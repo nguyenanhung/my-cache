@@ -28,7 +28,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class ZendDiskCache extends Cache
 {
-	protected $driverConfig = [];
+	protected array $driverConfig = [];
 
 	/**
 	 * ZendDiskCache constructor.
