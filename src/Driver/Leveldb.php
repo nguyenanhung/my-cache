@@ -26,44 +26,44 @@ use nguyenanhung\MyCache\Cache;
  */
 class Leveldb extends Cache
 {
-    protected $driverConfig = [];
+	protected $driverConfig = [];
 
-    /**
-     * Leveldb constructor.
-     *
-     * @author   : 713uk13m <dev@nguyenanhung.com>
-     * @copyright: 713uk13m <dev@nguyenanhung.com>
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->logger->setLoggerSubPath(__CLASS__);
-        try {
-            $this->cacheInstance = CacheManager::getInstance('leveldb', new Config($this->driverConfig));
-        } catch (Exception $e) {
-            $this->logger->error(__FUNCTION__, $e->getMessage());
-            $this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for Level DB Cache |----------------------");
-            $this->logger->error(__FUNCTION__, $e->getTraceAsString());
-            $this->cacheInstance = null;
-        }
-    }
+	/**
+	 * Leveldb constructor.
+	 *
+	 * @author   : 713uk13m <dev@nguyenanhung.com>
+	 * @copyright: 713uk13m <dev@nguyenanhung.com>
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->logger->setLoggerSubPath(__CLASS__);
+		try {
+			$this->cacheInstance = CacheManager::getInstance('leveldb', new Config($this->driverConfig));
+		} catch (Exception $e) {
+			$this->logger->error(__FUNCTION__, $e->getMessage());
+			$this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for Level DB Cache |----------------------");
+			$this->logger->error(__FUNCTION__, $e->getTraceAsString());
+			$this->cacheInstance = null;
+		}
+	}
 
-    /**
-     * Function setDriverConfig
-     *
-     * @param string $cachePath
-     *
-     * @return $this
-     * @author   : 713uk13m <dev@nguyenanhung.com>
-     * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/20/2021 36:40
-     */
-    public function setDriverConfig(string $cachePath = ''): Leveldb
-    {
-        $this->driverConfig = [
-            'path' => $cachePath
-        ];
+	/**
+	 * Function setDriverConfig
+	 *
+	 * @param string $cachePath
+	 *
+	 * @return $this
+	 * @author   : 713uk13m <dev@nguyenanhung.com>
+	 * @copyright: 713uk13m <dev@nguyenanhung.com>
+	 * @time     : 09/20/2021 36:40
+	 */
+	public function setDriverConfig(string $cachePath = ''): Leveldb
+	{
+		$this->driverConfig = [
+			'path' => $cachePath
+		];
 
-        return $this;
-    }
+		return $this;
+	}
 }
