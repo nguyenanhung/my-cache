@@ -24,44 +24,44 @@ use nguyenanhung\MyCache\Cache;
  */
 class SqlLite extends Cache
 {
-    protected $driverConfig = [];
+	protected $driverConfig = [];
 
-    /**
-     * SqlLite constructor.
-     *
-     * @author   : 713uk13m <dev@nguyenanhung.com>
-     * @copyright: 713uk13m <dev@nguyenanhung.com>
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->logger->setLoggerSubPath(__CLASS__);
-        try {
-            $this->cacheInstance = CacheManager::getInstance('sqlite', new Config($this->driverConfig));
-        } catch (Exception $e) {
-            $this->logger->error(__FUNCTION__, $e->getMessage());
-            $this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for SQL Lite Cache |----------------------");
-            $this->logger->error(__FUNCTION__, $e->getTraceAsString());
-            $this->cacheInstance = null;
-        }
-    }
+	/**
+	 * SqlLite constructor.
+	 *
+	 * @author   : 713uk13m <dev@nguyenanhung.com>
+	 * @copyright: 713uk13m <dev@nguyenanhung.com>
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->logger->setLoggerSubPath(__CLASS__);
+		try {
+			$this->cacheInstance = CacheManager::getInstance('sqlite', new Config($this->driverConfig));
+		} catch (Exception $e) {
+			$this->logger->error(__FUNCTION__, $e->getMessage());
+			$this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for SQL Lite Cache |----------------------");
+			$this->logger->error(__FUNCTION__, $e->getTraceAsString());
+			$this->cacheInstance = null;
+		}
+	}
 
-    /**
-     * Function setDriverConfig
-     *
-     * @param string $cachePath
-     *
-     * @return $this
-     * @author   : 713uk13m <dev@nguyenanhung.com>
-     * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/20/2021 38:26
-     */
-    public function setDriverConfig(string $cachePath = ''): SqlLite
-    {
-        $this->driverConfig = [
-            'path' => $cachePath
-        ];
+	/**
+	 * Function setDriverConfig
+	 *
+	 * @param string $cachePath
+	 *
+	 * @return $this
+	 * @author   : 713uk13m <dev@nguyenanhung.com>
+	 * @copyright: 713uk13m <dev@nguyenanhung.com>
+	 * @time     : 09/20/2021 38:26
+	 */
+	public function setDriverConfig(string $cachePath = ''): SqlLite
+	{
+		$this->driverConfig = [
+			'path' => $cachePath
+		];
 
-        return $this;
-    }
+		return $this;
+	}
 }
