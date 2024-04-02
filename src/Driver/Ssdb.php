@@ -26,7 +26,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class Ssdb extends Cache
 {
-	protected $driverConfig = [];
+	protected array $driverConfig = [];
 
 	/**
 	 * Ssdb constructor.

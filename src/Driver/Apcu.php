@@ -26,7 +26,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class Apcu extends Cache
 {
-	protected $driverConfig = [];
+	protected array $driverConfig = [];
 
 	/**
 	 * Apcu constructor.

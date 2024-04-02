@@ -26,7 +26,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class Memcached extends Cache
 {
-	protected $driverConfig = [
+	protected array $driverConfig = [
 		'host' => '127.0.0.1',
 		'port' => 11211,
 		// 'sasl_user' => false, // optional

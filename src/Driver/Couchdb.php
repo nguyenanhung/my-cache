@@ -26,7 +26,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class Couchdb extends Cache
 {
-	protected $driverConfig = [
+	protected array $driverConfig = [
 		'host' => '127.0.0.1',
 		'port' => 5984,
 		'path' => '/',

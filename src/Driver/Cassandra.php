@@ -28,7 +28,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class Cassandra extends Cache
 {
-	protected $driverConfig = [
+	protected array $driverConfig = [
 		'host' => '127.0.0.1',
 		'port' => 9042,
 		'username' => '',

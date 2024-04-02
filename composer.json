@@ -18,13 +18,13 @@
 	}
   ],
   "require": {
-	"php": ">=7.0",
+	"php": "^8.0",
 	"ext-json": "*",
 	"ext-iconv": "*",
 	"ext-openssl": "*",
 	"ext-mbstring": "*",
 	"nguyenanhung/my-debug": "^4.0 || ^3.0",
-	"phpfastcache/phpfastcache": "^9.0 || ^8.0.8 || ^7.1"
+	"phpfastcache/phpfastcache": "^9.0 || ^8.1"
   },
   "require-dev": {
 	"kint-php/kint": ">=3.0"
@@ -49,6 +49,7 @@
 	"predis/predis": "^1.1",
 	"mongodb/mongodb": "^1.9",
 	"phpfastcache/phpssdb": "~1.0.0",
-	"phpfastcache/couchdb": "~1.0.0"
+	"phpfastcache/couchdb": "~1.0.0",
+	"phpfastcache/mongodb-extension": "~9.2.0"
   }
 }

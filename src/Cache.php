@@ -37,7 +37,7 @@ use nguyenanhung\MyDebug\Benchmark;
  */
 class Cache
 {
-	const VERSION = '3.0.7';
+	const VERSION = '4.0.0';
 	const LAST_MODIFIED = '2023-04-02';
 	const AUTHOR_NAME = 'Hung Nguyen';
 	const AUTHOR_WEB = 'https://nguyenanhung.com/';
@@ -51,46 +51,46 @@ class Cache
 	const IGNORE_SYMFONY_NOTICE = true;
 
 	/** @var Benchmark $benchmark */
-	protected $benchmark;
+	protected Benchmark $benchmark;
 
 	/** @var null|object */
 	protected $cacheInstance;
 
 	/** @var array|mixed */
-	protected $cacheHandle;
+	protected mixed $cacheHandle;
 
 	/** @var string */
-	protected $cacheDriver;
+	protected string $cacheDriver;
 
 	/** @var array */
-	protected $driverConfig;
+	protected array $driverConfig;
 
 	/** @var string */
-	protected $cachePath;
+	protected string $cachePath;
 
 	/** @var int */
-	protected $cacheTtl = 900;
+	protected int $cacheTtl = 900;
 
 	/** @var string */
-	protected $cacheSecurityKey;
+	protected string $cacheSecurityKey;
 
 	/** @var string|int */
-	protected $cacheDefaultChmod;
+	protected string|int $cacheDefaultChmod;
 
 	/** @var string */
-	protected $cacheDefaultKeyHashFunction;
+	protected string $cacheDefaultKeyHashFunction;
 
 	/** @var Logger $logger */
-	protected $logger;
+	protected Logger $logger;
 
 	/** @var bool */
-	protected $debugStatus = false;
+	protected bool $debugStatus = false;
 
 	/** @var bool|string */
-	protected $debugLevel = 'error';
+	protected string|bool $debugLevel = 'error';
 
 	/** @var string */
-	protected $loggerPath = '';
+	protected string $loggerPath = '';
 
 	/**
 	 * Cache constructor.
@@ -137,14 +137,10 @@ class Cache
 						$this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new MemcacheConfig($this->driverConfig));
 					} elseif (strtolower($this->cacheDriver) === 'memcached') {
 						$this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new MemcachedConfig($this->driverConfig));
-					} elseif (strtolower($this->cacheDriver) === 'mongodb' && class_exists('\Phpfastcache\Drivers\Mongodb\Config')) {
-						$this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new \Phpfastcache\Drivers\Mongodb\Config($this->driverConfig));
 					} elseif (strtolower($this->cacheDriver) === 'cassandra') {
 						$this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new CassandraConfig($this->driverConfig));
 					} elseif (strtolower($this->cacheDriver) === 'ssdb') {
 						$this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new SsdbConfig($this->driverConfig));
-					} elseif (strtolower($this->cacheDriver) === 'couchdb' && class_exists('\Phpfastcache\Drivers\Couchdb\Config')) {
-						$this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new \Phpfastcache\Drivers\Couchdb\Config($this->driverConfig));
 					} else {
 						$this->cacheInstance = CacheManager::getInstance($this->cacheDriver);
 					}
@@ -745,7 +741,7 @@ class Cache
 	/**
 	 * Function clean - Hàm Clean Cache
 	 *
-	 * @return null|string|array Trả về TRUE trong trường hợp thành công | Error String nếu có lỗi Exception
+	 * @return null|string|array Trả về Array trong trường hợp thành công | Error String nếu có lỗi Exception
 	 *
 	 * @author    : 713uk13m <dev@nguyenanhung.com>
 	 * @copyright : 713uk13m <dev@nguyenanhung.com>
