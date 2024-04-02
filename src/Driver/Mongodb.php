@@ -26,7 +26,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class Mongodb extends Cache
 {
-	protected $driverConfig = [
+	protected array $driverConfig = [
 		'host' => '127.0.0.1',
 		'port' => 27017,
 		'username' => '',

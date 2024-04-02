@@ -28,7 +28,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class ZendMemoryCache extends Cache
 {
-	protected $driverConfig = [];
+	protected array $driverConfig = [];
 
 	/**
 	 * ZendMemoryCache constructor.

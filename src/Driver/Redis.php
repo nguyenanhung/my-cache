@@ -26,7 +26,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class Redis extends Cache
 {
-	protected $driverConfig = [
+	protected array $driverConfig = [
 		'host' => '127.0.0.1', //Default value
 		'port' => 6379, //Default value
 		'password' => null, //Default value

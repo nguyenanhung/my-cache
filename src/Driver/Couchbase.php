@@ -26,7 +26,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class Couchbase extends Cache
 {
-	protected $driverConfig = [
+	protected array $driverConfig = [
 		'host' => '127.0.0.1',
 		'port' => '8091',
 		'username' => 'your-couchbase-username',

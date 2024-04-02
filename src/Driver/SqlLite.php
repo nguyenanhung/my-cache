@@ -24,7 +24,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class SqlLite extends Cache
 {
-	protected $driverConfig = [];
+	protected array $driverConfig = [];
 
 	/**
 	 * SqlLite constructor.

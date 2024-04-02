@@ -26,7 +26,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class Cookie extends Cache
 {
-	protected $driverConfig = [];
+	protected array $driverConfig = [];
 
 	/**
 	 * Cookie constructor.

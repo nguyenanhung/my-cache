@@ -26,7 +26,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class Leveldb extends Cache
 {
-	protected $driverConfig = [];
+	protected array $driverConfig = [];
 
 	/**
 	 * Leveldb constructor.
