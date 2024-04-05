@@ -108,6 +108,7 @@ if ($cache->has($cacheId)) {
 }
 
 testOutputWriteLnOnCache('|~~~~~~~~~~~~~~ Cache Result ~~~~~~~~~~~~~~|', $data);
+testOutputWriteLnOnCache('Class Cache Instance', $cache->getCacheInstance());
 
 //Create Cache
 //if ($cache->has($cacheId)) {

@@ -37,8 +37,8 @@ use nguyenanhung\MyDebug\Benchmark;
  */
 class Cache
 {
-	const VERSION = '4.0.1';
-	const LAST_MODIFIED = '2023-04-02';
+	const VERSION = '4.0.2';
+	const LAST_MODIFIED = '2023-04-05';
 	const AUTHOR_NAME = 'Hung Nguyen';
 	const AUTHOR_WEB = 'https://nguyenanhung.com/';
 	const AUTHOR_EMAIL = 'dev@nguyenanhung.com';
@@ -51,46 +51,46 @@ class Cache
 	const IGNORE_SYMFONY_NOTICE = true;
 
 	/** @var Benchmark $benchmark */
-	protected Benchmark $benchmark;
+	protected $benchmark;
 
 	/** @var null|object */
 	protected $cacheInstance;
 
 	/** @var array|mixed */
-	protected mixed $cacheHandle;
+	protected $cacheHandle;
 
 	/** @var string */
-	protected string $cacheDriver;
+	protected $cacheDriver;
 
 	/** @var array */
-	protected array $driverConfig;
+	protected $driverConfig;
 
 	/** @var string */
-	protected string $cachePath;
+	protected $cachePath;
 
 	/** @var int */
-	protected int $cacheTtl = 900;
+	protected $cacheTtl = 900;
 
 	/** @var string */
-	protected string $cacheSecurityKey;
+	protected $cacheSecurityKey;
 
 	/** @var string|int */
-	protected string|int $cacheDefaultChmod;
+	protected $cacheDefaultChmod;
 
 	/** @var string */
-	protected string $cacheDefaultKeyHashFunction;
+	protected $cacheDefaultKeyHashFunction;
 
 	/** @var Logger $logger */
-	protected Logger $logger;
+	protected $logger;
 
 	/** @var bool */
-	protected bool $debugStatus = false;
+	protected $debugStatus = false;
 
 	/** @var bool|string */
-	protected string|bool $debugLevel = 'error';
+	protected $debugLevel = 'error';
 
 	/** @var string */
-	protected string $loggerPath = '';
+	protected $loggerPath = '';
 
 	/**
 	 * Cache constructor.
@@ -114,8 +114,12 @@ class Cache
 				$this->logger->setGlobalLoggerLevel($this->debugLevel);
 			}
 		}
+	}
+
+	public function setupCacheHandle()
+	{
 		$this->cacheHandle = [
-			'path' => $this->cachePath,
+//			'path' => $this->cachePath,
 			"itemDetailedDate" => false,
 			//'fallback'               => self::DEFAULT_DRIVERS,
 			'defaultTtl' => self::DEFAULT_TTL,
@@ -125,6 +129,11 @@ class Cache
 		if (version_compare(PHP_VERSION, '8.0', '>=')) {
 			unset($this->cacheHandle['defaultChmod']);
 		}
+	}
+
+	public function setupCacheInstance()
+	{
+		$this->setupCacheHandle();
 		try {
 			CacheManager::setDefaultConfig(new ConfigurationOption($this->cacheHandle));
 			if (!empty($this->cacheDriver)) {
@@ -334,7 +343,8 @@ class Cache
 	 */
 	public function setCachePath(string $cachePath = null): Cache
 	{
-		$this->cachePath = $cachePath;
+		$this->cachePath = trim($cachePath);
+		$this->cacheHandle['path'] = $this->cachePath;
 		$this->logger->debug(__FUNCTION__, 'setCachePath: ' . $this->cachePath);
 
 		return $this;
@@ -575,6 +585,7 @@ class Cache
 	public function has($key = '')
 	{
 		try {
+			$this->setupCacheInstance();
 			if (is_object($this->cacheInstance)) {
 				$cache = $this->cacheInstance->getItem($key);
 				if (!$cache->isHit()) {
@@ -614,6 +625,7 @@ class Cache
 	public function get($key = '')
 	{
 		try {
+			$this->setupCacheInstance();
 			if (is_object($this->cacheInstance)) {
 				if (is_array($key)) {
 					$cache = $this->cacheInstance->getItems($key);
@@ -665,6 +677,7 @@ class Cache
 	public function save($key = '', $value = '')
 	{
 		try {
+			$this->setupCacheInstance();
 			if (is_object($this->cacheInstance)) {
 				$cache = $this->cacheInstance->getItem($key);
 				if (!$cache->isHit()) {
@@ -713,6 +726,7 @@ class Cache
 	public function delete($key = '')
 	{
 		try {
+			$this->setupCacheInstance();
 			if (is_object($this->cacheInstance)) {
 				$result = is_array($key) ? $this->cacheInstance->deleteItems($key) : $this->cacheInstance->deleteItem($key);
 				$this->logger->debug(__FUNCTION__, 'Final Delete Content from Key: ' . $key . ' => Output result: ' . json_encode($result));
@@ -750,6 +764,7 @@ class Cache
 	public function clean()
 	{
 		try {
+			$this->setupCacheInstance();
 			if (is_object($this->cacheInstance)) {
 				$result = array(
 					'result' => $this->cacheInstance->clear(),
