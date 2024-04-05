@@ -42,7 +42,10 @@ class Apcu extends Cache
 			$this->cacheInstance = CacheManager::getInstance('apcu', new Config($this->driverConfig));
 		} catch (Exception $e) {
 			$this->logger->error(__FUNCTION__, $e->getMessage());
-			$this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for APCu Cache |----------------------");
+			$this->logger->error(
+				__FUNCTION__,
+				"----------------------| Trace Error Log for APCu Cache |----------------------"
+			);
 			$this->logger->error(__FUNCTION__, $e->getTraceAsString());
 			$this->cacheInstance = null;
 		}

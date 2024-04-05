@@ -47,7 +47,10 @@ class Predis extends Cache
 			$this->cacheInstance = CacheManager::getInstance('predis', new Config($this->driverConfig));
 		} catch (Exception $e) {
 			$this->logger->error(__FUNCTION__, $e->getMessage());
-			$this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for Predis |----------------------");
+			$this->logger->error(
+				__FUNCTION__,
+				"----------------------| Trace Error Log for Predis |----------------------"
+			);
 			$this->logger->error(__FUNCTION__, $e->getTraceAsString());
 			$this->cacheInstance = null;
 		}
@@ -56,18 +59,22 @@ class Predis extends Cache
 	/**
 	 * Function setDriverConfig
 	 *
-	 * @param string $host
-	 * @param int $port
-	 * @param string|null $password
-	 * @param string|null $database
+	 * @param  string  $host
+	 * @param  int  $port
+	 * @param  string|null  $password
+	 * @param  string|null  $database
 	 *
 	 * @return $this
 	 * @author   : 713uk13m <dev@nguyenanhung.com>
 	 * @copyright: 713uk13m <dev@nguyenanhung.com>
 	 * @time     : 08/01/2021 23:32
 	 */
-	public function setDriverConfig(string $host = '127.0.0.1', int $port = 6379, string $password = null, string $database = null): Predis
-	{
+	public function setDriverConfig(
+		string $host = '127.0.0.1',
+		int $port = 6379,
+		string $password = null,
+		string $database = null
+	): Predis {
 		$this->driverConfig = [
 			'host' => $host,
 			'port' => $port,
