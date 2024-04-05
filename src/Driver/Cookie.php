@@ -42,7 +42,10 @@ class Cookie extends Cache
 			$this->cacheInstance = CacheManager::getInstance('cookie', new Config($this->driverConfig));
 		} catch (Exception $e) {
 			$this->logger->error(__FUNCTION__, $e->getMessage());
-			$this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for Cookie Cache |----------------------");
+			$this->logger->error(
+				__FUNCTION__,
+				"----------------------| Trace Error Log for Cookie Cache |----------------------"
+			);
 			$this->logger->error(__FUNCTION__, $e->getTraceAsString());
 			$this->cacheInstance = null;
 		}

@@ -37,8 +37,8 @@ use nguyenanhung\MyDebug\Benchmark;
  */
 class Cache
 {
-	const VERSION = '4.0.2';
-	const LAST_MODIFIED = '2023-04-05';
+	const VERSION = '4.0.3';
+	const LAST_MODIFIED = '2023-04-06';
 	const AUTHOR_NAME = 'Hung Nguyen';
 	const AUTHOR_WEB = 'https://nguyenanhung.com/';
 	const AUTHOR_EMAIL = 'dev@nguyenanhung.com';
@@ -107,10 +107,10 @@ class Cache
 		$this->logger = new Logger();
 		$this->logger->setLoggerSubPath(__CLASS__);
 		$this->logger->setLoggerFilename('Log-' . date('Y-m-d') . '.log');
-		if ($this->debugStatus === true && !empty($this->loggerPath)) {
+		if ($this->debugStatus === true && ! empty($this->loggerPath)) {
 			$this->logger->setDebugStatus($this->debugStatus);
 			$this->logger->setLoggerPath($this->loggerPath);
-			if (!empty($this->debugLevel)) {
+			if ( ! empty($this->debugLevel)) {
 				$this->logger->setGlobalLoggerLevel($this->debugLevel);
 			}
 		}
@@ -123,8 +123,8 @@ class Cache
 			"itemDetailedDate" => false,
 			//'fallback'               => self::DEFAULT_DRIVERS,
 			'defaultTtl' => self::DEFAULT_TTL,
-			'defaultChmod' => !empty($this->cacheDefaultChmod) ? $this->cacheDefaultChmod : 0777,
-			'defaultKeyHashFunction' => !empty($this->cacheDefaultKeyHashFunction) ? $this->cacheDefaultKeyHashFunction : 'md5'
+			'defaultChmod' => ! empty($this->cacheDefaultChmod) ? $this->cacheDefaultChmod : 0777,
+			'defaultKeyHashFunction' => ! empty($this->cacheDefaultKeyHashFunction) ? $this->cacheDefaultKeyHashFunction : 'md5'
 		];
 		if (version_compare(PHP_VERSION, '8.0', '>=')) {
 			unset($this->cacheHandle['defaultChmod']);
@@ -136,20 +136,38 @@ class Cache
 		$this->setupCacheHandle();
 		try {
 			CacheManager::setDefaultConfig(new ConfigurationOption($this->cacheHandle));
-			if (!empty($this->cacheDriver)) {
-				if (!empty($this->driverConfig)) {
+			if ( ! empty($this->cacheDriver)) {
+				if ( ! empty($this->driverConfig)) {
 					if (strtolower($this->cacheDriver) === 'redis') {
-						$this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new RedisConfig($this->driverConfig));
+						$this->cacheInstance = CacheManager::getInstance(
+							$this->cacheDriver,
+							new RedisConfig($this->driverConfig)
+						);
 					} elseif (strtolower($this->cacheDriver) === 'predis') {
-						$this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new PRedisConfig($this->driverConfig));
+						$this->cacheInstance = CacheManager::getInstance(
+							$this->cacheDriver,
+							new PRedisConfig($this->driverConfig)
+						);
 					} elseif (strtolower($this->cacheDriver) === 'memcache') {
-						$this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new MemcacheConfig($this->driverConfig));
+						$this->cacheInstance = CacheManager::getInstance(
+							$this->cacheDriver,
+							new MemcacheConfig($this->driverConfig)
+						);
 					} elseif (strtolower($this->cacheDriver) === 'memcached') {
-						$this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new MemcachedConfig($this->driverConfig));
+						$this->cacheInstance = CacheManager::getInstance(
+							$this->cacheDriver,
+							new MemcachedConfig($this->driverConfig)
+						);
 					} elseif (strtolower($this->cacheDriver) === 'cassandra') {
-						$this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new CassandraConfig($this->driverConfig));
+						$this->cacheInstance = CacheManager::getInstance(
+							$this->cacheDriver,
+							new CassandraConfig($this->driverConfig)
+						);
 					} elseif (strtolower($this->cacheDriver) === 'ssdb') {
-						$this->cacheInstance = CacheManager::getInstance($this->cacheDriver, new SsdbConfig($this->driverConfig));
+						$this->cacheInstance = CacheManager::getInstance(
+							$this->cacheDriver,
+							new SsdbConfig($this->driverConfig)
+						);
 					} else {
 						$this->cacheInstance = CacheManager::getInstance($this->cacheDriver);
 					}
@@ -174,7 +192,10 @@ class Cache
 	{
 		if (self::USE_BENCHMARK === true) {
 			$this->benchmark->mark('code_end');
-			$this->logger->debug(__FUNCTION__, 'Elapsed Time: ===> ' . $this->benchmark->elapsed_time('code_start', 'code_end'));
+			$this->logger->debug(
+				__FUNCTION__,
+				'Elapsed Time: ===> ' . $this->benchmark->elapsed_time('code_start', 'code_end')
+			);
 			$this->logger->debug(__FUNCTION__, 'Memory Usage: ===> ' . $this->benchmark->memory_usage());
 		}
 	}
@@ -218,7 +239,7 @@ class Cache
 	/**
 	 * Function setDebugStatus
 	 *
-	 * @param bool|string|null $debugStatus
+	 * @param  bool|string|null  $debugStatus
 	 *
 	 * @return $this
 	 * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -248,7 +269,7 @@ class Cache
 	/**
 	 * Function setDebugLevel
 	 *
-	 * @param bool|string|null $debugLevel
+	 * @param  bool|string|null  $debugLevel
 	 *
 	 * @return $this
 	 * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -278,7 +299,7 @@ class Cache
 	/**
 	 * Function setDebugLoggerPath
 	 *
-	 * @param string|null $loggerPath
+	 * @param  string|null  $loggerPath
 	 *
 	 * @return $this
 	 * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -334,7 +355,7 @@ class Cache
 	/**
 	 * Function setCachePath - Cấu hình thư mục lưu trữ cache
 	 *
-	 * @param string|null $cachePath
+	 * @param  string|null  $cachePath
 	 *
 	 * @return $this
 	 * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -366,7 +387,7 @@ class Cache
 	/**
 	 * Function setCacheTtl - Cầu hình TTL cho file Cache
 	 *
-	 * @param null $cacheTtl
+	 * @param  null  $cacheTtl
 	 *
 	 * @return $this
 	 *
@@ -376,7 +397,7 @@ class Cache
 	 */
 	public function setCacheTtl($cacheTtl = null): Cache
 	{
-		if (!empty($cacheTtl)) {
+		if ( ! empty($cacheTtl)) {
 			$this->cacheTtl = $cacheTtl;
 			$this->logger->debug(__FUNCTION__, 'setCacheTtl: ' . $this->cacheTtl);
 		} else {
@@ -402,7 +423,7 @@ class Cache
 	/**
 	 * Function setCacheDriver - Hàm cấu hình cache drivers
 	 *
-	 * @param string $cacheDriver
+	 * @param  string  $cacheDriver
 	 *
 	 * @return $this
 	 *
@@ -414,9 +435,17 @@ class Cache
 	{
 		if ($cacheDriver !== self::DEFAULT_DRIVERS && (extension_loaded($cacheDriver))) {
 			$this->cacheDriver = $cacheDriver;
-			$this->logger->debug(__FUNCTION__, 'Set Cache Driver: ' . json_encode($cacheDriver) . ' and server is supported');
+			$this->logger->debug(
+				__FUNCTION__,
+				'Set Cache Driver: ' . json_encode($cacheDriver) . ' and server is supported'
+			);
 		} else {
-			$this->logger->error(__FUNCTION__, 'Set Cache Driver: ' . json_encode($cacheDriver) . ' and server is not supported, user default driver: ' . self::DEFAULT_DRIVERS);
+			$this->logger->error(
+				__FUNCTION__,
+				'Set Cache Driver: ' . json_encode(
+					$cacheDriver
+				) . ' and server is not supported, user default driver: ' . self::DEFAULT_DRIVERS
+			);
 			$this->cacheDriver = self::DEFAULT_DRIVERS;
 		}
 		$this->logger->debug(__FUNCTION__, 'setCacheDriver: ' . $this->cacheDriver);
@@ -440,7 +469,7 @@ class Cache
 	/**
 	 * Function setDriverConfigure
 	 *
-	 * @param array $driverConfig
+	 * @param  array  $driverConfig
 	 * User: 713uk13m <dev@nguyenanhung.com>
 	 * Copyright: 713uk13m <dev@nguyenanhung.com>
 	 * @return $this
@@ -466,7 +495,7 @@ class Cache
 	/**
 	 * Function setCacheSecurityKey - Hàm cấu hình mã an toàn khi encode cache
 	 *
-	 * @param string|null $cacheSecurityKey
+	 * @param  string|null  $cacheSecurityKey
 	 *
 	 * @return $this
 	 *
@@ -476,7 +505,7 @@ class Cache
 	 */
 	public function setCacheSecurityKey(string $cacheSecurityKey = null): Cache
 	{
-		if (!empty($cacheSecurityKey)) {
+		if ( ! empty($cacheSecurityKey)) {
 			$this->cacheSecurityKey = $cacheSecurityKey;
 			$this->logger->debug(__FUNCTION__, 'setCacheSecurityKey: ' . $this->cacheSecurityKey);
 		} else {
@@ -502,7 +531,7 @@ class Cache
 	/**
 	 * Function setCacheDefaultChmod - Hàm cấu hình phân quyền file cache
 	 *
-	 * @param null|int|string $cacheDefaultChmod
+	 * @param  null|int|string  $cacheDefaultChmod
 	 *
 	 * @return $this
 	 *
@@ -512,7 +541,7 @@ class Cache
 	 */
 	public function setCacheDefaultChmod($cacheDefaultChmod = null): Cache
 	{
-		if (!empty($cacheDefaultChmod)) {
+		if ( ! empty($cacheDefaultChmod)) {
 			$this->cacheDefaultChmod = $cacheDefaultChmod;
 			$this->logger->debug(__FUNCTION__, 'setCacheDefaultChmod: ' . $this->cacheDefaultChmod);
 		} else {
@@ -538,7 +567,7 @@ class Cache
 	/**
 	 * Function setCacheDefaultKeyHashFunction - Hàm cấu hình thuật toán mã hóa ID Cache
 	 *
-	 * @param string|null $cacheDefaultKeyHashFunction
+	 * @param  string|null  $cacheDefaultKeyHashFunction
 	 *
 	 * @return $this
 	 *
@@ -548,7 +577,7 @@ class Cache
 	 */
 	public function setCacheDefaultKeyHashFunction(string $cacheDefaultKeyHashFunction = null): Cache
 	{
-		if (!empty($cacheDefaultKeyHashFunction)) {
+		if ( ! empty($cacheDefaultKeyHashFunction)) {
 			$this->cacheDefaultKeyHashFunction = $cacheDefaultKeyHashFunction;
 			$this->logger->debug(__FUNCTION__, 'setCacheDefaultKeyHashFunction: ' . $this->cacheDefaultKeyHashFunction);
 		} else {
@@ -574,7 +603,7 @@ class Cache
 	/**
 	 * Function has - Kiểm tra sự tồn tại dữ liệu cache
 	 *
-	 * @param mixed $key
+	 * @param  mixed  $key
 	 *
 	 * @return bool|string True if the request resulted in a cache hit. False otherwise.
 	 *
@@ -588,7 +617,7 @@ class Cache
 			$this->setupCacheInstance();
 			if (is_object($this->cacheInstance)) {
 				$cache = $this->cacheInstance->getItem($key);
-				if (!$cache->isHit()) {
+				if ( ! $cache->isHit()) {
 					return false;
 				}
 
@@ -597,13 +626,15 @@ class Cache
 			$this->logger->error(__FUNCTION__, 'cacheInstance is not available');
 			return false;
 		} catch (InvalidArgumentException $exception) {
-			$message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine() . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
+			$message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine(
+				) . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
 			$this->logger->error(__FUNCTION__, 'Error Message: ' . $exception->getMessage());
 			$this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $exception->getTraceAsString());
 
 			return $message;
 		} catch (Exception $e) {
-			$message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
+			$message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode(
+				) . ' - Message: ' . $e->getMessage();
 			$this->logger->error(__FUNCTION__, 'Error Message: ' . $e->getMessage());
 			$this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $e->getTraceAsString());
 
@@ -614,7 +645,7 @@ class Cache
 	/**
 	 * Function get - Hàm lấy dữ liệu cache
 	 *
-	 * @param array|string $key
+	 * @param  array|string  $key
 	 *
 	 * @return bool|mixed|string|null
 	 *
@@ -632,12 +663,15 @@ class Cache
 				} else {
 					$cache = $this->cacheInstance->getItem($key);
 				}
-				if (!$cache->isHit()) {
+				if ( ! $cache->isHit()) {
 					$result = null;
 					$this->logger->debug(__FUNCTION__, 'Unavailable Cache for Key: ' . $key);
 				} else {
 					$result = $cache->get();
-					$this->logger->debug(__FUNCTION__, 'Get Cache from Key: ' . $key . ', result: ' . json_encode($result));
+					$this->logger->debug(
+						__FUNCTION__,
+						'Get Cache from Key: ' . $key . ', result: ' . json_encode($result)
+					);
 				}
 				$message = 'Final get Content from Key: ' . $key . ' => Output result: ' . json_encode($result);
 				$this->logger->debug(__FUNCTION__, $message);
@@ -649,13 +683,15 @@ class Cache
 
 			return null;
 		} catch (InvalidArgumentException $exception) {
-			$message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine() . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
+			$message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine(
+				) . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
 			$this->logger->error(__FUNCTION__, 'Error Message: ' . $exception->getMessage());
 			$this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $exception->getTraceAsString());
 
 			return $message;
 		} catch (Exception $e) {
-			$message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
+			$message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode(
+				) . ' - Message: ' . $e->getMessage();
 			$this->logger->error(__FUNCTION__, 'Error Message: ' . $e->getMessage());
 			$this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $e->getTraceAsString());
 
@@ -666,8 +702,8 @@ class Cache
 	/**
 	 * Function save - Hàm Save Cache
 	 *
-	 * @param array|string $key Key Cache
-	 * @param mixed $value Dữ liệu cần cache
+	 * @param  array|string  $key  Key Cache
+	 * @param  mixed  $value  Dữ liệu cần cache
 	 *
 	 * @return mixed|string|array|object Dữ liệu đầu ra
 	 * @author    : 713uk13m <dev@nguyenanhung.com>
@@ -680,14 +716,22 @@ class Cache
 			$this->setupCacheInstance();
 			if (is_object($this->cacheInstance)) {
 				$cache = $this->cacheInstance->getItem($key);
-				if (!$cache->isHit()) {
+				if ( ! $cache->isHit()) {
 					$cache->set($value)->expiresAfter($this->cacheTtl);//in seconds, also accepts Datetime
-					$this->cacheInstance->save($cache); // Save the cache item just like you do with doctrine and entities
+					$this->cacheInstance->save(
+						$cache
+					); // Save the cache item just like you do with doctrine and entities
 					$result = $cache->get();
-					$this->logger->debug(__FUNCTION__, 'Save Cache Key: ' . $key . ' with Value: ' . json_encode($value));
+					$this->logger->debug(
+						__FUNCTION__,
+						'Save Cache Key: ' . $key . ' with Value: ' . json_encode($value)
+					);
 				} else {
 					$result = $cache->get();
-					$this->logger->debug(__FUNCTION__, 'Get Cache from Key: ' . $key . ', result: ' . json_encode($result));
+					$this->logger->debug(
+						__FUNCTION__,
+						'Get Cache from Key: ' . $key . ', result: ' . json_encode($result)
+					);
 				}
 				$message = 'Final get Content from Key: ' . $key . ' => Output result: ' . json_encode($result);
 				$this->logger->debug(__FUNCTION__, $message);
@@ -699,13 +743,15 @@ class Cache
 
 			return null;
 		} catch (InvalidArgumentException $exception) {
-			$message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine() . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
+			$message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine(
+				) . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
 			$this->logger->error(__FUNCTION__, 'Error Message: ' . $exception->getMessage());
 			$this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $exception->getTraceAsString());
 
 			return $message;
 		} catch (Exception $e) {
-			$message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
+			$message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode(
+				) . ' - Message: ' . $e->getMessage();
 			$this->logger->error(__FUNCTION__, 'Error Message: ' . $e->getMessage());
 			$this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $e->getTraceAsString());
 
@@ -716,7 +762,7 @@ class Cache
 	/**
 	 * Function delete - Hàm Delete Cache
 	 *
-	 * @param array|string $key
+	 * @param  array|string  $key
 	 *
 	 * @return bool|string|null  True if the request resulted in a cache hit. False otherwise.
 	 * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -728,8 +774,13 @@ class Cache
 		try {
 			$this->setupCacheInstance();
 			if (is_object($this->cacheInstance)) {
-				$result = is_array($key) ? $this->cacheInstance->deleteItems($key) : $this->cacheInstance->deleteItem($key);
-				$this->logger->debug(__FUNCTION__, 'Final Delete Content from Key: ' . $key . ' => Output result: ' . json_encode($result));
+				$result = is_array($key) ? $this->cacheInstance->deleteItems($key) : $this->cacheInstance->deleteItem(
+					$key
+				);
+				$this->logger->debug(
+					__FUNCTION__,
+					'Final Delete Content from Key: ' . $key . ' => Output result: ' . json_encode($result)
+				);
 
 				return $result;
 			}
@@ -738,13 +789,15 @@ class Cache
 
 			return null;
 		} catch (InvalidArgumentException $exception) {
-			$message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine() . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
+			$message = 'Error File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine(
+				) . ' - Code: ' . $exception->getCode() . ' - Message: ' . $exception->getMessage();
 			$this->logger->error(__FUNCTION__, 'Error Message: ' . $exception->getMessage());
 			$this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $exception->getTraceAsString());
 
 			return $message;
 		} catch (Exception $e) {
-			$message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
+			$message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode(
+				) . ' - Message: ' . $e->getMessage();
 			$this->logger->error(__FUNCTION__, 'Error Message: ' . $e->getMessage());
 			$this->logger->error(__FUNCTION__, 'Error Trace As String: ' . $e->getTraceAsString());
 
@@ -773,7 +826,12 @@ class Cache
 					'getStats' => $this->cacheInstance->getStats(),
 					'getConfig' => $this->cacheInstance->getConfig()
 				);
-				$this->logger->debug(__FUNCTION__, 'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . json_encode($result));
+				$this->logger->debug(
+					__FUNCTION__,
+					'Clear Cache from Handler: ' . json_encode($this->cacheHandle) . ' -> Result: ' . json_encode(
+						$result
+					)
+				);
 
 				return $result;
 			}
@@ -782,7 +840,8 @@ class Cache
 
 			return null;
 		} catch (Exception $e) {
-			$message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
+			$message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode(
+				) . ' - Message: ' . $e->getMessage();
 			if (function_exists('log_message')) {
 				// Enabled logging for CodeIgniter Framework
 				log_message('error', 'Error Message: ' . $e->getMessage());

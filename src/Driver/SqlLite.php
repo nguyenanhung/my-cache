@@ -40,7 +40,10 @@ class SqlLite extends Cache
 			$this->cacheInstance = CacheManager::getInstance('sqlite', new Config($this->driverConfig));
 		} catch (Exception $e) {
 			$this->logger->error(__FUNCTION__, $e->getMessage());
-			$this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for SQL Lite Cache |----------------------");
+			$this->logger->error(
+				__FUNCTION__,
+				"----------------------| Trace Error Log for SQL Lite Cache |----------------------"
+			);
 			$this->logger->error(__FUNCTION__, $e->getTraceAsString());
 			$this->cacheInstance = null;
 		}
@@ -49,7 +52,7 @@ class SqlLite extends Cache
 	/**
 	 * Function setDriverConfig
 	 *
-	 * @param string $cachePath
+	 * @param  string  $cachePath
 	 *
 	 * @return $this
 	 * @author   : 713uk13m <dev@nguyenanhung.com>

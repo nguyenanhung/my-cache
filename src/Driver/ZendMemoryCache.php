@@ -44,7 +44,10 @@ class ZendMemoryCache extends Cache
 			$this->cacheInstance = CacheManager::getInstance('zendshm', new Config($this->driverConfig));
 		} catch (Exception $e) {
 			$this->logger->error(__FUNCTION__, $e->getMessage());
-			$this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for Zend Memory Cache |----------------------");
+			$this->logger->error(
+				__FUNCTION__,
+				"----------------------| Trace Error Log for Zend Memory Cache |----------------------"
+			);
 			$this->logger->error(__FUNCTION__, $e->getTraceAsString());
 			$this->cacheInstance = null;
 		}

@@ -47,7 +47,10 @@ class Memcache extends Cache
 			$this->cacheInstance = CacheManager::getInstance('memcache', new Config($this->driverConfig));
 		} catch (Exception $e) {
 			$this->logger->error(__FUNCTION__, $e->getMessage());
-			$this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for Memcache |----------------------");
+			$this->logger->error(
+				__FUNCTION__,
+				"----------------------| Trace Error Log for Memcache |----------------------"
+			);
 			$this->logger->error(__FUNCTION__, $e->getTraceAsString());
 			$this->cacheInstance = null;
 		}
@@ -56,18 +59,22 @@ class Memcache extends Cache
 	/**
 	 * Function setDriverConfig
 	 *
-	 * @param string $host
-	 * @param int $port
-	 * @param bool $saslUser
-	 * @param bool $saslPassword
+	 * @param  string  $host
+	 * @param  int  $port
+	 * @param  bool  $saslUser
+	 * @param  bool  $saslPassword
 	 *
 	 * @return $this
 	 * @author   : 713uk13m <dev@nguyenanhung.com>
 	 * @copyright: 713uk13m <dev@nguyenanhung.com>
 	 * @time     : 08/01/2021 27:01
 	 */
-	public function setDriverConfig(string $host = '127.0.0.1', int $port = 11211, bool $saslUser = false, bool $saslPassword = false): Memcache
-	{
+	public function setDriverConfig(
+		string $host = '127.0.0.1',
+		int $port = 11211,
+		bool $saslUser = false,
+		bool $saslPassword = false
+	): Memcache {
 		$this->driverConfig = [
 			'host' => $host,
 			'port' => $port,

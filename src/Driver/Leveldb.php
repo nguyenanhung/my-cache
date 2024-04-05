@@ -42,7 +42,10 @@ class Leveldb extends Cache
 			$this->cacheInstance = CacheManager::getInstance('leveldb', new Config($this->driverConfig));
 		} catch (Exception $e) {
 			$this->logger->error(__FUNCTION__, $e->getMessage());
-			$this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for Level DB Cache |----------------------");
+			$this->logger->error(
+				__FUNCTION__,
+				"----------------------| Trace Error Log for Level DB Cache |----------------------"
+			);
 			$this->logger->error(__FUNCTION__, $e->getTraceAsString());
 			$this->cacheInstance = null;
 		}
@@ -51,7 +54,7 @@ class Leveldb extends Cache
 	/**
 	 * Function setDriverConfig
 	 *
-	 * @param string $cachePath
+	 * @param  string  $cachePath
 	 *
 	 * @return $this
 	 * @author   : 713uk13m <dev@nguyenanhung.com>
