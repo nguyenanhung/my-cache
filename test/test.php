@@ -13,63 +13,63 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use nguyenanhung\MyCache\Cache;
 
 if ( ! function_exists('testOutputWriteLnOnCache')) {
-	/**
-	 * Function testOutputWriteLnOnCache
-	 *
-	 * @param  mixed  $name
-	 * @param  mixed  $msg
-	 *
-	 * @author   : 713uk13m <dev@nguyenanhung.com>
-	 * @copyright: 713uk13m <dev@nguyenanhung.com>
-	 * @time     : 09/20/2021 30:31
-	 */
-	function testOutputWriteLnOnCache($name = '', $msg = '')
-	{
-		if (is_array($msg) || is_object($msg)) {
-			$msg = json_encode($msg);
-		}
-		echo $name . ' -> ' . $msg . PHP_EOL;
-	}
+    /**
+     * Function testOutputWriteLnOnCache
+     *
+     * @param  mixed  $name
+     * @param  mixed  $msg
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/20/2021 30:31
+     */
+    function testOutputWriteLnOnCache($name = '', $msg = '')
+    {
+        if (is_array($msg) || is_object($msg)) {
+            $msg = json_encode($msg);
+        }
+        echo $name . ' -> ' . $msg . PHP_EOL;
+    }
 }
 if ( ! function_exists('testSendRequestOnCache')) {
-	/**
-	 * Function testSendRequestOnCache
-	 *
-	 * @param  string  $url
-	 * @param  string|array|object  $data
-	 * @param  string  $method
-	 *
-	 * @return bool|string|null
-	 * @author   : 713uk13m <dev@nguyenanhung.com>
-	 * @copyright: 713uk13m <dev@nguyenanhung.com>
-	 * @time     : 04/21/2020 17:40
-	 */
-	function testSendRequestOnCache(string $url = '', $data = '', string $method = 'GET')
-	{
-		$endpoint = ( ! empty($data) && (is_array($data) || is_object($data))) ? $url . '?' . http_build_query(
-				$data
-			) : $url;
-		$method = strtoupper($method);
-		$curl = curl_init();
-		curl_setopt_array($curl, array(
-			CURLOPT_URL => $endpoint,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => "",
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 30,
-			CURLOPT_CUSTOMREQUEST => $method,
-			CURLOPT_POSTFIELDS => "",
-			CURLOPT_HTTPHEADER => array(),
-		));
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
-		curl_close($curl);
-		if ($err) {
-			return "cURL Error #:" . $err;
-		}
+    /**
+     * Function testSendRequestOnCache
+     *
+     * @param  string  $url
+     * @param  string|array|object  $data
+     * @param  string  $method
+     *
+     * @return bool|string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 04/21/2020 17:40
+     */
+    function testSendRequestOnCache(string $url = '', $data = '', string $method = 'GET')
+    {
+        $endpoint = ( ! empty($data) && (is_array($data) || is_object($data))) ? $url . '?' . http_build_query(
+                $data
+            ) : $url;
+        $method = strtoupper($method);
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $endpoint,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_CUSTOMREQUEST => $method,
+            CURLOPT_POSTFIELDS => "",
+            CURLOPT_HTTPHEADER => array(),
+        ));
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+        if ($err) {
+            return "cURL Error #:" . $err;
+        }
 
-		return $response;
-	}
+        return $response;
+    }
 }
 
 $storagePath = dirname(__DIR__) . '/storage';
@@ -80,9 +80,9 @@ $cacheChmod = 0777;
 $cacheKeyHash = 'md5';
 $cache = new Cache();
 $cache->setDebugStatus(true)->setDebugLevel(null)->setDebugLoggerPath($logsPath)->setCachePath($cachePath)->setCacheTtl(
-	500
+    500
 )->setCacheDriver('files')->setCacheSecurityKey($cacheSecurityKey)->setCacheDefaultChmod(
-	$cacheChmod
+    $cacheChmod
 )->setCacheDefaultKeyHashFunction($cacheKeyHash)->__construct();
 
 
@@ -108,10 +108,10 @@ testOutputWriteLnOnCache('CacheId', $cacheId);
 
 //Create Cache
 if ($cache->has($cacheId)) {
-	$data = $cache->get($cacheId);
+    $data = $cache->get($cacheId);
 } else {
-	$data = testSendRequestOnCache($url);
-	$cache->save($cacheId, $data);
+    $data = testSendRequestOnCache($url);
+    $cache->save($cacheId, $data);
 }
 
 testOutputWriteLnOnCache('|~~~~~~~~~~~~~~ Cache Result ~~~~~~~~~~~~~~|', $data);
@@ -133,12 +133,7 @@ testOutputWriteLnOnCache('Class Cache Instance', $cache->getCacheInstance());
 //    echo "</pre>";
 //}
 
-// Clean Cache
+//Clean Cache
 //echo "<pre>";
 //print_r($cache->clean());
 //echo "</pre>";
-
-
-
-
-
