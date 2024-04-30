@@ -26,43 +26,44 @@ use nguyenanhung\MyCache\Cache;
  */
 class Ssdb extends Cache
 {
-	protected array $driverConfig = [];
+    const CLASS_NAME = 'SsdbCache';
+    protected $driverConfig = [];
 
-	/**
-	 * Ssdb constructor.
-	 *
-	 * @author   : 713uk13m <dev@nguyenanhung.com>
-	 * @copyright: 713uk13m <dev@nguyenanhung.com>
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-		$this->logger->setLoggerSubPath(__CLASS__);
-		try {
-			$this->cacheInstance = CacheManager::getInstance('ssdb', new Config($this->driverConfig));
-		} catch (Exception $e) {
-			$this->logger->error(__FUNCTION__, $e->getMessage());
-			$this->logger->error(
-				__FUNCTION__,
-				"----------------------| Trace Error Log for SSDB Cache |----------------------"
-			);
-			$this->logger->error(__FUNCTION__, $e->getTraceAsString());
-			$this->cacheInstance = null;
-		}
-	}
+    /**
+     * Ssdb constructor.
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->logger->setLoggerSubPath(__CLASS__);
+        try {
+            $this->cacheInstance = CacheManager::getInstance('ssdb', new Config($this->driverConfig));
+        } catch (Exception $e) {
+            $this->logger->error(__FUNCTION__, $e->getMessage());
+            $this->logger->error(
+                __FUNCTION__,
+                "----------------------| Trace Error Log for SSDB Cache |----------------------"
+            );
+            $this->logger->error(__FUNCTION__, $e->getTraceAsString());
+            $this->cacheInstance = null;
+        }
+    }
 
-	/**
-	 * Function setDriverConfig
-	 *
-	 * @return $this
-	 * @author   : 713uk13m <dev@nguyenanhung.com>
-	 * @copyright: 713uk13m <dev@nguyenanhung.com>
-	 * @time     : 09/19/2021 20:45
-	 */
-	public function setDriverConfig(): Ssdb
-	{
-		$this->driverConfig = [];
+    /**
+     * Function setDriverConfig
+     *
+     * @return $this
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/19/2021 20:45
+     */
+    public function setDriverConfig(): Ssdb
+    {
+        $this->driverConfig = [];
 
-		return $this;
-	}
+        return $this;
+    }
 }

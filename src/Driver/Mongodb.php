@@ -26,82 +26,83 @@ use nguyenanhung\MyCache\Cache;
  */
 class Mongodb extends Cache
 {
-	protected array $driverConfig = [
-		'host' => '127.0.0.1',
-		'port' => 27017,
-		'username' => '',
-		'password' => '',
-		'timeout' => 1,
-		/**
-		 * These ones are
-		 * totally optional
-		 */
-		// 'collectionName' => 'Cache',
-		// 'databaseName' => 'phpFastCache'
-	];
+    const CLASS_NAME = 'MongodbCache';
+    protected $driverConfig = [
+        'host' => '127.0.0.1',
+        'port' => 27017,
+        'username' => '',
+        'password' => '',
+        'timeout' => 1,
+        /**
+         * These ones are
+         * totally optional
+         */
+        // 'collectionName' => 'Cache',
+        // 'databaseName' => 'phpFastCache'
+    ];
 
-	/**
-	 * Mongodb constructor.
-	 *
-	 * @author   : 713uk13m <dev@nguyenanhung.com>
-	 * @copyright: 713uk13m <dev@nguyenanhung.com>
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-		$this->logger->setLoggerSubPath(__CLASS__);
-		try {
-			$this->cacheInstance = CacheManager::getInstance('mongodb', new Config($this->driverConfig));
-		} catch (Exception $e) {
-			$this->logger->error(__FUNCTION__, $e->getMessage());
-			$this->logger->error(
-				__FUNCTION__,
-				"----------------------| Trace Error Log for MongoDB |----------------------"
-			);
-			$this->logger->error(__FUNCTION__, $e->getTraceAsString());
-			$this->cacheInstance = null;
-		}
-	}
+    /**
+     * Mongodb constructor.
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->logger->setLoggerSubPath(__CLASS__);
+        try {
+            $this->cacheInstance = CacheManager::getInstance('mongodb', new Config($this->driverConfig));
+        } catch (Exception $e) {
+            $this->logger->error(__FUNCTION__, $e->getMessage());
+            $this->logger->error(
+                __FUNCTION__,
+                "----------------------| Trace Error Log for MongoDB |----------------------"
+            );
+            $this->logger->error(__FUNCTION__, $e->getTraceAsString());
+            $this->cacheInstance = null;
+        }
+    }
 
-	/**
-	 * Function setDriverConfig
-	 *
-	 * @param  string  $host
-	 * @param  int  $port
-	 * @param  string  $username
-	 * @param  string  $password
-	 * @param  int  $timeout
-	 * @param  string  $collectionName
-	 * @param  string  $databaseName
-	 *
-	 * @return $this
-	 * @author   : 713uk13m <dev@nguyenanhung.com>
-	 * @copyright: 713uk13m <dev@nguyenanhung.com>
-	 * @time     : 08/01/2021 31:37
-	 */
-	public function setDriverConfig(
-		string $host = '127.0.0.1',
-		int $port = 27017,
-		string $username = '',
-		string $password = '',
-		int $timeout = 1,
-		string $collectionName = 'Cache',
-		string $databaseName = 'phpFastCache'
-	): Mongodb {
-		$this->driverConfig = [
-			'host' => $host,
-			'port' => $port,
-			'username' => $username,
-			'password' => $password,
-			'timeout' => $timeout,
-			/**
-			 * These ones are
-			 * totally optional
-			 */
-			'collectionName' => $collectionName,
-			'databaseName' => $databaseName
-		];
+    /**
+     * Function setDriverConfig
+     *
+     * @param  string  $host
+     * @param  int  $port
+     * @param  string  $username
+     * @param  string  $password
+     * @param  int  $timeout
+     * @param  string  $collectionName
+     * @param  string  $databaseName
+     *
+     * @return $this
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 08/01/2021 31:37
+     */
+    public function setDriverConfig(
+        string $host = '127.0.0.1',
+        int $port = 27017,
+        string $username = '',
+        string $password = '',
+        int $timeout = 1,
+        string $collectionName = 'Cache',
+        string $databaseName = 'phpFastCache'
+    ): Mongodb {
+        $this->driverConfig = [
+            'host' => $host,
+            'port' => $port,
+            'username' => $username,
+            'password' => $password,
+            'timeout' => $timeout,
+            /**
+             * These ones are
+             * totally optional
+             */
+            'collectionName' => $collectionName,
+            'databaseName' => $databaseName
+        ];
 
-		return $this;
-	}
+        return $this;
+    }
 }

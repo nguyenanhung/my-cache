@@ -26,64 +26,75 @@ use nguyenanhung\MyCache\Cache;
  */
 class Couchdb extends Cache
 {
-	protected array $driverConfig = [
-		'host' => '127.0.0.1',
-		'port' => 5984,
-		'path' => '/',
-		'username' => 'your-couchdb-username',
-		'password' => 'your-couchdb-password',
-		'ssl' => true,
-		'timeout' => 10,
-	];
+    const CLASS_NAME = 'CouchdbCache';
+    protected $driverConfig = [
+        'host' => '127.0.0.1',
+        'port' => 5984,
+        'path' => '/',
+        'username' => 'your-couchdb-username',
+        'password' => 'your-couchdb-password',
+        'ssl' => true,
+        'timeout' => 10,
+    ];
 
-	/**
-	 * Couchdb constructor.
-	 *
-	 * @author   : 713uk13m <dev@nguyenanhung.com>
-	 * @copyright: 713uk13m <dev@nguyenanhung.com>
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-		$this->logger->setLoggerSubPath(__CLASS__);
-		try {
-			$this->cacheInstance = CacheManager::getInstance('couchdb', new Config($this->driverConfig));
-		} catch (Exception $e) {
-			$this->logger->error(__FUNCTION__, $e->getMessage());
-			$this->logger->error(__FUNCTION__, "----------------------| Trace Error Log for Couchdb |----------------------");
-			$this->logger->error(__FUNCTION__, $e->getTraceAsString());
-			$this->cacheInstance = null;
-		}
-	}
+    /**
+     * Couchdb constructor.
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->logger->setLoggerSubPath(__CLASS__);
+        try {
+            $this->cacheInstance = CacheManager::getInstance('couchdb', new Config($this->driverConfig));
+        } catch (Exception $e) {
+            $this->logger->error(__FUNCTION__, $e->getMessage());
+            $this->logger->error(
+                __FUNCTION__,
+                "----------------------| Trace Error Log for Couchdb |----------------------"
+            );
+            $this->logger->error(__FUNCTION__, $e->getTraceAsString());
+            $this->cacheInstance = null;
+        }
+    }
 
-	/**
-	 * Function setDriverConfig
-	 *
-	 * @param string $host
-	 * @param int $port
-	 * @param string $path
-	 * @param string $username
-	 * @param string $password
-	 * @param bool $ssl
-	 * @param int $timeout
-	 *
-	 * @return $this
-	 * @author   : 713uk13m <dev@nguyenanhung.com>
-	 * @copyright: 713uk13m <dev@nguyenanhung.com>
-	 * @time     : 08/01/2021 42:12
-	 */
-	public function setDriverConfig(string $host = '127.0.0.1', int $port = 5984, string $path = '/', string $username = '', string $password = '', bool $ssl = true, int $timeout = 10): Couchdb
-	{
-		$this->driverConfig = [
-			'host' => $host,
-			'port' => $port,
-			'part' => $path,
-			'username' => $username,
-			'password' => $password,
-			'ssl' => $ssl,
-			'timeout' => $timeout
-		];
+    /**
+     * Function setDriverConfig
+     *
+     * @param  string  $host
+     * @param  int  $port
+     * @param  string  $path
+     * @param  string  $username
+     * @param  string  $password
+     * @param  bool  $ssl
+     * @param  int  $timeout
+     *
+     * @return $this
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 08/01/2021 42:12
+     */
+    public function setDriverConfig(
+        string $host = '127.0.0.1',
+        int $port = 5984,
+        string $path = '/',
+        string $username = '',
+        string $password = '',
+        bool $ssl = true,
+        int $timeout = 10
+    ): Couchdb {
+        $this->driverConfig = [
+            'host' => $host,
+            'port' => $port,
+            'part' => $path,
+            'username' => $username,
+            'password' => $password,
+            'ssl' => $ssl,
+            'timeout' => $timeout
+        ];
 
-		return $this;
-	}
+        return $this;
+    }
 }
