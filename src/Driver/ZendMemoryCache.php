@@ -28,7 +28,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class ZendMemoryCache extends Cache
 {
-    const CLASS_NAME = 'ZendMemoryCacheCache';
+    const CLASS_NAME = 'ZendMemoryCache';
     protected $driverConfig = [];
 
     /**
