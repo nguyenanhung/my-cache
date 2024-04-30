@@ -26,6 +26,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class Couchdb extends Cache
 {
+    const CLASS_NAME = 'CouchdbCache';
 	protected $driverConfig = [
 		'host' => '127.0.0.1',
 		'port' => 5984,

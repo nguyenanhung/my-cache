@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Project my-cache
  * Created by PhpStorm
@@ -11,12 +12,12 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use nguyenanhung\MyCache\Cache;
 
-if (!function_exists('testOutputWriteLnOnCache')) {
+if ( ! function_exists('testOutputWriteLnOnCache')) {
     /**
      * Function testOutputWriteLnOnCache
      *
-     * @param mixed $name
-     * @param mixed $msg
+     * @param  mixed  $name
+     * @param  mixed  $msg
      *
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
@@ -30,13 +31,13 @@ if (!function_exists('testOutputWriteLnOnCache')) {
         echo $name . ' -> ' . $msg . PHP_EOL;
     }
 }
-if (!function_exists('testSendRequestOnCache')) {
+if ( ! function_exists('testSendRequestOnCache')) {
     /**
      * Function testSendRequestOnCache
      *
-     * @param string              $url
-     * @param string|array|object $data
-     * @param string              $method
+     * @param  string  $url
+     * @param  string|array|object  $data
+     * @param  string  $method
      *
      * @return bool|string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -45,18 +46,20 @@ if (!function_exists('testSendRequestOnCache')) {
      */
     function testSendRequestOnCache(string $url = '', $data = '', string $method = 'GET')
     {
-        $endpoint = (!empty($data) && (is_array($data) || is_object($data))) ? $url . '?' . http_build_query($data) : $url;
+        $endpoint = ( ! empty($data) && (is_array($data) || is_object($data))) ? $url . '?' . http_build_query(
+                $data
+            ) : $url;
         $method = strtoupper($method);
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL            => $endpoint,
+            CURLOPT_URL => $endpoint,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING       => "",
-            CURLOPT_MAXREDIRS      => 10,
-            CURLOPT_TIMEOUT        => 30,
-            CURLOPT_CUSTOMREQUEST  => $method,
-            CURLOPT_POSTFIELDS     => "",
-            CURLOPT_HTTPHEADER     => array(),
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_CUSTOMREQUEST => $method,
+            CURLOPT_POSTFIELDS => "",
+            CURLOPT_HTTPHEADER => array(),
         ));
         $response = curl_exec($curl);
         $err = curl_error($curl);
@@ -76,7 +79,11 @@ $cacheSecurityKey = 'Web-Build';
 $cacheChmod = 0777;
 $cacheKeyHash = 'md5';
 $cache = new Cache();
-$cache->setDebugStatus(true)->setDebugLevel(null)->setDebugLoggerPath($logsPath)->setCachePath($cachePath)->setCacheTtl(500)->setCacheDriver('files')->setCacheSecurityKey($cacheSecurityKey)->setCacheDefaultChmod($cacheChmod)->setCacheDefaultKeyHashFunction($cacheKeyHash)->__construct();
+$cache->setDebugStatus(true)->setDebugLevel(null)->setDebugLoggerPath($logsPath)->setCachePath($cachePath)->setCacheTtl(
+    500
+)->setCacheDriver('files')->setCacheSecurityKey($cacheSecurityKey)->setCacheDefaultChmod(
+    $cacheChmod
+)->setCacheDefaultKeyHashFunction($cacheKeyHash)->__construct();
 
 
 testOutputWriteLnOnCache('Class Cache SDK Version', $cache->getVersion());
@@ -108,6 +115,7 @@ if ($cache->has($cacheId)) {
 }
 
 testOutputWriteLnOnCache('|~~~~~~~~~~~~~~ Cache Result ~~~~~~~~~~~~~~|', $data);
+testOutputWriteLnOnCache('Class Cache Instance', $cache->getCacheInstance());
 
 //Create Cache
 //if ($cache->has($cacheId)) {

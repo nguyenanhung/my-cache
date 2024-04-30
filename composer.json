@@ -1,54 +1,59 @@
 {
-  "name": "nguyenanhung/my-cache",
-  "type": "library",
-  "description": "My Cache Library",
-  "keywords": [
-	"cache",
-	"phpfastcache",
-	"my cache"
-  ],
-  "homepage": "https://github.com/nguyenanhung/my-cache",
-  "license": "GPL-3.0",
-  "authors": [
-	{
-	  "name": "Nguyen An Hung",
-	  "email": "dev@nguyenanhung.com",
-	  "homepage": "https://nguyenanhung.com",
-	  "role": "Developer"
-	}
-  ],
-  "require": {
-	"php": ">=7.0",
-	"ext-json": "*",
-	"ext-iconv": "*",
-	"ext-openssl": "*",
-	"ext-mbstring": "*",
-	"nguyenanhung/my-debug": "^4.0 || ^3.0",
-	"phpfastcache/phpfastcache": "^9.0 || ^8.0.8 || ^7.1"
-  },
-  "require-dev": {
-	"kint-php/kint": ">=3.0"
-  },
-  "autoload": {
-	"psr-4": {
-	  "nguyenanhung\\MyCache\\": "src/"
-	}
-  },
-  "suggest": {
-	"ext-apcu": "*",
-	"ext-intl": "*",
-	"ext-memcached": "*",
-	"ext-memcache": "*",
-	"ext-redis": "*",
-	"ext-xcache": "*",
-	"ext-sqlite": "*",
-	"ext-wincache": "*",
-	"ext-leveldb": "*",
-	"ext-couchbase": "*",
-	"ext-couchbase_v3": "*",
-	"predis/predis": "^1.1",
-	"mongodb/mongodb": "^1.9",
-	"phpfastcache/phpssdb": "~1.0.0",
-	"phpfastcache/couchdb": "~1.0.0"
-  }
+    "name": "nguyenanhung/my-cache",
+    "type": "library",
+    "description": "My Cache Library",
+    "keywords": [
+        "cache",
+        "phpfastcache",
+        "my cache"
+    ],
+    "homepage": "https://github.com/nguyenanhung/my-cache",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Nguyen An Hung",
+            "email": "dev@nguyenanhung.com",
+            "homepage": "https://nguyenanhung.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/nguyenanhung/my-cache/issues",
+        "wiki": "https://github.com/nguyenanhung/my-cache/wiki",
+        "source": "https://github.com/nguyenanhung/my-cache"
+    },
+    "require": {
+        "php": ">=7.0",
+        "ext-json": "*",
+        "ext-iconv": "*",
+        "ext-openssl": "*",
+        "ext-mbstring": "*",
+        "nguyenanhung/my-debug": "^4.0 || ^3.0",
+        "phpfastcache/phpfastcache": "^9.0 || ^8.0.8 || ^7.1"
+    },
+    "require-dev": {
+        "kint-php/kint": ">=3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "nguyenanhung\\MyCache\\": "src/"
+        }
+    },
+    "suggest": {
+        "ext-apcu": "*",
+        "ext-intl": "*",
+        "ext-memcached": "*",
+        "ext-memcache": "*",
+        "ext-redis": "*",
+        "ext-xcache": "*",
+        "ext-sqlite": "*",
+        "ext-wincache": "*",
+        "ext-leveldb": "*",
+        "ext-couchbase": "*",
+        "ext-couchbase_v3": "*",
+        "predis/predis": "^1.1",
+        "mongodb/mongodb": "^1.9",
+        "phpfastcache/phpssdb": "~1.0.0",
+        "phpfastcache/couchdb": "~1.0.0"
+    }
 }

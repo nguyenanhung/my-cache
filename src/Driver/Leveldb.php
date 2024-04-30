@@ -26,6 +26,7 @@ use nguyenanhung\MyCache\Cache;
  */
 class Leveldb extends Cache
 {
+    const CLASS_NAME = 'LeveldbCache';
 	protected $driverConfig = [];
 
 	/**
