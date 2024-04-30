@@ -133,12 +133,7 @@ testOutputWriteLnOnCache('Class Cache Instance', $cache->getCacheInstance());
 //    echo "</pre>";
 //}
 
-// Clean Cache
+//Clean Cache
 //echo "<pre>";
 //print_r($cache->clean());
 //echo "</pre>";
-
-
-
-
-
