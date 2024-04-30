@@ -83,7 +83,7 @@ $cache->setDebugStatus(true)->setDebugLevel(null)->setDebugLoggerPath($logsPath)
     500
 )->setCacheDriver('files')->setCacheSecurityKey($cacheSecurityKey)->setCacheDefaultChmod(
     $cacheChmod
-)->setCacheDefaultKeyHashFunction($cacheKeyHash)->__construct();
+)->setCacheDefaultKeyHashFunction($cacheKeyHash);
 
 
 testOutputWriteLnOnCache('Class Cache SDK Version', $cache->getVersion());
